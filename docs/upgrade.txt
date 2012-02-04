@@ -1,0 +1,39 @@
+UPGRADING
+
+From 1.0 - 
+
+-If you are upgrading from 1.0 you will need to run the sql file docs/upgrade_1.0_1.1.sql on your database, to apply the changes that have happened to the table schema since the 1.0 release.  This can be done with the following command:
+
+mysql -uUSERNAME -pPASSWORD PROJECTTRAQDB < upgrade_1.0_1.1.sql
+
+-For installations that use modified template files, the follow templates have been rev'd:
+
+bug/templates/enterBugTemplate.tmpl
+bug/templates/editBugTemplate.tmpl
+bug/templates/shortForm.tmpl
+task/templates/enterTaskTemplate.tmpl
+task/templates/shortForm.tmpl
+templates/editlogins.tmpl
+templates/header-bug.tmpl
+templates/header-task.tmpl
+templates/header-traq.tmpl
+templates/level-1-email-confirm.tmpl
+templates/level-1-email-confirm.tmpl.full
+templates/query_bug.tmpl
+templates/query_task.tmpl
+templates/templates.tmpl
+
+You may want to review/apply your modifications to the new template files
+
+
+-The following parameter have been added/changed in the traq.cfg configuration file:
+
+
+	requirecomment=>'auto',
+
+	externalaccess => {
+		useoutsideLogin => '0',
+		allowvisitor => '0',
+	},
+	
+Also, a new outsideLogin function is defined in the traq.cfg file which can be alternately used for logins.  this is provided for integration.  

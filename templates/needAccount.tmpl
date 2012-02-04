@@ -1,0 +1,69 @@
+<!--
+###############################################################
+#    Copyright (C) 3001-3003 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<html>
+<head>
+</head>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<body>
+<center>
+<h3>New Account Setup</h3>
+<p/>
+<table class=form_table cellspacing=0 cellpadding=3>
+<tr class=form_header>
+<td colspan=4>
+<font size=+1><b>[[first_name]] [[last_name]]</b></font>
+</td>
+</tr>
+<form action="needAccount.cgi" method=post>
+<input type=hidden name=mode value=[[nextmode]]>
+<tr>
+	<td>Username:</td><td><input type=text name=username size=30 value='[[username]]'></td>
+	<input type=hidden name=active value=Yes>
+	</td>
+	<td rowspan=9>
+	</td>
+</tr>
+<tr>
+	<td>Password:</td><td><input type=[[passwordmode]] name=password value='[[password]]' size=30></td>
+</tr>
+<tr>
+	<td>First Name:</td><td><input type=text name=first_name size=30 value="[[first_name]]"></td>
+</tr>
+<tr>
+	<td>Last Name:</td><td><input type=text name="last_name" value="[[last_name]]" size=30></td>
+</tr>
+<tr>
+	<td>Email:</td><td><input type=text name=email size=30 value='[[email]]'></td>
+</tr>
+<tr>
+<td>
+	<center><input type=submit value="Setup Account" onClick="this.value='Please wait...'"></center>
+</td>
+</tr>
+<input type=hidden name=userid value='[[userid]]'>
+<input type=hidden name=bugtraqprefs value='[[bugtraqprefs]]'>
+<input type=hidden name=returnfields value='[[returnfields]]'>
+<input type=hidden name=recordeditprivs value='[[recordeditprivs]]'>
+</form>
+</table>
+</center>
+</body>
+</html>

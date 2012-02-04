@@ -1,0 +1,693 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<HTML><HEAD><TITLE>TaskTraq Query</TITLE>
+<SCRIPT LANGUAGE="Javascript">
+
+[[JS]]
+
+
+function calendar(datefield){
+  var val=escape(document.main.elements[datefield].value);
+  window.open('calpop.cgi?fld='+datefield+'&val='+val,'calendar','width=240,height=270,menubar=0,scrollbars=0,resizable=1,toolbar=0');
+}
+function hoverOn(){
+        this.className = 'tab tabHover';
+}
+
+function hoverOff(){
+        this.className = 'tab';
+}
+
+function initTabs () {
+        toggleTab(1);
+}
+function toggleTab2(i){
+	if (document.getElementById)
+	{
+		for (f=1;f<numberOfTabs2+1;f++)
+		{
+			document.getElementById('tabcontent2'+f).style.display='none';
+			document.getElementById('tab2'+f).className = 'tab';
+			document.getElementById('tab2'+f).onmouseover = hoverOn;
+			document.getElementById('tab2'+f).onmouseout = hoverOff;
+		}
+		document.getElementById('tabcontent2'+i).style.display='block';
+		document.getElementById('tab2'+i).className = 'tab tabActive';
+		document.getElementById('tab2'+i).onmouseover = '';
+		document.getElementById('tab2'+i).onmouseout = '';
+	}
+}
+
+function initTabs2 () {
+        toggleTab2(1);
+}
+
+</SCRIPT>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-en.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-setup.js"></script>
+</HEAD>
+<BODY>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+
+<FORM action="do_query.cgi" method=get name=main>
+<input type=hidden name=type value=task>
+<br>
+<table style="border: 1px solid #bbb;" bgcolor=#eeeeee CELLPADDING="1" CELLSPACING="0" >
+<tr>
+<td valign=center>
+<FONT face="Arial, Helvetica, sans-serif" size=3>Save this Query as:</FONT></B><INPUT name=queryname>
+&nbsp;&nbsp;
+Get All:
+<b>Bugs</b><input type=checkbox name=return_bugs [[return_bugs]] value=1>
+<b>Tasks</b><input type=checkbox name=return_tasks  [[return_tasks]] value=1>
+&nbsp;&nbsp;<INPUT type=submit value="Submit query" name=submit onClick="this.value='Please wait...'"> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<INPUT type=reset value="Reset back to the default query" name=reset> 
+</td>
+</tr>
+<tr>
+<td align=center>
+	<font size=-1>Filter by  
+		<select name=status_class style="font-size:10px;">
+			<option></option>
+			[[STATUS_CLASS_OPTIONLIST]]
+		</select>
+	</font>
+</td>
+</tr>
+</table>
+<p/>
+<table width=740 class="form_table">
+<tr>
+<td>
+<div class="tabs">
+	<span onclick="toggleTab(1)" id="tab1" class="tab">Task Search</span> 
+	<span onclick="toggleTab(2)" id="tab2" class="tab">More Options</span> 
+</div>
+<div id="tabcontent1" class="tabBody">  
+<!-- PROJECT COMPONENT VERSION MILESTONE -->
+<TABLE cellspacing=10>
+	<TR>
+	  <TD vAlign=top align=left>
+	  	<FONT face="Arial, Helvetica, sans-serif"><B>[[PROJECTIDLABEL]] or Service:</B> 
+	    </FONT><br>
+          	<SELECT multiple size=5 name=projectid id=projectid onChange="dyn_menu(this.form.projectid,'target_milestone');dyn_menu(this.form.projectid,'componentid');">
+				[[PROJECTID_OPTIONLIST]]
+		</SELECT>
+	  </TD>
+	  <TD vAlign=top align=left>
+	  <FONT face="Arial, Helvetica, sans-serif"><B>[[COMPONENTIDLABEL]]: 
+	      </B></FONT><br>
+	  <SELECT multiple size=5 name=componentid id=componentid>  
+			[[COMPONENTID_OPTIONLIST]]
+	      </SELECT> 
+	  </TD>
+    <TD vAlign=top align=left>
+    <FONT face="Arial, Helvetica, sans-serif"><B>[[TARGET_PROJECTLABEL]]:</B> </FONT><br>
+    <SELECT multiple size=5 name=target_project id=target_project> 
+    [[TARGET_PROJECT_OPTIONLIST]]
+      </SELECT> 
+    </TD>
+	  <TD vAlign=top align=left>
+	  <FONT face="Arial, Helvetica, sans-serif"><B>[[TARGET_MILESTONELABEL]]</B></FONT><br>
+	  <SELECT multiple size=5 name=target_milestone id=target_milestone>
+			[[TARGET_MILESTONE_OPTIONLIST]]
+	      </SELECT>
+	  </TD>
+  </TR>
+</TABLE>
+
+
+<!-- SHORT DESC, LONG DESC WHITEBOARD KEYWORDS ATTACHMENTS -->
+<TABLE>
+        <TBODY>
+        <TR>
+            <TD>
+            	<FONT face="Arial, Helvetica, sans-serif" size=3><B>[[SHORT_DESCLABEL]]:</B></FONT>
+            </TD>
+          <TD>
+          <FONT face="Arial, Helvetica, sans-serif">
+          <INPUT name=short_desc size=40 value="[[short_desc]]"> 
+          </FONT>
+          </TD>
+          <TD><FONT face="Arial, Helvetica, sans-serif">
+          <SELECT name=short_desc_type> 
+			[[short_desc_type_optionlist]]
+            </SELECT> 
+            </FONT>
+            </TD>
+        </TR>
+        <TR>
+            <TD valign=top>
+            <FONT face="Arial, Helvetica, sans-serif" size=3>
+            <B>[[LONG_DESCLABEL]]:</B>
+            </FONT>
+            </TD>
+          <TD>
+          <FONT face="Arial, Helvetica, sans-serif">
+          <input type=text name=long_desc size=40 value="[[long_desc]]"> 
+           </FONT></TD>
+          <TD><FONT face="Arial, Helvetica, sans-serif">
+          	<SELECT name=long_desc_type> 
+			[[long_desc_type_optionlist]]
+          	</SELECT> </FONT>
+          	</TD>
+          	</TR>
+ 		<TR>
+            <TD><FONT face="Arial, Helvetica, sans-serif" size=3>
+            <B>[[STATUS_WHITEBOARDLABEL]]:</B>
+            </FONT>
+            </TD>
+          <TD><FONT face="Arial, Helvetica, sans-serif">
+          <INPUT name=status_whiteboard size=40 value="[[status_whiteboard]]"> 
+          </FONT>
+          </TD>
+          <TD><FONT face="Arial, Helvetica, sans-serif">
+          <SELECT name=status_whiteboard_type> 
+			[[status_whiteboard_type_optionlist]]
+          </SELECT> </FONT>
+          </TD>
+          </TR>
+		<TR>
+           <TD><FONT face="Arial, Helvetica, sans-serif" size=3>
+             <B><A HREF="./keywords.cgi" TARGET=newwin>[[KEYWORDSLABEL]]</a>:</B></FONT></TD>
+           <TD colspan=3><FONT face="Arial, Helvetica, sans-serif">
+               [[BEGINb]]
+               <input name=keywords type=checkbox value=[[keywordid]]>[[name]] &nbsp;&nbsp;&nbsp;
+               [[ENDb]]
+                 </FONT>
+<FONT face="Arial, Helvetica, sans-serif">
+           <SELECT name=keywords_type> <OPTION value=any selected>Any</OPTION> 
+               <OPTION value=all>All</OPTION> <OPTION value=none>None</OPTION>
+           </SELECT> </FONT>
+           </TD>
+        </TR>
+        <TR>
+          <TD>
+          	<FONT face="Arial, Helvetica, sans-serif" size=3><B>Attachments:</B></FONT>
+          </TD>
+          <TD colspan=2>
+          <select name=attach_have>
+          [[attach_have_optionlist]]
+          </select>
+			</TD>
+         </TR>
+</table>
+
+<!-- USER ROLES: ASSIGNED TO PRIMARY/SECONDARY CONTACTS -->
+<TABLE cellpadding=5 style="position:relative;">
+	<TR>
+	 <TD vAlign=middle>
+		<font size=-1><i>
+		Select users or<br>
+		groups of users as roles<br>
+		to query records against
+		<p/>
+		Will <select name=role_andor>
+		[[ROLE_ANDOR_OPTIONLIST]]
+		</select>
+		<br>
+	    the selections<br><br><br>&nbsp;
+		</i></font>
+	 </td>
+
+	<TD vAlign=top>
+	 
+<div class="tabs">
+	<span onclick="toggleTab2(1)" id="tab21" class="tab">[[ASSIGNED_TOLABEL]]</span> 
+	<span onclick="toggleTab2(2)" id="tab22" class="tab">[[REPORTERLABEL]]</span> 
+	<span onclick="toggleTab2(3)" id="tab23" class="tab">[[TECH_CONTACTLABEL]]</span> 
+	<span onclick="toggleTab2(4)" id="tab24" class="tab">[[QA_CONTACTLABEL]]</span> 
+	<span onclick="toggleTab2(5)" id="tab25" class="tab">[[CCLABEL]]</span> 
+</div>
+<div id="tabcontent21" class="tabBody">  
+	<table>
+	<tr>
+	<td>
+	 &nbsp;&nbsp;<i>[[ASSIGNED_TOLABEL]]</i><br>
+	<SELECT MULTIPLE SIZE=8 name=assigned_to>
+	[[ASSIGNED_TO_OPTIONLIST]]
+	</SELECT>
+	</td>
+	<td>
+	 <i>or Groups</i><br>
+	<SELECT MULTIPLE SIZE=8 name=assigned_togroup>
+	[[ASSIGNED_TOGROUP_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+	</table>
+</div>	
+<div id="tabcontent22" class="tabBody">  
+	<table>
+	<tr>
+	<td>
+	 &nbsp;&nbsp;<i>[[REPORTERLABEL]]</i><br>
+	<SELECT MULTIPLE SIZE=8 name=reporter>
+	[[REPORTER_OPTIONLIST]]
+	</SELECT>
+	</td>
+	<td>
+	 <i>or Groups</i><br>
+	<SELECT MULTIPLE SIZE=8 name=reportergroup>
+	[[REPORTERGROUP_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+	</table>
+</div>	
+<div id="tabcontent23" class="tabBody">  
+	<table>
+	<tr>
+	<td>
+	 &nbsp;&nbsp;<i>[[TECH_CONTACTLABEL]]</i><br>
+	<SELECT MULTIPLE SIZE=8 name=tech_contact>
+	[[TECH_CONTACT_OPTIONLIST]]
+	</SELECT>
+	</td>
+	<td>
+	 <i>or Groups</i><br>
+	<SELECT MULTIPLE SIZE=8 name=tech_contactgroup>
+	[[TECH_CONTACTGROUP_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+	</table>
+</div>	
+<div id="tabcontent24" class="tabBody">  
+	<table>
+	<tr>
+	<td>
+	 &nbsp;&nbsp;<i>[[QA_CONTACTLABEL]]</i><br>
+	<SELECT MULTIPLE SIZE=8 name=qa_contact>
+	[[QA_CONTACT_OPTIONLIST]]
+	</SELECT>
+	</td>
+	<td>
+	 <i>or Groups</i><br>
+	<SELECT MULTIPLE SIZE=8 name=qa_contactgroup>
+	[[QA_CONTACTGROUP_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+	</table>
+</div>	
+<div id="tabcontent25" class="tabBody">  
+	<table>
+	<tr>
+	<td>
+	 &nbsp;&nbsp;<i>[[CCLABEL]]</i><br>
+	<SELECT MULTIPLE SIZE=8 name=cc>
+	[[ROLE_CC_OPTIONLIST]]
+	</SELECT>
+	</td>
+	<td>
+	 <i>or Groups</i><br>
+	<SELECT MULTIPLE SIZE=8 name=ccgroup>
+	[[CCGROUP_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+	</table>
+</div>	
+</div>	
+	</TD>
+	</TR>
+</TABLE>
+
+<!-- STATUS,URGENCY,RESOLUTION... -->
+
+<!-- STATUS,URGENCY,RESOLUTION... -->
+<TABLE cellspacing=10>
+	<TR>
+	<TD align=left>
+	    <B><FONT face="Arial, Helvetica, sans-serif" size=3>[[STATUSLABEL]]:</FONT> </B> 
+	</TD>
+	<TD align=left>
+	    <B><FONT face="Arial, Helvetica, sans-serif" size=3>[[RESOLUTIONLABEL]]:</FONT> </B> 
+	</TD>
+	<TD align=left>
+	    <B><FONT face="Arial, Helvetica, sans-serif" size=3>[[PRIORITYLABEL]]:</FONT> </B> 
+	</TD>
+	<TD align=left>
+	    <B><FONT face="Arial, Helvetica, sans-serif" size=3>[[SEVERITYLABEL]]:</FONT> </B> 
+	</TD>
+</TR>
+<TR>
+	<TD vAlign=top align=left>
+	  <SELECT multiple size=5 name=status> 
+		[[STATUS_OPTIONLIST]]
+	  </SELECT> 
+	</TD>
+	<TD vAlign=top align=left>
+	  <SELECT multiple size=5 name=resolution> 
+		[[RESOLUTION_OPTIONLIST]]
+	  </SELECT> 
+	</TD>
+	<TD vAlign=top align=left>
+	<SELECT multiple size=5 name=priority> 
+	[[PRIORITY_OPTIONLIST]]
+	</SELECT> 
+	</TD>
+	<TD vAlign=top align=left><SELECT multiple size=5 name=severity> 
+	[[SEVERITY_OPTIONLIST]]
+	  </SELECT> 
+	</TD>
+</TR>
+</TABLE>
+</div>
+
+<div id="tabcontent2" class="tabBody">  
+<!-- DATE BASED SEARCHING -->
+<font color=#666666><b>DATE BASED SEARCHING</b></font>
+<TABLE border=1>
+	<TR bgColor=#feeb7d>
+	  <TD colspan=4 align=center style="cursor: pointer;" onClick="NewWindow('datetest.cgi','Date Tester',400,500,'1');">
+	  	<FONT face="Arial, Helvetica, sans-serif" size=-1>For information on date formatting and intelligent date parsing, click here. Leave blank for all dates.</FONT>
+	  </TD>
+	</TR>
+<TR>
+	<TD>
+      	<table>
+		      	<tr>
+		            <TD colSpan=2><FONT face="Arial, Helvetica, sans-serif"><B>Creation Dates</B> 
+		              </FONT></TD>
+		        </TR>
+		          <TR>
+		            <TD><FONT face="Arial, Helvetica, sans-serif">Start Date: </font></td>
+		             <td> 
+		             			  <INPUT size=10 value="[[start_creation_ts]]" name=start_creation_ts id=start_creation_ts><img style="cursor: pointer;" id="cal_start_creation_ts" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "start_creation_ts",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_start_creation_ts"       // ID of the button
+			}
+		  );
+		</script>
+		             </TD>
+		           </tr>
+		           <tr><TD><FONT face="Arial, Helvetica, sans-serif">End Date: </font></td>
+		            <td>
+		             			  <INPUT size=10 value="[[end_creation_ts]]" name=end_creation_ts id=end_creation_ts><img style="cursor: pointer;" id="cal_end_creation_ts" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "end_creation_ts",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_end_creation_ts"       // ID of the button
+			}
+		  );
+		</script>
+		            </TD>
+		          </TR>
+		</TABLE>
+	</TD>
+	<TD>	
+		<table>
+			<tr><td colspan=2>
+			<font face="Arial, Helvetica, sans-serif"><B>Modified Dates</B></FONT>
+			</td></tr>
+			<tr><td>
+			<FONT face="Arial, Helvetica, sans-serif">Start Date: </font></td>
+			  <td>
+			  <INPUT size=10 value="[[start_delta_ts]]" name=start_delta_ts id=start_delta_ts><img style="cursor: pointer;" id="cal_start_delta_ts" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "start_delta_ts",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_start_delta_ts"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+			<tr><td><FONT face="Arial, Helvetica, sans-serif">End Date: </font></td>
+			<td>
+			  <INPUT size=10 value="[[end_delta_ts]]" name=end_delta_ts id=end_delta_ts><img style="cursor: pointer;" id="cal_end_delta_ts" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "end_delta_ts",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_end_delta_ts"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+		</table>
+	</TD>
+	<TD>
+		<table>
+			<tr><td colspan=2>
+			<font face="Arial, Helvetica, sans-serif"><B>Start Dates</B></FONT>
+			</td></tr>
+			<tr><td>
+			<FONT face="Arial, Helvetica, sans-serif">Start Date: </font></td>
+			  <td>
+		             			  <INPUT size=10 value="[[start_start_date]]" name=start_start_date id=start_start_date><img style="cursor: pointer;" id="cal_start_start_date" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "start_start_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_start_start_date"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+			<tr><td><FONT face="Arial, Helvetica, sans-serif">End Date: </font></td>
+			<td>
+		             			  <INPUT size=10 value="[[end_start_date]]" name=end_start_date id=end_start_date><img style="cursor: pointer;" id="cal_end_start_date" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "end_start_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_end_start_date"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+		</table>
+	</TD>
+	<TD>
+		<table>
+			<tr><td colspan=2>
+			<font face="Arial, Helvetica, sans-serif"><B>Target Dates</B></FONT>
+			</td></tr>
+			<tr><td>
+			<FONT face="Arial, Helvetica, sans-serif">Start Date: </font></td>
+			  <td>
+		             			  <INPUT size=10 value="[[start_target_date]]" name=start_target_date id=start_target_date><img style="cursor: pointer;" id="cal_start_target_date" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "start_target_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_start_target_date"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+			<tr><td><FONT face="Arial, Helvetica, sans-serif">End Date: </font></td>
+			<td>
+		             			  <INPUT size=10 value="[[end_target_date]]" name=end_target_date id=end_target_date><img style="cursor: pointer;" id="cal_end_target_date" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "end_target_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_end_target_date"       // ID of the button
+			}
+		  );
+		</script>
+			</td></tr>
+		</table>
+	</TD>
+	</TR>
+</table>
+
+<br>
+<!-- SPECIFIC RECORD INCLUSION OR EXCLUSION -->
+<font color=#666666><b>SPECIFIC RECORD INCLUSION OR EXCLUSION</b></font>
+<TABLE>
+	<TR>
+	    <TD colSpan=3><FONT face="Arial, Helvetica, sans-serif">
+	    <SELECT name=task_id_type> 
+	    <OPTION value=include selected>Only
+	    <OPTION value=exclude>Exclude</OPTION>
+	    </SELECT> 
+	    tasks numbered: 
+	    <INPUT value="[[record_id]]" name=record_id size=40> 
+	      (separate by commas)</FONT></TD></TR>
+	  <TR>
+	    <TD colSpan=2><FONT face="Arial, Helvetica, sans-serif">&nbsp;</FONT>
+	</TD>
+	</TR>
+</TABLE>
+
+<br>
+<!-- SEARCHING ON RECORD CHANGES -->
+<font color=#666666><b>SEARCHING ON RECORD CHANGES</b></font>
+<table border=1>
+	<TR>
+	<TD rowSpan=3>
+		<FONT face="Arial, Helvetica, sans-serif" size=3>Where the<BR>field(s) changed. </FONT>
+	</TD>
+	<TD rowSpan=3>
+		<FONT face="Arial, Helvetica, sans-serif" size=3>
+		<SELECT multiple size=4 name=chfield> 
+		[[CHFIELD_OPTIONLIST]]
+		</SELECT> </FONT>
+	</TD>
+	<TD>
+		<FONT face="Arial, Helvetica, sans-serif" size=3>dates 
+	  <INPUT size=10 value="[[chfield_from]]" name=chfield_from id=chfield_from><img style="cursor: pointer;" id="cal_chfield_from" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "chfield_from",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_chfield_from"       // ID of the button
+			}
+		  );
+		</script>
+		 to 
+	  <INPUT size=10 value="[[chfield_to]]" name=chfield_to id=chfield_to><img style="cursor: pointer;" id="cal_chfield_to" src="./cal_icon.gif"> 
+		<script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "chfield_to",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_chfield_to"       // ID of the button
+			}
+		  );
+		</script>
+		</FONT>
+	</TD>
+	<td>
+		<FONT face="Arial, Helvetica, sans-serif" size=3>value changed to:<input type=text value="[[changeto]]" name=changeto size=11></font>
+	</td>
+	</TR>
+	<TR>
+	<TD>
+		<FONT face="Arial, Helvetica, sans-serif" size=3>changed in last 
+		<INPUT size=2 value="[[changedin]]" name=changedin> days</FONT>
+	</TD>
+	<TD>changed by:<SELECT NAME=changeby><option value="">
+		[[CHANGEBY_OPTIONLIST]]
+		</SELECT>
+	</TD>
+	</TR>
+</TABLE>
+
+
+<br>
+<!-- BOOL FIELD QUERIES -->
+<font color=#666666><b>BOOLEAN FIELD QUERIES</b></font>
+<TABLE>
+	<TR>
+	  <TD nowrap>
+	    <SELECT name=bool_field1> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field1_optionlist]]
+	    </SELECT> 
+
+	    <SELECT name=bool_operator1> 
+	        <OPTION value=none>-- Limit by Operator --</OPTION> 
+			[[bool_operator1_optionlist]]
+	    </SELECT>
+	      <INPUT size=20 name=bool_value1 value="[[bool_value1]]">
+	   </td>
+	</tr>
+	<tr>
+		<td>
+	      <select name=bool_type1>
+			[[BOOL_TYPE1_OPTIONLIST]]
+			</select>
+	  </TD>
+
+	  </TR>
+	  <TR>
+	  <TD nowrap>
+	    <SELECT name=bool_field2> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field2_optionlist]]
+		</SELECT> 
+
+	    <SELECT name=bool_operator2> 
+	        <OPTION value=none >-- Limit by Operator --</OPTION> 
+			[[bool_operator2_optionlist]]
+	    </SELECT>
+
+	      <INPUT size=20 name=bool_value2 value="[[bool_value2]]">
+	   </td>
+	</tr>
+	<tr>
+		<td>
+			<select name=bool_type2>
+			[[BOOL_TYPE2_OPTIONLIST]]
+			</select
+	  </TD>
+
+	  </TR>
+	  <TR>
+	  <TD nowrap>
+	    <SELECT name=bool_field3> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field3_optionlist]]
+		</SELECT> 
+
+	    <SELECT name=bool_operator3> 
+	        <OPTION value=none>-- Limit by Operator --</OPTION> 
+			[[bool_operator3_optionlist]]
+	    </SELECT>
+
+	      <INPUT size=20 name=bool_value3 value="[[bool_value3]]">
+	   </td>
+	</tr>
+	<tr>
+		<td>
+			<select name=bool_type3>
+			[[BOOL_TYPE3_OPTIONLIST]]
+			</select	  </TD>
+	  </TR>
+	<TR>
+	  <TD>
+	    <CENTER><B> <FONT 
+	    face="Arial, Helvetica, sans-serif"><A 
+	    href="http://library.albany.edu/internet/boolean.html">What is this 
+	    stuff?</A> </FONT></B></CENTER></TD>
+</TABLE>
+</div>
+</td>
+</tr>
+</table>
+<script>var numberOfTabs2 = 5; initTabs2();</script>  
+<script>var numberOfTabs = 2; initTabs();</script>  
+</FORM>
+
+
+</BODY></HTML>

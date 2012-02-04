@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>TaskTraq</title>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+<p><b><font size="+2" color="#000000">&nbsp;&nbsp;TaskTraq:</font></b>&nbsp;&nbsp;Task Tracking Application
+</p><TABLE BORDER=0 CELLSPACING=10 CELLPADDING=0 WIDTH="90%" >
+<tr>
+					<FORM METHOD="get" ACTION="../redir.cgi">
+<td colspan=2>
+					<center><b>Click here for <a href="tasklist.cgi">Task Lists</a></b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<FONT SIZE=+0>Show Task/Ticket Number&nbsp;</FONT>
+						<INPUT TYPE=hidden NAME=type VALUE=look>
+						<INPUT TYPE="text" NAME="id" SIZE="5">
+						<INPUT TYPE="submit" NAME="Submit" VALUE="Go">
+</center>
+</td>
+					</FORM>
+</tr>
+			<TR VALIGN=TOP>
+				<TD WIDTH="50%">
+<fieldset>
+<legend>
+					<B><FONT SIZE=-1>Click on the [[PROJECTIDLABEL]] you wish to open a task against:</FONT></B>
+</legend>
+					<TABLE CELLSPACING=5 >
+
+[[BEGIN1]]
+			<tr><td nowrap><a href="enterTaskForm.cgi?rtype=task&projectid=[[projectid]]"><b>[[project]]</b></a></td><td>[[description]]</td></tr>
+[[END1]]
+  						
+					</TABLE>
+</fieldset>
+				</TD>
+				<TD WIDTH="50%">
+					<HR>
+<fieldset>
+<legend>
+					<B><FONT SIZE=-1>Click on the service you wish to open a ticket against:</FONT></B> &nbsp;
+</legend>
+					<TABLE CELLSPACING=5 >
+						
+[[BEGIN2]]
+			<tr><td><a href="enterTaskForm.cgi?rtype=task&projectid=[[svc_projectid]]"><b>[[svc_project]]</b></a></td><td>[[svc_description]]</td></tr>
+[[END2]]
+
+					</TABLE>
+</fieldset>
+					<UL>
+					</UL>
+					<P>
+						&nbsp;
+					</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<FONT SIZE=-1>If you do not see your [[PROJECTIDLABEL]] listed above, please contact <A HREF="mailto:[[webmaster]]">[[webmaster]]</A>.</FONT>
+		<HR>
+</table>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+
+<script>
+[[HEADER]]
+</script>
+</body>
+</html>

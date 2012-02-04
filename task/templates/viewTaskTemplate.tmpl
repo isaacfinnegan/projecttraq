@@ -1,0 +1,420 @@
+<html>
+<head>
+   <title>TaskTraq - Task # [[RTYPE]][[RECORD_ID_DISP]]</title>
+<SCRIPT LANGUAGE=JAVASCRIPT>
+var proj = new Array();
+var versions = new Array();
+[[JS]]
+function populateComps(form) {
+        var selectedps = new Array();
+        var xx = 0;
+        for(var ii=0; ii < form.projectid.length; ii++) {
+                if(form.projectid.options[ii].selected) {
+                        selectedps[xx] = form.projectid.options[ii].value;
+                        xx++;
+                }
+        }
+        for(var xxx=0; xxx < 30; xxx++) {
+                form.componentid.options[xxx] = null;
+                form.buildid.options[xxx] = null;
+        }
+        var index1=0;
+        var index2=0;
+        for(var iii=0; iii < selectedps.length; iii++) {
+                projectid = selectedps[iii];
+                for(var i = 0; i < proj[projectid].length; i++) {
+                        form.componentid.options[index1] = new Option(proj[projectid][i][0], proj[projectid][i][1]);
+                        index1++;
+                }
+                for(var i=0; i < versions[projectid].length; i++) {
+                        form.buildid.options[index2] = new Option(versions[projectid][i][0], versions[projectid][i][1]);
+                        index2++;
+                }
+        }
+}
+function validateRequiredFields(form) {
+ [[BEGINREQ]]
+ if( form.[[REQUIREDFIELD]].value == "" ) 
+ {
+	alert("[[REQUIREDFIELDLABEL]] cannot be blank");
+	form.[[REQUIREDFIELD]].focus();
+	return false;
+ }
+ [[ENDREQ]]
+ return true;
+}
+
+function warnProjectChange() {
+	alert("Changing projects will require you to resubmit with a new component.\nPlease refresh the form after submitting and choose a new component");
+	return true;
+}
+function verify() {
+	msg = "Please be sure to save edits before clicking this link.\nHit cancel to go back.";
+	return confirm(msg);
+}
+function verifyNextPrev(num) {
+	if(num) {
+		return true;
+	}
+	else {
+		msg="There is no [[RECORDTYPE]] here, please cancel this request";
+		confirm(msg);
+		return false;
+	}
+}
+function NewWindow(mypage, myname, w, h, scroll) {
+	var winl = (screen.width - w) / 2;
+	var wint = (screen.height - h) / 2;
+	winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
+	win = window.open(mypage, myname, winprops)
+	if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+function loadIframe(iframeName, url) {
+  if ( window.frames[iframeName] ) {
+    window.frames[iframeName].location = url;   
+    return false;
+  }
+  else return true;
+}
+function hoverOn(){
+        this.className = 'tab tabHover';
+}
+
+function hoverOff(){
+        this.className = 'tab';
+}
+
+function toggleTab(i){
+        if (document.getElementById){
+                for (f=1;f<numberOfTabs+1;f++){
+                        document.getElementById('tabcontent'+f).style.display='none';
+                        document.getElementById('tab'+f).className = 'tab';
+	 		document.getElementById('tab'+f).onmouseover = hoverOn;
+	 		document.getElementById('tab'+f).onmouseout = hoverOff;
+                }
+                document.getElementById('tabcontent'+i).style.display='block';
+                document.getElementById('tab'+i).className = 'tab tabActive';
+	 	document.getElementById('tab'+i).onmouseover = '';
+	 	document.getElementById('tab'+i).onmouseout = '';
+        }
+}
+
+function initTabs () {
+        toggleTab(1);
+}
+</SCRIPT>
+<script type="text/javascript" src="[[PISSROOT]]/calendar.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-en.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-setup.js"></script>
+</head>
+<BODY>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+[[HEADER]]
+<p/>
+<TABLE class="form_table" cellspacing=0 cellpadding=4><FORM NAME=main METHOD="post" ACTION="processEdit.cgi" onsubmit="return validateRequiredFields(this);">
+<FONT SIZE="2">
+	<INPUT TYPE=hidden NAME=record_id VALUE=[[RECORD_ID_VAL]]>
+	<INPUT TYPE=hidden NAME=debug VALUE=[[DEBUG]]>
+	<INPUT TYPE=hidden NAME=queryid VALUE=[[QUERYID]]>
+	<TR>
+	<TD class="form_header" colspan=2 align=left>
+		<b>View</b>/<A HREF="../redir.cgi?type=edit&id=[[RECORD_ID_VAL]]&queryid=[[QUERYID]]"><b>Edit</b></a>
+	</TD>
+	<TD class="form_header" colspan=2 align=center>
+		<A HREF="../redir.cgi?type=view&id=[[PREV]]&debug=[[DEBUG]]&queryid=[[QUERYID]]" onClick="return verifyNextPrev([[PREV]])">([[PREV]])Previous  </A>
+		<b>---[[RECORDTYPE]] # [[RTYPE]][[RECORD_ID_DISP]]---</b>
+		<A HREF="../redir.cgi?type=view&id=[[NEXT]]&debug=[[DEBUG]]&queryid=[[QUERYID]]" onClick="return verifyNextPrev([[NEXT]])">Next([[NEXT]])</A></b> ([[INDEX]]) of ([[NUMRESULTS]])
+	</TD>
+	<TD class="form_header" colspan=2 align=right>
+		<A HREF="../do_query.cgi?queryid=[[QUERYID]]">Back</a> to query
+	</TD>
+	</TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B> <FONT SIZE="3" COLOR="#CC0033"></FONT> 
+        [[REQSHORT_DESC]]<A HREF="./fielddescriptions.html#Summary" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[SHORTDESCLABEL]]</span>:</a></B></FONT></TD>
+      <TD colspan=4> <FONT SIZE="2"> 
+        <INPUT readonly NAME=short_desc SIZE=45 maxlength=140 VALUE="[[SHORT_DESC_DISP]]" style="font-size:14px;">
+	</font></td>
+	<TD>
+		<FONT SIZE="2">
+			<b>( <font color=red>*</font> ) Required fields</b>
+		</font>
+	</td>
+    </TR>
+
+	<TR VALIGN="MIDDLE"> 
+		<TD ALIGN=RIGHT>
+			<FONT SIZE="2"><b>[[REQPROJECTID]]<span class="fieldlabel">[[PROJECTLABEL]]</span>:</b></font></TD><TD> 
+			[[PROJECTID_DISP]]
+		</TD>
+		<TD ALIGN=right VALIGN="MIDDLE">
+			<FONT SIZE="2"><B> 
+			[[REQCOMPONENTID]]<A HREF="./viewcategories.cgi?projectid=[[PROJECTID_VAL]]" class="fieldlabel"><span class="fieldlabel">[[COMPONENTLABEL]]</span></a>:</B></FONT>
+		</TD> 
+		<TD VALIGN="MIDDLE"> 
+			<FONT SIZE="2"> 
+			[[COMPONENTID_DISP]]
+			</FONT>
+		</TD>
+		<TD ALIGN=RIGHT>
+			<FONT SIZE="2"><B>[[REQTARGET_MILESTONE]]<A HREF="./fielddescriptions.html#TargetMilestone" target=newwin class="fieldlabel"><span class="fieldlabel">[[MILESTONELABEL]]</span>:</a></B> 
+        	</FONT>
+        </td>
+      	<TD >
+      		<FONT SIZE="2"> 
+        	[[TARGET_MILESTONE_DISP]]
+			</FONT>
+        </TD>
+	</TR>
+       <TR > 
+      <TD ALIGN=RIGHT> 
+        <FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033"></FONT> 
+          [[REQASSIGNED_TO]]<A HREF="./fielddescriptions.html#AssignedTo" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[ASSIGNEDLABEL]]</span></a></b></font></TD>
+	<TD>
+        [[ASSIGNED_TO_DISP]]
+	</TD>      
+	<TD ALIGN=right><FONT SIZE="2"><B>[[REQREPORTER]]<span class="fieldlabel">[[REPORTERLABEL]]</span>:</B></FONT></TD>
+	<INPUT TYPE=hidden NAME=reporter VALUE="[[REPORTERID]]">
+      <TD><FONT SIZE="2">[[REPORTER_DISP]]</FONT></TD>
+<TD>&nbsp;</TD>
+<TD rowspan=9 ALIGN=left VALIGN=top>
+<br>
+	<FONT SIZE="2">
+		<B>
+			[[REQLONG_DESC]]<A HREF="./fielddescriptions.html#Description" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[LONG_DESCLABEL]]</span>:</a></B>
+	</FONT>
+	<FONT SIZE=-1>
+	<p class=comments style="height: 400px; width: 300px; overflow: auto;">
+		[[LONG_DESC_DISP]]
+	</p>
+	</font>
+</TD>
+
+	</TR>
+   	<TR>
+		<TD align=right>
+		<FONT SIZE="2">
+		<b>[[REQSTATUS]]<A HREF="./fielddescriptions.html#Status" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[STATUSLABEL]]</span>:</a></b>
+		</font></TD>
+		<TD>
+		[[STATUS_DISP]]
+		</TD>
+		<TD VALIGN="MIDDLE" align=right>
+			<FONT SIZE="2">
+				<b>
+					[[REQRESOLUTION]]<A HREF="./fielddescriptions.html#Resolution" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[RESLABEL]]</span>:</a>
+				</b>
+		</td>
+		<td>
+			[[RESOLUTION_DISP]] 
+		</td>
+    </TR>
+ <TR>
+      <TD ALIGN=right><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033"></FONT> 
+        [[REQSEVERITY]]<A HREF="./fielddescriptions.html#Severity" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[SEVLABEL]]</span>:</a></B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        [[SEVERITY_DISP]]
+        </FONT></TD>
+
+      <TD ALIGN=RIGHT><FONT SIZE="2"><B>[[REQPRIORITY]]<A HREF="./fielddescriptions.html#Priority" target=newwin class="fieldlabel"><span class="fieldlabel">[[PRILABEL]]</span>:</a></B> </font></td>
+	<td>
+	[[PRIORITY_DISP]]
+	</td>
+	</tr>
+	<tr height=70>
+	<TD VALIGN=TOP align=right>
+	</TD>
+	</TR>
+	<TR>
+   <TD colspan="5">
+<div class="tabs">
+	<span onclick="toggleTab(1)" id="tab1" class="tab">Details</span> 
+	<span onclick="toggleTab(2); loadIframe('attachmentview','../attach.cgi?mode=view&id=[[RECORD_ID_DISP]]&queryid=[[QUERYID]]'); toggleTab(2)" id="tab2" class="tab">Attachments</span> 
+	<span onclick="toggleTab(3)" id="tab3" class="tab">Dependencies</span>
+	<span onclick="toggleTab(4); loadIframe('activityview','../activity.cgi?id=[[RECORD_ID_DISP]]&queryid=[[QUERYID]]&type=bug');toggleTab(4)" id="tab4" class="tab">Activity Log</span></div>
+<div width=500 id="tabcontent1" class="tabBody">
+<table height=200 width=500>
+
+    <TR> 
+      <TD colspan=4 ><FONT SIZE="2"><B>[[REQSTATUS_WHITEBOARD]]<A HREF="./fielddescriptions.html#Whiteboard" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[WHITEBOARDLABEL]]</span>:</a></B> 
+        </FONT> 
+		 <FONT SIZE="2"> 
+        [[STATUS_WHITEBOARD_DISP]]
+        </FONT></TD>
+    </TR>
+<TR VALIGN="MIDDLE">
+       <TD colspan=4 ><FONT SIZE="2"><B> [[REQKEYWORDS]]<A HREF="./keyword_descriptions.html" target=newwin class="fieldlabel"><span class="fieldlabel">[[KEYWORDSLABEL]]</span></a>:</B></FONT>
+       <FONT SIZE="1"> 
+		[[KEYWORDS_DISP]]
+         </FONT></TD>
+     </TR>
+
+<tr>
+<td>
+<b><FONT SIZE="2">[[REQTECH_CONTACT]]<A HREF="./fielddescriptions.html#TechContact" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[TECHLABEL]]</span>:</a></font></b>
+  &nbsp;&nbsp;
+  [[TECH_CONTACT_DISP]]
+</td>
+<td rowspan=3 valign=top>
+	<b><font size=2>[[REQCC]]<A HREF="./fielddescriptions.html#CC" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[CCLABEL]]</span>:</a></font></b>
+      <FONT SIZE="2"> 
+	[[CC_DISP]]
+</font>
+
+</td>
+</tr>
+<tr>
+<td>
+	<b><FONT SIZE="2">[[REQQA_CONTACT]]<A HREF="./fielddescriptions.html#SQEContact" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[QALABEL]]</span>:</a></font></b>
+	&nbsp;&nbsp;
+	[[QA_CONTACT_DISP]]
+	</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+    <TR> 
+      <TD><FONT SIZE="2"><B>[[REQSTART_DATE]]<A HREF="./fielddescriptions.html#Complete" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[START_DATELABEL]]</span>:</a></B> 
+        </FONT> 
+	 <FONT SIZE="2"> 
+        [[START_DATE_DISP]]
+        </FONT></TD>
+      <TD><FONT SIZE="2"><B>[[REQTARGET_DATE]]<A HREF="./fielddescriptions.html#Complete" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[TARGET_DATELABEL]]</span>:</a></B> 
+        </FONT> 
+	 <FONT SIZE="2"> 
+        [[TARGET_DATE_DISP]]
+        </FONT></TD>
+    </TR>
+	<tr>
+	<td colspan=2>
+	<font size="2"><b>[[REQUNITS_REQ]]<a href="./fielddescriptions.html#Units" target="descwin" class="fieldlabel"><span class="fieldlabel">[[UNITLABEL]]</span>:</a></b></font>
+
+	[[UNITS_REQ_DISP]]
+	</td>
+	</tr>
+
+<TR>
+<TD colspan=4>
+<font size=2>Creation Date: [[CREATION_TS_DISP]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Last Modified Date: [[DELTA_TS_DISP]]</font>
+</td>
+</tr>
+
+
+</table>
+</div>
+<div width=500  id="tabcontent2" class="tabBody">
+<table width=500 height=200>
+		<TR>
+			<TD VALIGN=TOP align=center>
+			<TABLE border=1>
+				<FONT SIZE="1"><tr>
+				<th><FONT SIZE="1">Attach_ID</font></th>
+				<th><FONT SIZE="1">Date Added</font></th>
+				<th><FONT SIZE="1">Description</font></th>
+				<th><FONT SIZE="1">Filename</font></th>
+				<th><FONT SIZE="1">Submitter</font></th>
+				<th></font><FONT SIZE="1">MimeType</font></th></tr>
+				</font>
+				[[BEGIN1]]
+					<TR>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[attach_id]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[creation_ts]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[description]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[filename]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[submitter_id]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1">[[mimetype]]</font></td>
+						<td bgcolor=#FFFFFF><FONT SIZE="1"><a href="[[PISSROOT]]/attach.cgi?mode=download&id=[[RECORDID]]&attid=[[attach_id]]&queryid=[[QUERYID]]">Download</A></font></td>
+					</TR>
+				[[END1]]
+				</TABLE>
+			</td>
+		</tr>
+</table>
+</div>
+
+<div  width=500 id="tabcontent3" class="tabBody">
+<table height=200 width=500>
+		<TR>
+			<TD VALIGN=TOP align=center>
+					<font size=-1>
+						<b>
+							[[RTYPE]][[RECORD_ID_DISP]] depends on:</b>
+
+					</font>
+				</td>
+				<td valign=top align=center>
+					<font size=-1>
+						<b>
+							[[RTYPE]][[RECORD_ID_DISP]] blocks:</b>
+					</font>
+				</td>
+			</tr>
+			<tr>
+				<td align=center>
+					<font size="-1">
+						[[BEGIN55]] 
+						<nobr>
+							<A HREF="./enterBugForm.cgi?type=view&id=[[CHILDID]]">
+								[[CHILDIDSTRIKE]][[CHRTYPE]][[CHILDID]]</A></STRIKE>-[[CHILDIDSTATUS]] 
+							, 
+						</nobr>
+						[[END55]] 
+					</font>
+					<br>
+					<br>
+				</td>
+				<td align=center>
+					<FONT SIZE=-1>
+						[[BEGIN56]] 
+						<nobr>
+							<A HREF="./enterBugForm.cgi?type=view&id=[[PARENTID]]">
+								[[PARENTIDSTRIKE]][[PARTYPE]][[PARENTID]]</A></STRIKE>-[[PARENTIDSTATUS]] 
+							, 
+						</nobr>
+						[[END56]] 
+					</font>
+					<br>
+					<br>
+				</td>
+			</tr>
+			<tr>
+			<td colspan=2  align=center>
+			<A HREF="./enterBugForm.cgi?type=new&parent=[[RECORD_ID_VAL]]&projectid=[[PRODUCTID_VAL]]">
+							Create dependent
+						</A>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+			</td>
+			</tr>
+</table>
+</div>
+<div  width=500 id="tabcontent4" class="tabBody">
+<iframe name=activityview style="border:none;" src="" width=500 height=200>
+	<A href="../activity.cgi?id=[[RECORD_ID_VAL]]&queryid=[[QUERYID]]&type=bug" onclick="NewWindow(this.href,'name','700','400','yes');return false;">
+		View record Activity
+	</a>
+</iframe>
+</div>
+
+	</td>
+	</tr>
+	<tR>
+	<TD VALIGN=top COLSPAN="5"> 
+	<TABLE BORDER="0" CELLSPACING="15" CELLPADDING="0" ALIGN="CENTER">
+	  <TR> 
+		<TD> 
+		</TD>
+	  </tR>
+    </table>
+    </td></TR>
+</form></TABLE>
+	<TABLE width=700>
+  </TABLE>
+  <script>var numberOfTabs = 4; initTabs();</script>
+
+<P>&nbsp;</P>
+</body>
+</html>

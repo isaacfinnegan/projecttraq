@@ -1,0 +1,176 @@
+<html>
+<head>
+   <title>BugTraq Enter Bug Page</title>
+</head>
+<BODY>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+[[HEADER]]
+<FORM NAME=newbug METHOD="post" ACTION="processNewBug.cgi">
+<INPUT TYPE=hidden NAME=projectid VALUE="[[PRODUCTID]]">
+<INPUT TYPE=hidden NAME=parent VALUE="[[PARENT]]">
+<INPUT TYPE=hidden NAME=debug VALUE="[[DEBUG]]">
+<INPUT TYPE=hidden NAME=rtype VALUE=[[RTYPE]]>
+  <TABLE WIDTH="700" BORDER="0" CELLSPACING="1" CELLPADDING="1">
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B>Reporter:</B></FONT></TD>
+	<INPUT TYPE=hidden NAME=reporter VALUE="[[REPORTER]]">
+      <TD><FONT SIZE="2">[[REPORTER]]</FONT></TD>
+      <TD> 
+        <DIV ALIGN="RIGHT"><FONT SIZE="2"><B>Product:</B></FONT></DIV>
+      </TD>
+      <TD COLSPAN="2"> <FONT SIZE="2">[[PRODUCT]]</FONT></TD>
+    </TR>
+    <TR > 
+      <TD ALIGN=RIGHT> 
+          <FONT SIZE="2"><A HREF="./fielddescriptions.html#AssignedTo" target=descwin><b>Assigned To:</a></b>
+	</TD><TD>
+	<SELECT NAME="assigned_to">
+	[[BEGIN1]]
+		<OPTION VALUE=[[EMPLOYEEID]]>[[EMPLOYEENAME]]
+	[[END1]]
+	</SELECT>
+	</TD>
+      <TD COLSPAN="1" ROWSPAN="3" VALIGN="TOP" ALIGN=RIGHT> <FONT SIZE="2"> 
+	<FONT SIZE="2"><b><A HREF="./fielddescriptions.html#CC" target=descwin>CC:</a></b>
+	</TD>
+      <TD COLSPAN="1" ROWSPAN="3" VALIGN="TOP"> <FONT SIZE="2"> 
+      <select size=6 name="cc" multiple>
+        [[BEGINXXX]]
+        	<OPTION SELECTED value=[[CCVAL]]>[[CCNAME]]
+        [[ENDXXX]]
+	[[BEGIN11]]
+		<OPTION VALUE=[[CCPOSSID]]>[[CCPOSSNAME]]
+	[[END11]]
+</select></TD>
+      <TD VALIGN=top colspan=2>
+        <CENTER>
+          <P ALIGN="LEFT"><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+            </B></FONT><B><FONT SIZE="3" FACE="Arial, Helvetica, sans-serif">Required 
+            Fields</FONT></B></P>
+        </CENTER>
+      </TD>
+     </TR>
+     <TR><TD ALIGN=RIGHT><FONT SIZE="2"><b><A HREF="./fielddescriptions.html#TechContact" target=descwin>TechContact:</a>
+	</TD><TD><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2" color=red>auto-populated
+	</TD>
+      </TR>
+      <TR>
+        <TD ALIGN=RIGHT><FONT SIZE="2"><b><A HREF="./fielddescriptions.html#SQEContact" target=descwin>SQEContact:</a>
+	</TD><TD><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2" color=red>auto-populated
+	</TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#BuildID" target=descwin>BuildID:</a></B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME=version>
+	[[BEGIN2]]
+          <OPTION VALUE="[[BUILDIDV]]">[[BUILDIDL]] </OPTION>
+	[[END2]]
+        </SELECT>
+        </FONT></TD>
+      <TD valign="middle" ALIGN=right><B><FONT SIZE="2"><A HREF="./fielddescriptions.html#Platform" target=descwin>Platform</B>:</a></TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME="platform">
+	[[BEGIN3]]
+          <OPTION VALUE="[[PLATFORMV]]">[[PLATFORML]]
+	[[END3]]
+        </SELECT>
+        </FONT></TD>
+      <TD ALIGN=right><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT><A HREF="./fielddescriptions.html#OS" target=descwin>OS:</a></B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME="bug_op_sys">
+	[[BEGIN4]]
+          <OPTION VALUE="[[OPSYSV]]">[[OPSYSL]]
+	[[END4]]
+        </SELECT>
+        </FONT></TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD valign=middle> 
+        <DIV ALIGN="RIGHT"><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT><A HREF="./fielddescriptions.html#Reproducibility" target=descwin>Reproducibility:</a></B></FONT></DIV>
+      </TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME="reproducibility">
+	[[BEGIN5]]
+          <OPTION VALUE="[[REPROV]]">[[REPROL]]</OPTION>
+	[[END5]]
+        </SELECT>
+        </FONT></TD>
+      <TD ALIGN=right><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT><A HREF="./fielddescriptions.html#Severity" target=descwin>Severity:</a></B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME=severity>
+	[[BEGIN7]]
+          <OPTION VALUE="[[SEVERITYV]]">[[SEVERITYL]] </OPTION>
+	[[END7]]
+        </SELECT>
+        </FONT></TD>
+      <TD ALIGN=right VALIGN="MIDDLE"><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT><A HREF="./viewcomponents.cgi?projectid=[[PRODUCTID]]">Component:</a></B></FONT></TD>
+      <TD VALIGN="MIDDLE"> <FONT SIZE="2"> 
+        <SELECT NAME=componentid>
+	[[BEGIN8]]
+          <OPTION VALUE="[[COMPONENTV]]" >[[COMPONENTL]] </OPTION>
+	[[END8]]
+        </SELECT>
+        </FONT></TD>
+      <TD><FONT SIZE="2"></FONT></TD>
+      <TD ALIGN=right VALIGN="MIDDLE"><FONT SIZE="2"></FONT></TD>
+      <TD VALIGN="MIDDLE"><FONT SIZE="2"></FONT></TD>
+      <TD><FONT SIZE="2"></FONT></TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B> <FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+         <A HREF="./fielddescriptions.html#Summary" target=descwin>Summary:</a></B></FONT></TD>
+      <TD COLSPAN="5"> <FONT SIZE="2"> 
+        <INPUT NAME=short_desc maxlength=60 SIZE=45 VALUE="[[SHORT_DESC]]">
+        </FONT></TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B> <A HREF="./keyword_descriptions.html" TARGET=newwin>Keywords</a>:</B></FONT></TD>
+      <TD COLSPAN="5"> <FONT SIZE="2"> 
+<input type=text size=45 name=keywords value="[[KEYWORDS]]">
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD ALIGN=RIGHT><FONT SIZE="2"><B><A HREF="./fielddescriptions.html#Whiteboard" target=descwin>Whiteboard:</a></B> 
+        </FONT> 
+      <TD COLSPAN=5> <FONT SIZE="2"> 
+        <INPUT NAME=whiteboard SIZE=45 value="[[WHITEBOARD]]">
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD ALIGN=right VALIGN=top><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#Description" target=descwin>Description:</a></B></FONT></TD>
+      <!--  </tr> <tr> --> 
+      <TD COLSPAN=5> <FONT SIZE="3"> 
+        <TEXTAREA WRAP=VIRTUAL NAME=description ROWS=15 COLS=70>[[LONG_DESC]]</TEXTAREA>
+        <BR>
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD VALIGN=top COLSPAN="6"> 
+        <TABLE BORDER="0" CELLSPACING="15" CELLPADDING="0" ALIGN="CENTER">
+          <TR> 
+            <TD> 
+              <INPUT TYPE="submit" NAME="Submit" VALUE="Submit">
+            </TD>
+            <TD>
+              <INPUT TYPE="submit" NAME="attach" VALUE="Submit with Attachment">
+            </TD>
+            <TD> 
+              <INPUT TYPE="reset" VALUE="Reset" NAME="reset">
+            </TD>
+          </TR>
+        </TABLE>
+        <CENTER>
+          <INPUT TYPE="submit" NAME=maketemplate VALUE="Save as Template">
+          <input type=text name=templatename size=10>
+        </CENTER>
+      </TD>
+    </TR>
+  </TABLE>
+  </FORM>
+<P>&nbsp;</P>
+[[FOOTER]]
+</body>
+</html>

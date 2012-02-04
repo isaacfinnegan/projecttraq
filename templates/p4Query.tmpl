@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>Perforce Projecttraq Query</title>
+</head>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<body>
+<h3>Perforce Projectraq Query</h3>
+<form action="/projecttraq/p4Query.cgi" method=get>
+Changelist Range:<input type=text name=range value="x,y">
+Depot Path:<input type=text name=path value="//depot/...">
+<input type=hidden name=mode value=submit>
+Debug: <input type=checkbox name=debug value=1>
+<input type=submit>
+</form>
+</body>
+</html>

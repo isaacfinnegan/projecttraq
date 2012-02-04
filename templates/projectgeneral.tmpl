@@ -1,0 +1,88 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<h3>Modifiying General Info</h3>
+<form action="editproject.cgi" method=post>
+<table>
+<tr>
+<td>
+[[PROJECTIDLABEL]] Name:
+<input type=text name=projectname value="[[PROJECTNAME]]">
+<br>
+[[PROJECTIDLABEL]] Description:<br>
+<textarea name=projectdesc rows=3 cols=30>[[PROJECTDESC]]</textarea>
+<br>
+Bugs:<input type=checkbox  name='rec_type' value='bug' [[bugcheck]]>  
+Tasks:<input type=checkbox name='rec_type' value='task' [[taskcheck]]>
+<br>
+Default [[tech_contact]]: <select name=defaulttech>
+<option value=[[techid]]>[[techname]]
+[[BEGIN1]]
+<option value=[[EMPLOYEEID]]>[[EMPLOYEENAME]]
+[[END1]]
+</SELECT><br>
+Default [[qa_contact]]: <select name=defaultqa>
+<option value=[[qaid]]>[[qaname]]
+[[BEGIN2]]
+<option value=[[EMPLOYEEID]]>[[EMPLOYEENAME]]
+[[END2]]
+</SELECT>
+<br>
+[[PROJECTIDLABEL]] Status: <input type=checkbox name='active' [[activecheck]] value='1'>Active
+</td>
+<td>
+	  Auto-CC:
+	  <div>
+<ol style="
+	font-size: 11px;
+	height: 9em;
+	width: 200x;
+	overflow: auto;
+	list-style-type:none;
+	padding: 3px;
+	margin:0;
+	border: 1px dotted grey;
+	background: white;
+	" id="cc">
+		[[PROJECTIDCC_OPTIONLIST]] 
+	</ol></div>
+
+	  </td>
+</tr>
+<tr>
+<td colspan=2>
+[[PROJECTIDLABEL]] URL: <input type=text size=60 name=url value="[[PROJECTURL]]">
+</td>
+</tr>
+<tr>
+<td colspan=2>
+URL for New Bugs (leave empty for default): <input type=text size=60 name=newbugurl value="[[PROJECTURL]]">
+</td>
+</tr>
+<tr>
+<td colspan=2>
+URL for New Tasks (leave empty for default): <input type=text size=60 name=newtaskurl value="[[PROJECTURL]]">
+</td>
+</tr>
+</table>
+<input type=hidden name=projectid value=[[PROJECTID]]>
+<input type=hidden name=mode value=processgeneral>
+<input type=submit value="Save Changes" onClick="this.value='Please wait...'">
+</form>

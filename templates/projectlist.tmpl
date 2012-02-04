@@ -1,0 +1,16 @@
+<b>[[ACTION]] [[PROJECTIDLABEL]]:</b><select name=projectid size=1 onChange="submitOnSelect()">
+[[BEGIN1]]
+<option value=[[projectid]] [[SELECTED]]>[[project]]</option>
+[[END1]]
+</SELECT><input type=submit value=Change><br>
+[[COMMENTOUT]]
+<font color=lightblue><b><a href="editproject.cgi?mode=getproject&editarea=general&projectid=[[CURRPROJECT]]">General</a></b></font>
+<br>
+<font color=lightblue><b><a href="editproject.cgi?mode=getproject&editarea=components&projectid=[[CURRPROJECT]]">[[COMPONENTLABEL]]</a></b></font>
+<br>
+<font color=lightblue><b><a href="editproject.cgi?mode=getproject&editarea=groups&projectid=[[CURRPROJECT]]">Groups</a></b></font>
+<br>
+<font color=lightblue><b><a href="milestone_edit.cgi?projectid=[[CURRPROJECT]]">[[MILESTONELABEL]]</a></b></font>
+<br>
+<font color=lightblue><b><a href="editproject.cgi?mode=getproject&editarea=menus&projectid=[[CURRPROJECT]]">Menus</a></b></font>
+[[COMMENTEND]]

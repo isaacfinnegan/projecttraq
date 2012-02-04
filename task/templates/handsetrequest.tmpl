@@ -1,0 +1,152 @@
+<html>
+<head>
+<title>Handset Request</title>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<script type="text/javascript" src="[[PISSROOT]]/calendar.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-en.js"></script>
+<script type="text/javascript" src="[[PISSROOT]]/calendar-setup.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+function getphonereq(form)
+{
+	var ii;
+	var data="Phone Requirements\n";
+	for(ii=0;ii<form.phone.length;ii++)
+	{
+		if(form.phone[ii].checked)
+		{
+			data+=form.phone[ii].value + "\n";
+		}
+	}
+	data+="\nModel: " + form.model.value+"\n\n";
+	form.long_desc.value=data + form.long_desc.value;
+	return 0;
+}
+
+</script>
+</head>
+<BODY onload="window.resizeTo(800,700);" >
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<br>
+<br>
+<FORM NAME=main METHOD="post" ACTION="processNewTask.cgi" onSubmit="return valid(this);">
+<INPUT TYPE=hidden NAME=projectid VALUE="[[PROJECTID_VAL]]">
+<INPUT TYPE=hidden NAME=reporter VALUE="[[REPORTER_VAL]]">
+<INPUT TYPE=hidden NAME=parent VALUE="[[PARENT]]">
+<INPUT TYPE=hidden NAME=popup VALUE="0">
+<INPUT TYPE=hidden NAME=debug VALUE="[[DEBUG]]">
+<INPUT TYPE=hidden NAME=rtype VALUE=[[RTYPE]]>
+<input type=hidden name=componentid value="[[COMPONENTID_VAL]]">
+
+  <input type=hidden name="assigned_to" value=[[ASSIGNED_TO_VAL]]>
+  [[KEYWORDS_VAL]]
+  <input type=hidden name=status_whiteboard value=[[STATUS_WHITEBOARD_VAL]]>
+  <input type=hidden name="short" value=1>
+  <input type="hidden" name=target_milestone value=[[TARGET_MILESTONE_VAL]]>
+  <input type=hidden name=units_req value="[[UNITS_REQ_VAL]]">
+  <TABLE WIDTH="700" class=form_table  BORDER="0" CELLSPACING="0" CELLPADDING="5">
+	<tr class=form_header>
+<td colspan=8>
+<h3>Handset Request Form</h3>
+</td>
+</tr>
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><font color=red>*</font>Summary:</TD>
+      <TD COLSPAN="1">  
+        <INPUT type=text NAME=short_desc maxlength=250 SIZE=45 VALUE="[[SHORT_DESC_DISP]]">
+        </TD>
+        <td valign=top colspan=3 rowspan=4>
+        Approval/CC:
+<br>
+   <div style="width: 200px">
+<ol style="
+        font-size: 11px;
+        height: 14em;
+        overflow: auto;
+        list-style-type:none;
+        padding: 3px;
+        margin:0;
+        border: 1px dotted grey;
+        background: white;
+        " id="cc">
+[[CC_OPTIONLIST]]
+</ol></div>
+</TD>
+
+    </TR>
+    <tr>
+    <td align=right>
+	Urgency:
+	<td>
+	        <SELECT NAME=severity>
+         [[SEVERITY_OPTIONLIST]]
+        </SELECT>
+	</td>
+    <TR> 
+      <TD ALIGN=RIGHT>
+      Borrow Date:  
+</TD>
+	<TD nowrap>
+        <INPUT ID="start_date" NAME=start_date SIZE=15 value="[[START_DATE_DISP]]">
+    <img style="cursor: pointer;" id="cal_start_date" src="../cal_icon.gif">
+    <script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "start_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_start_date"       // ID of the button
+			}
+		  );
+		</script>
+
+        
+      Return Date:  
+        <INPUT ID="target_date" NAME=target_date SIZE=15 value="[[TARGET_DATE_DISP]]">
+           <img style="cursor: pointer;" id="cal_target_date" src="../cal_icon.gif">
+    <script type="text/javascript">
+		  Calendar.setup(
+			{
+			  inputField  : "target_date",         // ID of the input field
+			  ifFormat    : "%Y-%m-%d",    // the date format
+			  button      : "cal_target_date"       // ID of the button
+			}
+		  );
+		</script>
+ 
+	</TD>
+    </TR>
+    <TR>
+	<TD align=right valign=top>
+		Phone Features:
+	</TD>
+ 	<TD colspan=4>
+		<ul>
+		<li><input type=checkbox name=phone value=ptt>PTT</li>
+		<li><input type=checkbox name=phone value=vnotes>VNotes</li>
+		<li><input type=checkbox name=phone value=sqa>SQA</li>
+		<li><input type=checkbox name=phone value=infostream>InfoStream</li>
+		<li><input type=checkbox name=phone value=contactsync>Contact Sync</li>
+		</ul>	
+		(or) Model: <input type=text name=model>
+	</TD>
+
+    </TR>
+    <TR> 
+      <TD ALIGN=right VALIGN=top><font color=red>*</font>Business Need<br>/Details</TD>
+      <!--  </tr> <tr> -->
+      <TD COLSPAN=5> <FONT SIZE="3"> 
+        <TEXTAREA WRAP=VIRTUAL NAME=long_desc ROWS=5 COLS=70>[[LONG_DESC_DISP]]</TEXTAREA>
+        <BR>
+        </TD>
+    </TR>
+    <TR align="center"> 
+      <TD COLSPAN="6" VALIGN=top> 
+        <input type="submit" name="Submit" value="Submit" onclick="return getphonereq(this.form);">
+        <CENTER>
+        </CENTER></TD>
+    </TR>
+  </TABLE>
+  </FORM>
+<P>&nbsp;</P>
+[[FOOTER]]
+</body>
+</html>

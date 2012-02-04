@@ -1,0 +1,89 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<div style="border: 1px solid #bbb;">
+<TABLE CELLPADDING="1" CELLSPACING="0" WIDTH="100%">
+  <TR bgcolor=#DDDDDD>
+      <FORM METHOD=GET ACTION="[[BASE]]/redir.cgi">
+    <TD>
+        <CENTER>
+          <FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">&nbsp;&nbsp;
+           &nbsp;&nbsp;</FONT><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">My Assigned
+          Tasks (<A HREF="[[DOQUERY]]?qname=user&type=task">Open</a> | <A HREF="[[DOQUERY]]?qname=user&status=resolved&type=task">Resolved</a> | <A HREF="[[DOQUERY]]?qname=user&status=closed&type=task">Closed</a> | <A HREF="[[DOQUERY]]?qname=user&status=all&type=task">All</a>)</FONT>
+         &nbsp;| &nbsp;&nbsp;</FONT><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">My Reported
+          Tasks (<A HREF="[[DOQUERY]]?qname=userreported&type=task">Open</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=resolved&type=task">Resolved</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=closed&type=task">Closed</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=all&type=task">All</a>)</FONT> 
+      <FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">&nbsp;&nbsp;
+           &nbsp;&nbsp;</FONT>
+           <br>
+           <FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">My Assigned
+          Bugs (<A HREF="[[DOQUERY]]?qname=user&type=bug">Open</a> | <A HREF="[[DOQUERY]]?qname=user&status=resolved&type=bug">Resolved</a> | <A HREF="[[DOQUERY]]?qname=user&status=closed&type=bug">Closed</a> | <A HREF="[[DOQUERY]]?qname=user&status=all&type=bug">All</a>)</FONT>
+           |&nbsp;&nbsp;</FONT><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">My Reported
+          Bugs (<A HREF="[[DOQUERY]]?qname=userreported&type=bug">Open</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=resolved&type=bug">Resolved</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=closed&type=bug">Closed</a> | <A HREF="[[DOQUERY]]?qname=userreported&status=all&type=bug">All</a>)</FONT>
+ <FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+ 	<br>
+          <br><table>
+          	<tr>
+          		<td><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+          			<A HREF="[[BASE]]/bug/buglist.cgi?mode=new">New Bug</a></font></td>
+          		<td><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2"><A HREF="[[BASE]]/display_query.cgi?cat=bug">Query Bugs</a></font></td>
+
+          <td rowspan=2><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+			<INPUT TYPE=SUBMIT VALUE="Find" NAME="SUBMIT">
+			<INPUT NAME=id SIZE=6>
+			<INPUT TYPE=hidden NAME=debug value=>
+			<INPUT TYPE=hidden name=type value=look>
+	  		</FONT></td>
+	  		<td rowspan=2><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+			|&nbsp;&nbsp; <a href="[[BASE]]/reports/choosereport.cgi">Reports</a> 
+		</FONT></td>
+		<td rowspan=2><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+			 | &nbsp;&nbsp;<A href="[[BASE]]/prefs.cgi">Preferences</a>
+		</FONT></td>
+		<td rowspan=2><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+          	|&nbsp;&nbsp;<A HREF="[[BASE]]/display_saved.cgi">My Queries</a> &nbsp;&nbsp; | &nbsp;&nbsp;<a href="[[BASE]]/templates.cgi">My Templates</a> 
+ 		 </FONT></td></tr> 
+          	<tr><td><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2"><A HREF="[[BASE]]/task/index.cgi">New Task</a></font></td>
+          	<td><FONT FACE="Arial, Helvetica, sans-serif" SIZE="2"><A HREF="[[BASE]]/display_query.cgi?cat=task">Query Tasks</a></font></td></tr>
+</table>
+</FORM>
+<FORM ACTION="[[DOQUERY]]" method=get>
+<CENTER>
+       MyQueries:
+        <input type=hidden name=type value=[[type]]>
+
+        <select name=qname>
+        <option>
+        [[BEGINX]]
+                <option value=traq_[[name]]>[[name]]
+        [[ENDX]]
+	</select>
+        <input type=submit value=RunIt>
+
+          <FONT FACE="Arial, Helvetica, sans-serif" SIZE="2">
+          &nbsp;&nbsp;&nbsp;&nbsp; <a href="[[BASE]]/task">TaskTraq</a> &nbsp;&nbsp;<a href="[[BASE]]/bug/">BugTraq</a>&nbsp;&nbsp <a href="[[BASE]]/">ProjectTraq</a> 
+          &nbsp;&nbsp;|&nbsp;&nbsp;<a href="[[BASE]]/logout.cgi">Logout</a>
+          </FONT>
+        </CENTER>
+    </TD>
+        </FORM>
+  </TR>
+</TABLE>
+</td></tr></table>
+</div>

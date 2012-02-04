@@ -1,0 +1,119 @@
+<html>
+<head>
+   <title>TaskTraq Enter Task Page</title>
+<SCRIPT LANGUAGE="JavaScript">
+var proj = new Array();
+var versions = new Array();
+[[JS]]
+function populateComps(form) {
+        var selectedps = new Array();
+        var xx = 0;
+        for(var ii=0; ii < form.projectid.length; ii++) {
+                if(form.projectid.options[ii].selected) {
+                        selectedps[xx] = form.projectid.options[ii].value;
+                        xx++;
+                }
+        }
+        for(var xxx=0; xxx < 30; xxx++) {
+                form.componentid.options[xxx] = null;
+                form.buildid.options[xxx] = null;
+        }
+        var index1=0;
+        var index2=0;
+        for(var iii=0; iii < selectedps.length; iii++) {
+                projectid = selectedps[iii];
+                for(var i = 0; i < proj[projectid].length; i++) {
+                        form.componentid.options[index1] = new Option(proj[projectid][i][0], proj[projectid][i][1]);
+                        index1++;
+                }
+                for(var i=0; i < versions[projectid].length; i++) {
+                        form.buildid.options[index2] = new Option(versions[projectid][i][0], versions[projectid][i][1]);
+                        index2++;
+                }
+        }
+
+}
+function validateRequiredFields(form) {
+ [[BEGINREQ]]
+ if( form.[[REQUIREDFIELD]].value == "" && form.templatename.value == "") 
+ {
+	if(form.templatename.value != "" ) {
+		return true;
+	}
+	alert("[[REQUIREDFIELDLABEL]] cannot be blank");
+	form.[[REQUIREDFIELD]].focus();
+	return false;
+ }
+ [[ENDREQ]]
+ return true;
+}
+function validateTemplate(form) {
+	if( form.templatename.value == "" ) {
+		alert("Please enter a name for the template.");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</SCRIPT>
+
+</head>
+<BODY >
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<p/>
+<p/>
+<p/>
+<FORM NAME=newtask METHOD="post" ACTION="processNewTask.cgi" >
+<INPUT TYPE=hidden NAME=parent VALUE="[[PARENT]]">
+<INPUT TYPE=hidden NAME=debug VALUE="[[DEBUG]]">
+<INPUT TYPE=hidden NAME=rtype VALUE=[[RTYPE]]>
+<input type=hidden name=projectid value="[[PROJECTID_VAL]]">
+<input type=hidden name="assigned_to" value=[[ASSIGNED_TO_VAL]]>
+<input type=hidden name="reporter" value=[[REPORTER_VAL]]>
+<input type=hidden name=popup value=0>
+[[CC_VAL]]
+<input type=hidden name=severity value=[[SEVERITY_VAL]]>
+<input type="hidden" name=target_milestone value=[[TARGET_MILESTONE_VAL]]>
+[[KEYWORDS_VAL]]
+<input type=hidden name=status_whiteboard value="Referring URL: [[REFERER]]">
+<input type=hidden name="short" value=1>
+  <TABLE WIDTH="600" BORDER="0" CELLSPACING="1" CELLPADDING="1" class="form_table">
+	<TR>
+	<TD align=right>
+	[[COMPONENTIDLABEL]]:
+	</TD>
+	<TD>
+	<select name=componentid>
+	[[COMPONENTID_OPTIONLIST]]
+	</Select>
+	&nbsp;&nbsp; If this is not a task (for bugs) <a href="http://internal.coremobility.com/projecttraq/bug/enterBugForm.cgi?id=&type=template&templatefile=ptfeedback.tmpl&category=g3&templatename=PT_feedback">Click Here</a>
+	</TD>
+	</TR>	
+<TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B> <FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#Summary" target=descwin>[[SHORTDESCLABEL]]:</a></B></FONT></TD>
+      <TD COLSPAN="5"> <FONT SIZE="2"> 
+        <INPUT type=text NAME=short_desc maxlength=250 SIZE=45 VALUE="[[SHORT_DESC_DISP]]">
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD ALIGN=right VALIGN=top><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#Description" target=descwin>[[LONG_DESCLABEL]]:</a></B></FONT></TD>
+      <!--  </tr> <tr> -->
+      <TD COLSPAN=5> <FONT SIZE="3"> 
+        <TEXTAREA WRAP=VIRTUAL NAME=long_desc ROWS=10 COLS=50>Referring URL: [[REFERER]]
+
+[[LONG_DESC_DISP]]</TEXTAREA>
+        <BR>
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD VALIGN=top COLSPAN="2"> <CENTER>
+          <input type="submit" name="Submit" value="Submit">
+        </CENTER></TD>
+    </TR>
+  </TABLE>
+  </FORM>
+</body>
+</html>

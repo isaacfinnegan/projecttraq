@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Support</title>
+</head>
+<body>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<p/>
+<b><font size="+2" color="#000000">&nbsp;&nbsp;Core Mobility Support</font></b>
+</p><TABLE BORDER=0 CELLSPACING=10 CELLPADDING=0 WIDTH="70%" >
+<tr>
+					<FORM METHOD="get" ACTION="../redir.cgi">
+<td colspan=2>
+						<FONT SIZE=+0>Show Task/Ticket Number&nbsp;</FONT>
+						<INPUT TYPE=hidden NAME=type VALUE=look>
+						<INPUT TYPE="text" NAME="id" SIZE="5">
+						<INPUT TYPE="submit" NAME="Submit" VALUE="Go">
+</center>
+</td>
+					</FORM>
+</tr>
+			<TR VALIGN=TOP>
+				<TD colspan=2 WIDTH="50%">
+					<HR>
+<fieldset>
+<legend>
+					<B><FONT SIZE=-1>Click on the service you wish to open a Support Request for:</FONT></B> &nbsp;
+</legend>
+					<TABLE CELLSPACING=5 >
+						
+[[BEGIN2]]
+			<tr><td><a href="../task/enterTaskForm.cgi?rtype=task&projectid=[[svc_projectid]]"><b>[[svc_project]]</b></a></td><td>[[svc_description]]</td></tr>
+[[END2]]
+
+					</TABLE>
+</fieldset>
+					<UL>
+					</UL>
+					<P>
+						&nbsp;
+					</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<FONT SIZE=-1>If you do not see your [[PROJECTIDLABEL]] listed above, please contact <A HREF="mailto:[[webmaster]]">[[webmaster]]</A>.</FONT>
+		<HR>
+</table>
+</body>
+</html>

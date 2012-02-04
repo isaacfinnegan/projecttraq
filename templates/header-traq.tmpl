@@ -1,0 +1,221 @@
+Ext.BLANK_IMAGE_URL='[[BASE]]/images/default/s.gif';
+ // Menus can be prebuilt and passed by reference
+    var dateMenu = new Ext.menu.DateMenu({
+        handler : function(dp, date){
+            Ext.example.msg('Date Selected', 'You chose {0}.', date.format('M j, Y'));
+        }
+    });
+
+    // Menus can be prebuilt and passed by reference
+    var colorMenu = new Ext.menu.ColorMenu({
+        handler : function(cm, color){
+            Ext.example.msg('Color Selected', 'You chose {0}.', color);
+        }
+    });
+
+    var ptmenu = new Ext.menu.Menu({
+        id: 'ptMenu',
+        items: [
+			{
+                text: 'ProjectTraq',
+                handler: function() { window.location.assign('[[BASE]]/') } 
+            },
+			{
+                text: 'BugTraq',
+                handler: function() { window.location.assign('[[BASE]]/bug/') } 
+            },
+            {
+                text: 'TaskTraq',
+                handler: function() { window.location.assign('[[BASE]]/task/') } 
+            },
+            {
+                icon: '[[BASE]]/images/prefs.gif',
+                text: 'Preferences',
+                handler: function() { window.location.assign("[[BASE]]/prefs.cgi") } 
+            }
+
+        ]
+    });
+    var newmenu = new Ext.menu.Menu({
+        id: 'newMenu',
+        items: [
+			{
+                text: 'Bug',
+                icon: '[[BASE]]/images/bug.gif',
+                handler: function() { window.location.assign("[[BUGTRAQ]]/buglist.cgi?mode=new") } 
+            },{
+                text: 'Task',
+                icon: '[[BASE]]/images/task.gif',
+                handler: function() { window.location.assign("[[TASKTRAQ]]/")} 
+            },
+            {
+            icon: '[[BASE]]/images/folder.gif',
+        	text: 'My Templates',
+            handler: function() { window.location.assign("[[BASE]]/templates.cgi") }, 
+	       	menu: {
+        			items: [
+						[[BEGINZ]]
+						{
+							icon: '[[BASE]]/images/[[TYPE]].gif',
+							text: '[[TEMPNAME]]',
+							handler: function() { window.location.assign("[[BASE]]/redir.cgi?method=template&category=[[USER]]&templatename=[[TEMPNAME]]&type=[[TYPE]]") } 
+						},
+						[[ENDZ]]
+						'-',
+						{
+							text: 'Template Manager',
+			                handler: function() { window.location.assign("[[BASE]]/templates.cgi") } 
+						}
+        			]
+        		}
+	        }
+
+        ]
+    });
+    var findmenu = new Ext.menu.Menu({
+        id: 'findMenu',
+        items: [
+            {
+	            icon: '[[BASE]]/images/note.gif',
+                text: 'My Open Records',
+                handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_tasks=1&return_bugs=1&status_class=open&dhtml=1")} 
+            },
+            {
+            	text: 'My Bugs',
+            	menu: {
+            		items: [
+						{
+							text: 'Open',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_bugs=1&status_class=open&dhtml=1")} 
+						},
+						{
+							text: 'Resolved',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_bugs=1&status_class=resolved&dhtml=1")} 
+						},
+						{
+							text: 'Closed',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_bugs=1&status_class=closed&dhtml=1")} 
+						},
+						{
+							text: 'All',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_bugs=1&dhtml=1")} 
+						}
+            		]
+            	}
+            },
+            {
+            	text: 'My Tasks',
+            	menu: {
+            		items: [
+						{
+							text: 'Open',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_tasks=1&status_class=open&dhtml=1")} 
+						},
+						{
+							text: 'Closed',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_tasks=1&status_class=closed&dhtml=1")} 
+						},
+						{
+							text: 'All',
+							handler: function() { window.location.assign("[[DOQUERY]]?assigned_to=[[USERID]]&return_tasks=1&dhtml=1")} 
+						}
+            		
+            		]
+            	}
+            },
+            {
+            icon: '[[BASE]]/images/folder.gif',
+        	text: 'My Saved Queries',
+        	menu: {
+        			items: [
+						[[BEGINX]]
+						{
+							text: '[[name]]',
+							handler: function() { window.location.assign("[[QUERYURL]]") } 
+						},
+						[[ENDX]]
+						'-',
+						{
+							text: 'Saved Query Manager',
+							handler: function() { window.location.assign("[[BASE]]/display_saved.cgi")} 
+						}
+				
+        			]
+        		}
+	        },
+            {
+            	text: 'Quick Search',
+            	menu: {
+            		id: 'quicksearch',
+            		items: [          		
+            			'<b style="margin-left:30px;" class="menu-title">QuickSearch</b>',
+            			'<FORM METHOD=GET ACTION="[[BASE]]/do_query.cgi" name=main> <input type=hidden name=task_id_type value=include> <input type=hidden name=dhtml value=1><input type=hidden name=short_desc_type value=allwords>  <input type=hidden name=long_desc_type value=allwords> <table width=200 cellspacing=5 cellpadding=0 style="margin-left:30px;">  <tr>  <td>  <INPUT NAME=queryall SIZE=12 style="font-size:10px; width:140px;"></td>  <tr>  <td >  Get all <input type=checkbox name=return_bugs checked value=1>Bugs  <input type=checkbox name=return_tasks checked value=1>Tasks</td>  </tr> <tr>  <td>  Record#(s):  <INPUT NAME=record_id SIZE=12 style="font-size:10px;">  </td>  </tr>  <tr>  <td >  <INPUT TYPE=SUBMIT VALUE="Find" NAME="SUBMIT" class="headerbutton" style="font-size:10px;">  <span style="font-size:10px;" >  <input type=checkbox name=status_class value=open> Exclude Closed Records </span></td>  </tr>  </table>  </FORM>'                 		
+            		]
+            	}
+            },
+			{
+                text: 'Bug Search',
+                handler: function() { window.location.assign("[[BASE]]/display_query.cgi?cat=bug&dhtml=1") } 
+            },
+            {
+                text: 'Task Search',
+                handler: function() { window.location.assign("[[BASE]]/display_query.cgi?cat=task&dhtml=1")} 
+            }
+
+        ]
+    });
+    var helpmenu = new Ext.menu.Menu({
+        id: 'helpMenu',
+        items: [
+            {
+                icon: '[[BASE]]/images/prefs.gif',
+                text: 'Preferences',
+                handler: function() { window.location.assign("[[BASE]]/prefs.cgi") } 
+            },
+			{
+                text: 'User Intro',
+                handler: function() { window.location.assign("[[BASE]]/docs/intro/Getting%20Started%20with%20ProjectTraq.htm") } 
+            },{
+                text: 'Feedback - Request',
+                icon: '[[BASE]]/images/task.gif',
+                handler: function() { window.location.assign("[[TASKTRAQ]]/enterTaskForm.cgi?id=&type=template&templatefile=ptfeedback.tmpl&category=g3&templatename=PT_feedbackrequest")} 
+            },
+            {
+                text: 'Feedback - Bug',
+                icon: '[[BASE]]/images/bug.gif',
+                handler: function() { window.location.assign("[[BUGTRAQ]]/enterBugForm.cgi?id=&type=template&templatefile=ptfeedback.tmpl&category=g3&templatename=PT_feedback")} 
+            }
+
+        ]
+    });
+    Ext.get('toolbar').remove();
+    var tb = new Ext.Toolbar();
+	tb.render('container');
+    tb.add(
+    	{
+            cls: 'bmenu', // icon and text class
+            text:'ProjectTraq',
+            menu: ptmenu  // assign menu by instance
+        }
+        ,
+        {
+            cls: 'bmenu', // icon and text class
+            text:'New',
+            menu: newmenu  // assign menu by instance
+        }
+        ,
+        {
+            cls: 'bmenu', // icon and text class
+            text:'Find',
+            menu: findmenu  // assign menu by instance
+        }
+      	,
+        {
+            cls: 'bmenu', // icon and text class
+            text:'?',
+            menu: helpmenu  // assign menu by instance
+        }      	
+        , '-');
+   tb.getEl().removeClass('x-toolbar');
+	tb.getEl().removeClass('x-small-editor');
+

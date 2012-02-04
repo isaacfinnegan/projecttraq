@@ -1,0 +1,66 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<HTML><HEAD><TITLE>Target Status Report</TITLE>
+</head>
+<body>
+<table width="100%"  border="1" cellspacing="3" cellpadding="3">
+  <tr>
+    <td rowspan="2">[[ydellabel]]</td>
+    <td colspan="4"><div align="center">Tasks Behind Schedule (days behind) </div></td>
+    <td colspan="2">Tasks at Risk (possible days behind) </td>
+    <td rowspan="2">Future Tasks</td>
+    <td rowspan="2">Completed Tasks</td>
+
+    <td width="10%" rowspan="2">Total Tasks </td>
+    <td width="10%" rowspan="2">Tasks with more than 7 &quot;Target Date changes&quot; </td>
+    <td width="10%" rowspan="2"> Tasks without &quot;Target Date&quot; </td>
+  </tr>
+  <tr>
+
+    <td>&gt;30</td>
+    <td>15 to 30 </td>
+    <td>8 to 15 </td>
+    <td>1 to 7 </td>
+    <td>&gt;7</td>
+    <td>1 to 7 </td>
+
+  </tr>
+[[BEGINYY]] 
+ <tr>
+    <td>[[ydel]]</td>
+    <td bgcolor="#FF3333">[[cnt_td_gt_30days_past]]</td>
+    <td bgcolor="#FF3333">[[cnt_td_15_30days_past]]</td>
+    <td bgcolor="#FF3333">[[cnt_td_8_14days_past]]</td>
+    <td bgcolor="#FF3333">[[cnt_td_1_7days_past]]</td>
+    <td bgcolor="#FFFF00">[[cnt_pos_gt_7day_behind]]</td>
+
+    <td bgcolor="#FFFF00">[[cnt_pos_1_7day_behind]]</td>
+    <td bgcolor="#66FF00">[[cnt_td_future]]</td>
+    <td bgcolor="#66FF00">[[cnt_completed_tasks]]</td>
+    <td>[[cnt_total_tasks]]</td>
+    <td>[[cnt_task_7date_changes]]</td>
+    <td>[[cnt_td_null]]</td>
+  </tr>
+ [[ENDYY]]
+</table>
+
+</body>
+</html>

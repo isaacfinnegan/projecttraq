@@ -1,0 +1,25 @@
+<head><title>Support</title></head>
+
+<LINK REL=stylesheet HREF="../traq.css" TYPE="text/css">
+<TABLE CELLPADDING="2">
+  <TR BGCOLOR="DDDDDD"> 
+    <TD COLSPAN="5"> 
+      <CENTER>
+        <FONT SIZE=+1><B><FONT COLOR="1A355F" FACE="Arial, Helvetica, sans-serif">Task Lists</FONT></B> 
+        </FONT> 
+      </CENTER>
+    </TD>
+  </TR>
+  [[BEGIN1]]
+	<tr><td><b>[[project]]</b></td>
+	<td><a href="../do_query.cgi?type=task&status=all&qname=project&project=[[projectid]]">(All)</a>
+			<td><a href="../do_query.cgi?type=task&status=open&qname=project&project=[[projectid]]">(Open)</b></a></td><td>
+			<td><a href="../do_query.cgi?type=task&status=closed&qname=project&project=[[projectid]]">(Closed)</b></a></td><td>
+			[[description]]</td>
+			</tr>
+[[END1]]
+</TABLE>
+<HR>
+<FONT SIZE="2">If you do not see your project listed above, please contact <A HREF="mailto:[[webmaster]]">[[webmaster]]</A>.</FONT> 
+</body>
+</html>

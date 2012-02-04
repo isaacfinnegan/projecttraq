@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>ProjectTraq vs. Bugzilla</title>
+<style type="text/css">
+<!--
+.style20 {font-family: Arial, Helvetica, sans-serif}
+.style21 {font-size: 24px; font-weight: bold;}
+.style22 {font-style: italic; font-size: 12px;}
+.style23 {font-size: 12px; font-style: italic; font-weight: bold;}
+-->
+</style>
+</head>
+
+<body>
+<p class="style20"><span class="style21">ProjectTraq vs. Bugzilla<br>
+  </span><span class="style22">Page maintained by </span><span class="style23"> <a href="mailto:projecttraq@good.com">projecttraq@good.com</a> - Last Updated 12/01/04 </span></p> 
+<hr>
+<span class="style20"><strong>Document Purpose <br>
+</strong>This document is for users familiar with Bugzilla feature functionality. It outlines the differences in UI/Usability for commonly used Bugzilla database features in the ProjectTraq database. This page provides the steps for this new functionality and/or the workarounds to be utilized until the feature is enhanced in ProjectTraq.<br>
+<br> 
+<strong>Contents</strong><br>
+<em>1.0 Record Views and Printing</em><br>
+&nbsp;&nbsp;&nbsp;1.1 Larger Description Field View<br>
+&nbsp;&nbsp;&nbsp;1.2 Long Format View/Print<br>
+&nbsp;&nbsp;&nbsp;1.3 Individual Record Print<br>
+<em>2.0 Duplicate Bugs  </em><br>
+</span>
+<p class="style20"><strong>1.0 Record Views and Printing</strong></p>
+<blockquote>
+  <p class="style20"><strong>1.1 Larger Description Field View </strong><em><br>
+    Current Functionality</em> - The ProjectTraq UI layout is a series of multiple fields. Thus, the description field is confined to a medium size field (not endless text as in Bugzilla) and is accessed in full via a scroll bar.<br>
+    <br>
+    <em>Current Workaround</em> - User can select the Description field as a column to view in a bug list view via the Query Columns prefs. Go to Preferences in navigation bar at top, and select the Query Columns tab. Move right &quot;Description&quot; from Fields List to Return Fields and Save Prefs. <br>
+    <br>
+    <em>Upcoming Enhancement </em>- The ProjectTraq development team is updating the Record View Preferences in the &quot;Preferences&quot; main tab to allow use to set default bug view to three types.</p>
+  <ul>
+    <li class="style20">Normal - Current layout with Description field size and scroll bar as designed. </li>
+    <li class="style20">Large - Current layout with a larger Description field size. Includes current field scroll bar functionality. </li>
+    <li class="style20">Unlimited - Description field will move to be displayed at bottom of bug record. This field will be as long as the entire text of the description field in one continuous view. User will use window scroll, not field scroll to browse the description field. This is similar to Bugzilla layout.<br>
+        <strong><br>
+        </strong><em>Enhancement Estimated Completion - December 2004</em> </li>
+  </ul>
+  <p class="style20"><strong>1.2 Long Format View/Print </strong><em><br>
+    Current Functionality</em> - The ProjectTraq database does not currently support the Long Format View/Print as designed in the Bugzilla database. <br>
+    <br>
+    <em>Current Workaround</em> - User can select the  fields desired for a &quot;long&quot; type of view as columns to view in a bug list via the Query Columns prefs. Go to Preferences in navigation bar at top, and select the Query Columns tab. Move right &quot;Description&quot; from Fields List to Return Fields and Save Prefs. A bug list view will now show all the data required, and user can print in Landscape to capture the key columns. NOTE: The landscape print will limit the print out to the left most columns, thus it is critical to ensure that the columns you must see in print are among the first 7 in your Return Field list. <br>
+    <br>
+    <em>Upcoming Enhancement </em>- The ProjectTraq development team will be adding the Long Format view and print functionality to the ProjectTraq DB features. </p>
+  <blockquote>
+    <p class="style20"><em>Enhancement Estimated Completion - December 2004</em> </p>
+  </blockquote>
+  <p class="style20"><strong>1.3 Individual Record Print </strong><em><br>
+Current Functionality</em> - The current functionality allows user to print a bug or task via the browser Print function. The print out will default to Portrait and will not contain the entire view of the record. Also, if the description field text contains more than the displayed description field size, the entire text will not print out. <br>
+<br>
+<em>Current Workaround<br>
+</em>(1) For small description fields, user can print in Landscape to print entire record layout.<br>
+(2) 
+For large description fields, user should print the record from a list view screen. For example, the user can select the fields desired for a &quot;long&quot; type of view as columns to view in a bug list via the Query Columns prefs. Go to Preferences in navigation bar at top, and select the Query Columns tab. Move right &quot;Description&quot; from Fields List to Return Fields and Save Prefs. A bug list view will now show all the data required, and user can print in Landscape to capture the key columns. NOTE: The landscape print will limit the print out to the left most columns, thus it is critical to ensure that the columns you must see in print are among the first 7 in your Return Field list. <br>
+<br>
+<em>Upcoming Enhancement </em>- The ProjectTraq development team will be enhancing the print function for individual records to display all fields and ensure entire description field is included in print out. </p>
+  <blockquote>
+    <p class="style20"><em>Enhancement Estimated Completion - December 2004</em> </p>
+  </blockquote>
+</blockquote>
+<p class="style20"><strong>2.0 Duplicate Bugs <br>
+  <br>
+  </strong><em>Current Functionality</em> - In Bugzilla, the user was able to mark a bug as Resolved/Duplicate and fill the duplicate bug number into a field on Submit. This field is not currently available on ProjectTraq</p>
+<p class="style20"><em>Current Workaround</em> - User needs to mention the duplicate bug number in the Additional Comments when saving the bug to Resolved/Duplicate. </p>
+<blockquote>
+  <p class="style20">&nbsp;  </p>
+  <ul>
+  </ul>
+  <p><span class="style20"><br>
+    <br>
+    <br>
+    <br>
+  </span>  </p>
+</blockquote>
+</body>
+</html>

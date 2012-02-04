@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Jan Leger">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>TaskTraq Field Descriptions</title>
+</head>
+<body>
+
+<center><b><font face="Times New Roman,Times"><font size=+2>TaskTraq Field
+Descriptions</font></font></b>
+<p><b><i><font face="Times New Roman,Times"><font color="#FF0000">This
+page defines the values used in each of the fields of TaskTraq task
+planning database.</font></font></i></b>
+<br><b><i><font face="Times New Roman,Times"><font color="#FF0000">For
+additional questions on this page and/or definitions, please contact <a href="mailto:"></a></font></font></i></b></center>
+
+<hr WIDTH="100%">
+<br><a NAME="AssignedTo"></a><b><font face="Times New Roman,Times"><font size=+1>Assigned
+To</font></font></b>
+<br><font face="Times New Roman,Times">This is the person in charge of
+completing the task.&nbsp; Every time this field changes, the status changes
+to NEW to make it easy to see which new tasks have appeared on a person's
+list.</font>
+<br>&nbsp;
+<p><a NAME="TechContact"></a><b><font face="Times New Roman,Times"><font size=+1>Tech
+Contact (</font><i>F</i></font><i>or Tasks against Projects Only)</i></b>
+<br><font face="Times New Roman,Times">This is the person who possesses
+the technical expertise in the component area identified on the task.</font>
+<br>&nbsp;
+<p><a NAME="SQE Contact"></a><b><font face="Times New Roman,Times"><font size=+1>SQE
+Contact (</font><i>F</i></font><i>or Tasks against Projects Only)</i></b>
+<br><font face="Times New Roman,Times">This is the person who has the responsibility
+to ensure that the task is verified once resolved.&nbsp; The SQE Contact
+may also be asked to confirm the task for the Assignee or Tech Contact.</font>
+<br>&nbsp;
+<p><a NAME="primary"></a><b><font face="Times New Roman,Times"><font size=+1>Primary
+Contact (</font><i>F</i></font><i>or Tasks against Services Only)</i></b>
+<br><font face="Times New Roman,Times">This is the person who possesses
+the technical expertise in the category area identified on the task.</font>
+<br>&nbsp;
+<p><a NAME="secondary"></a><b><font face="Times New Roman,Times"><font size=+1>Secondary
+Contact (</font><i>F</i></font><i>or Tasks against Services Only)</i></b>
+<br><font face="Times New Roman,Times">This is the person who has the responsibility
+to ensure that the task is verified once closed.&nbsp; The Secondary Contact
+may also be asked to assist with the task completion as needed.</font>
+<br>&nbsp;
+<p><a NAME="CC"></a><b><font face="Times New Roman,Times"><font size=+1>CC</font></font></b>
+<br><font face="Times New Roman,Times">This is a multiple selection field
+for person's who are not directly the Assigned To, Tech Contact, SQE Contact,
+Primary Contact and/or Secondary Contact, but should be aware of the task
+and changes reflected on the task record.</font>
+<br>&nbsp;
+<p><a NAME="Status"></a><b><font face="Times New Roman,Times"><font size=+1>Status</font></font></b>
+<br><font face="Times New Roman,Times">This field only appears after a
+New Task is submitted.&nbsp; The status field indicates the current status
+of work on a task.</font>
+<blockquote><font face="Times New Roman,Times"><b>New</b> - This task has
+recently been added to the assignee's list of tasks and must be processed.
+Tasks in this state may be accepted, and</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; become
+Assigned, passed on to someone else or remain with original Assigned To.</font>
+<br><font face="Times New Roman,Times"><b>Assigned</b> - This task is not
+yet resolved, but is assigned to the proper person.</font>
+<br><font face="Times New Roman,Times"><b>Evaluating</b> - This task request/work
+is being evaluated as to steps to complete/close.</font>
+<br><font face="Times New Roman,Times"><b>In Progress</b> - This task request/work
+is being worked on at this time.</font>
+<br><font face="Times New Roman,Times"><b>Waiting for Info</b> - This task
+request/work requires more information in order to complete.</font>
+<br><font face="Times New Roman,Times"><b>Reopened</b> - This task was
+once resolved, but the was deemed not completed and needs more work.</font>
+<br><font face="Times New Roman,Times"><b>Completed</b> (</font><b><i>Primarily
+used for Project tasks)</i></b> - <font face="Times New Roman,Times">This
+Project Task has been completed..</font>
+<br><font face="Times New Roman,Times"><b>Closed</b> (</font><b><i>Primarily
+used for Services tasks) </i></b><font face="Times New Roman,Times">- This
+Help Desk/Facilities task has been completed.</font></blockquote>
+<a NAME="catagory"></a><b><font size=+1>Category</font></b>
+<br><font face="Times New Roman,Times">This is a required field.&nbsp;
+This is the area in which the task need work.</font>
+<br>&nbsp;
+<p><a NAME="Urgency"></a><b><font face="Times New Roman,Times"><font size=+1>Urgency</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field.&nbsp;
+This field describes the urgency of completion for a task from the reporters
+perspective:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Blocker</b>
+- blocks daily administrative, development and/or testing work</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>High</b>
+- holding up productivity in an area</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Medium</b>
+-&nbsp; major loss of functionality, but there is a workaround, other work
+to do in another area.&nbsp; No immediate requirement.</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Low</b>
+- minor loss of functionality, or other problem where easy workaround is
+presen</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Enhancement</b>
+- Request for an enhancement to a process or tool, or a whole new process/tool
+request</font>
+<br>&nbsp;
+<p><a NAME="Target"></a><b><font face="Times New Roman,Times"><font size=+1>Target
+Milestone</font></font></b>
+<br><font face="Times New Roman,Times">This field only appears after a
+New Task is submitted.&nbsp; This field is used by project/service manager
+to balance out the task work.&nbsp; The target milestone may be an alpha,
+beta, final type of milestone or even calendar date.</font>
+<br>&nbsp;
+<p><a NAME="FixPriority"></a><b><font face="Times New Roman,Times"><font size=+1>Fix
+Priority</font></font></b>
+<br><font face="Times New Roman,Times">This field only appears after a
+New Task is submitted.&nbsp; This field describes the importance and order
+in which a task should be fixed.&nbsp; This field is used by the project/service
+manager to prioritize their task lists.&nbsp;&nbsp; The available priorities
+are:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P1 - Most
+important</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P2</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P3</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P4</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P5 - Least
+important</font>
+<br>&nbsp;
+<p><a NAME="Summary"></a><b><font face="Times New Roman,Times"><font size=+1>Summary</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field. This is
+a one line summary description of the task.&nbsp; This field will only
+allow a short number of characters.</font>
+<br>&nbsp;
+<p><a NAME="Whiteboard"></a><b><font face="Times New Roman,Times"><font size=+1>Whiteboard</font></font></b>
+<br><font face="Times New Roman,Times">This field can be utilized by anyone
+as an open "whiteboard" to note reminder information, prioritize work,
+quick documentation for commonality on tasks during a tasks review, etc.</font>
+<p><i><font face="Times New Roman,Times">NOTE:&nbsp; PLEASE NEVER DELETE
+ANYONE ELSES WHITEBOARD ENTRIES!!</font></i>
+<br>&nbsp;
+<p><a NAME="Complete"></a><b><font face="Times New Roman,Times"><font size=+1>Target
+Complete Date</font></font></b>
+<br><font face="Times New Roman,Times">This is the estimated date to complete
+the task.</font>
+<br>&nbsp;
+<p><a NAME="Description"></a><b><font face="Times New Roman,Times"><font size=+1>Description</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field. This field
+is for a detailed description of the task which should include:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - description
+of task to be completed</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - all other
+pertinent information</font>
+<br>&nbsp;
+<p><a NAME="Additional Comments"></a><b><font face="Times New Roman,Times"><font size=+1>Additional
+Comments</font></font></b>
+<br><font face="Times New Roman,Times">This field only appears after a
+New Task is submitted.&nbsp; This is where additional comments are submitted
+once a new task is submitted.</font>
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

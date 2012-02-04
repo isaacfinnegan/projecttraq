@@ -1,0 +1,54 @@
+<head><title>New Bug</title>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<body>
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+
+<div style='margin-left:20px;'>
+<p><b><font size="+2" color="#000000">BugTraq:</font></b>&nbsp;&nbsp;Defect Tracking Application
+</p>
+
+<P>Click on the product you 
+  wish to file a bug against. If this is an IT related issue, please open a help 
+  desk ticket. </P>
+<table><tr><td>
+<fieldset>
+<legend>
+<b>
+[[PROJECTIDLABEL]](s)
+</b>
+</legend>
+<TABLE CELLPADDING="2">
+
+[[BEGIN1]]
+	<tr><td><a href="enterBugForm.cgi?rtype=bug&projectid=[[projectid]]"><b>[[project]]</b></a></td><td>[[description]]</td></tr>
+[[END1]]
+</TABLE>
+</fieldset>
+</td></tr></table>
+<HR>
+<FONT SIZE="2">If you do not see your product listed above, please contact <A HREF="mailto:[[webmaster]]">[[webmaster]]</A>.</FONT> 
+</div>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<script>
+[[HEADER]]
+</script>
+</body>
+</html>

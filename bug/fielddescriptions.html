@@ -1,0 +1,206 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Jan Leger">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>BugTraq Field Descriptions</title>
+</head>
+<body>
+
+<center><b><font face="Times New Roman,Times"><font size=+2>BugTraq Field
+Descriptions</font></font></b>
+<p><b><i><font face="Times New Roman,Times"><font color="#FF0000">This
+page defines the values used in each of the fields of BugTraq problem
+reporting database.</font></font></i></b>
+<br><b><i><font face="Times New Roman,Times"><font color="#FF0000">For
+additional questions on this page and/or definitions, please contact <a href="mailto:"></a></font></font></i></b></center>
+
+<hr WIDTH="100%">
+<br><a NAME="AssignedTo"></a><b><font face="Times New Roman,Times"><font size=+1>Assigned
+To</font></font></b>
+<br><font face="Times New Roman,Times">This is the person in charge of
+resolving the bug.&nbsp; Every time this field changes, the status changes
+to NEW to make it easy to</font>
+<br><font face="Times New Roman,Times">see which new bugs have appeared
+on a person's list.&nbsp; The default status for queries of a person's
+open bugs (My Bugs) is set to</font>
+<br><font face="Times New Roman,Times">check NEW, ASSIGNED and REOPENED
+in the Status field.</font>
+<br>&nbsp;
+<p><a NAME="TechContact"></a><b><font face="Times New Roman,Times"><font size=+1>Tech
+Contact</font></font></b>
+<br><font face="Times New Roman,Times">This is the person who possesses
+the technical expertise in the component area identified on the bug.</font>
+<br>&nbsp;
+<p><a NAME="SQEContact"></a><b><font face="Times New Roman,Times"><font size=+1>SQE
+Contact</font></font></b>
+<br><font face="Times New Roman,Times">This is the person who has the responsibility
+to ensure that the bug is verified once resolved.&nbsp; The SQE Contact
+may also be asked to reproduce the bug for the Tech Contact.</font>
+<br>&nbsp;
+<p><a NAME="CC"></a><b><font face="Times New Roman,Times"><font size=+1>CC</font></font></b>
+<br><font face="Times New Roman,Times">This is a multiple selection field
+for person's who are not directly the Assigned To, Tech Contact and/or
+SQE Contact, but should</font>
+<br><font face="Times New Roman,Times">be aware of the bug and changes
+reflected on the record.</font>
+<br>&nbsp;
+<p><a NAME="BuildID"></a><b><font face="Times New Roman,Times"><font size=+1>Build
+ID</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field.&nbsp;
+This is the build number on which the bug initially occurred.</font>
+<br>&nbsp;
+<p><a NAME="Reproducibility"></a><b><font face="Times New Roman,Times"><font size=+1>Reproducibility</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field.&nbsp;
+Reporter must indicate how often the bug occurs: Always, Inconsistent or
+Never.</font>
+<br>&nbsp;
+<p><a NAME="Platform"></a><b><font face="Times New Roman,Times"><font size=+1>Platform</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field. This is
+the hardware platform against which the bug was reported. Legal platforms
+include:</font>
+<p><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; All (happens
+on all platforms; cross-platform bug)</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; All Simulators</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Dev Board</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Handset</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Mac</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; PC</font>
+<p><i><font face="Times New Roman,Times">Note: When conducting a query,
+selecting the option "All" does not select bugs assigned against all platforms.
+It merely selects bugs that occur on all platforms.</font></i>
+<br>&nbsp;
+<p><a NAME="Severity"></a><b><font face="Times New Roman,Times"><font size=+1>Severity</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field. This field
+describes the impact of a bug from the reporters perspective:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Blocker</b>
+- blocks development and/or testing work</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Critical</b>
+- crashes, loss of data, severe memory leak</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Major</b>
+-&nbsp; major loss of functionality, but no crash or loss of data</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Minor</b>&nbsp;
+- minor loss of functionality, or other problem where easy workaround is
+present</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Cosmetic</b>
+- UI problems like misspelt words or misaligned text</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; <b>Enhancement</b>
+- Request for an enhancement to a current feature, or a whole new feature
+request</font>
+<br>&nbsp;
+<p><a NAME="OS"></a><b><font face="Times New Roman,Times"><font size=+1>OS</font></font></b>
+<br><font face="Times New Roman,Times">This is a required field.&nbsp;
+This is the operating system against which the bug was reported. Legal
+operating systems include:</font>
+<p><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; All (happens
+on all operating systems; cross-platform bug)</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Linux</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Mac8.x</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Mac9.x</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; MacAll</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Win2k</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Win95</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Win98</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; WinAll</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; Win NT</font>
+<p><i><font face="Times New Roman,Times">Note: The operating system can
+imply the platform, but not always. For example, Linux can run on PC and
+Macintosh, Windows can run on Macintosh, etc.</font></i>
+<br><font face="Times New Roman,Times"></font>&nbsp;
+<p><a NAME="Summary"></a><b><font face="Times New Roman,Times"><font size=+1>Summary</font></font></b>
+<br><font face="Times New Roman,Times">This is a one line summary description
+of the bug.&nbsp; This field will only allow a short number of characters.</font>
+<br>&nbsp;
+<p><a NAME="Whiteboard"></a><b><font face="Times New Roman,Times"><font size=+1>Whiteboard</font></font></b>
+<br><font face="Times New Roman,Times">This field can be utilized by anyone
+as an open "whiteboard" to note reminder information, prioritize work (i.e.
+a tester), quick documentation for commonality on bugs during a bug review,
+etc.</font>
+<p><i><font face="Times New Roman,Times">NOTE:&nbsp; PLEASE NEVER DELETE
+ANYONE ELSES WHITEBOARD ENTRIES!!</font></i>
+<br>&nbsp;
+<p><a NAME="Description"></a><b><font face="Times New Roman,Times"><font size=+1>Description</font></font></b>
+<br><font face="Times New Roman,Times">This field is for a detailed description
+of the bug which should include:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - exact
+steps to reproduce</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - actual
+results vs. expected results</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - any workarounds</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; - all other
+pertinent information</font>
+<br>&nbsp;
+<p><a NAME="Status"></a><b><font face="Times New Roman,Times"><font size=+1>Status</font></font></b>
+<br><font face="Times New Roman,Times">The status field indicates the general
+health of a bug. Only certain status transitions are allowed.</font>
+<blockquote><font face="Times New Roman,Times"><b>NEW</b> - This bug has
+recently been added to the assignee's list of bugs and must be processed.
+Bugs in this state may be accepted, and become ASSIGNED, passed on to someone
+else or remain with original Assigned To.</font>
+<p><font face="Times New Roman,Times"><b>ASSIGNED</b> - This bug is not
+yet resolved, but is assigned to the proper person.</font>
+<p><font face="Times New Roman,Times"><b>REOPENED</b> - This bug was once
+resolved, but the resolution was deemed incorrect. For example, a WORKS
+AS DESIGNED bug is REOPENED when more information shows up and the bug
+is now reproducible.</font>
+<p><font face="Times New Roman,Times"><b>RESOLVED</b> - A resolution has
+been taken, and it is awaiting verification by SQE. From here bugs are
+either re-opened and become REOPENED, are marked VERIFIED, or are closed
+for good and marked CLOSED.</font>
+<p><font face="Times New Roman,Times"><b>VERIFIED</b> - SQE has looked
+at the bug and the resolution and agrees that the appropriate resolution
+has been taken. Bugs remain in this state until the product they were reported
+against actually ships, at which point they become CLOSED.</font>
+<p><font face="Times New Roman,Times"><b>CLOSED</b> - The bug is considered
+closed out since project is complete.&nbsp; This field is often used when
+doing one final pass of testing on the final candidate of the&nbsp; project.</font></blockquote>
+
+<p><br><a NAME="Resolution"></a><b><font face="Times New Roman,Times"><font size=+1>Resolution</font></font></b>
+<br><font face="Times New Roman,Times">The resolution field indicates what
+happened to this bug as it was set to RESOLVED Status. Any of the following
+may apply:</font>
+<blockquote><font face="Times New Roman,Times"><b>FIXED - </b>A fix for
+this bug is checked into the code tree and tested by engineer as working.</font>
+<p><font face="Times New Roman,Times"><b>WORKS AS DESIGNED</b> - The problem
+described is not a bug .</font>
+<p><font face="Times New Roman,Times"><b>WILL NOT FIX</b> - The problem
+described is a bug which will never be fixed.</font>
+<p><font face="Times New Roman,Times"><b>DEFERRED</b> - The problem described
+is a bug which will not be fixed in this phase/version of the product.
+But may be fixed in a later version.</font>
+<p><font face="Times New Roman,Times"><b>DUPLICATE</b> - The problem is
+a duplicate of an existing bug. Marking a bug duplicate requires the bug#
+of the duplicating bug to at least be noted&nbsp; in the description field.</font>
+<p><font face="Times New Roman,Times"><b>UNABLE TO REPRODUCE</b> - All
+attempts at reproducing this bug were futile, reading the code produces
+no clues as to why this behavior would occur. If more information appears
+later, please re-assign the bug, for now, file it.</font>
+<p><font face="Times New Roman,Times"><b>MOVED</b> - Bug was moved to a
+Task record, another project, or another database system.</font></blockquote>
+
+<p><br><a NAME="FixPriority"></a><b><font face="Times New Roman,Times"><font size=+1>Fix
+Priority</font></font></b>
+<br><font face="Times New Roman,Times">This field describes the importance
+and order in which a bug should be fixed. This field is utilized by the
+programmers/engineers to prioritized their work to be done.&nbsp;&nbsp;
+The available priorities are:</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P1 - Most
+important</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P2</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P3</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P4</font>
+<br><font face="Times New Roman,Times">&nbsp;&nbsp;&nbsp;&nbsp; P5 - Least
+important</font>
+<br><font face="Times New Roman,Times"></font>&nbsp;<font face="Times New Roman,Times"></font>
+<p><a NAME="TargetMilestone"></a><b><font face="Times New Roman,Times"><font size=+1>Target
+Milestone</font></font></b>
+<br><font face="Times New Roman,Times">This field only appears after a
+New Bug is submitted.&nbsp; This field is used by project manager to balance
+out the task work.&nbsp; The target milestone may be an alpha, beta, final
+type of milestone or even calendar date.</font>
+<br>&nbsp;
+<br><font face="Times New Roman,Times"></font>&nbsp;
+</body>
+</html>

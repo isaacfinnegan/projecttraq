@@ -1,0 +1,17 @@
+<html>
+<script src="[[PISSROOT]]/js/FusionCharts.js"></script>
+<body>
+
+<div id="chartdiv" align="center"> 
+        FusionCharts. </div>
+
+      <script type="text/javascript">
+  		   var chart = new FusionCharts("[[CHARTTYPE]]", "ChartId", "[[CHARTWIDTH]]", "[[CHARTHEIGHT]]");
+		   var url="[[URL]]";
+   		   chart.setDataURL(url);		   
+   		   chart.render("chartdiv");
+ 	  </script> 
+
+
+</body>
+</html>

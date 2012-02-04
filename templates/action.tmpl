@@ -1,0 +1,68 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<HTML>
+<HEAD>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+[[QUERYREL]]
+<A HREF="redir.cgi?type=look&id=[[PREV]]&queryid=[[QUERYID]]&debug=[[DEBUG]]" onClick="return verifyNextPrev([[PREV]])">([[PREV]])<b>Prev.</A> --- <A HREF="redir.cgi?type=look&id=[[NEXT]]&queryid=[[QUERYID]]&debug=[[DEBUG]]" onClick="return verifyNextPrev([[NEXT]])">Next([[NEXT]])</A></b> ([[INDEX]]) of ([[NUMRESULTS]])
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<A HREF="do_query.cgi?queryid=[[QUERYID]]">Back</a> to query 
+[[QUERYREL2]]
+<br>
+<br>
+<ul>
+<font size=+2>
+<li>Action: [[ACTION]]
+<li>By: [[USER]]
+[[BEGIN1]]
+<li>Result/RecordId: <A HREF="redir.cgi?type=look&id=[[ID]]&queryid=[[QUERYID]]">[[IDTYPE]][[ID]]</a> [[RESULT]]
+[[END1]]
+</font>
+</ul>
+<br>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+
+<script>
+[[HEADER]]
+</script>
+[[FOOTER]]
+</body>
+</html>
+

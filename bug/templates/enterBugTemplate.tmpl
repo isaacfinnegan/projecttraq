@@ -1,0 +1,632 @@
+<html>
+<head>
+   <title>BugTraq - New Bug</title>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+</head>
+<BODY onload="pageinit();">
+<FORM ENCTYPE="multipart/form-data" NAME=main2 METHOD="post" ACTION="processNewBug.cgi" onsubmit="return validateRequiredFields(this);">
+<div id=header>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=15% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	<TD width=65% align=center style="height:35px;" valign="middle">
+			<b>New Bug</b>
+	</TD>
+	<TD width=15% align=right style="height:35px;padding-right:30px;" valign="middle">
+	<FONT SIZE="2">
+			( <span class='required'>*</span> ) Required fields
+		</font>
+	</TD>
+	</TR>
+</table>
+</div>
+<div id=content>
+<INPUT TYPE=hidden NAME=debug VALUE=[[DEBUG]]>
+<INPUT type=hidden name=didsubmit value='n'>
+<center>
+<TABLE class="form_table" cellspacing=0 cellpadding=0 width="860">
+<tr><td colspan="2" style="height:15px;"><spacer type="block" height="15" width="1"></td></tr>
+
+<tr><td align=right><div class=quickfieldpref><a href="javascript:void();" onclick="quickfieldlist=window.prompt('secret fieldlist',quickfieldlist);SetCookie('pt_quickfieldsbug',quickfieldlist);loadquickfields();">test</a></div></td>
+<td>
+<table width=95%>
+<tr>
+<td>
+			<FONT SIZE="2"><b>[[REQPROJECTID]]<span class="fieldlabel">[[PROJECTLABEL]]:</span>&nbsp;</b></font>
+   		<select name=projectid onChange="switchProject(this.form,this.form.note.value);">
+			[[PROJECTID_OPTIONLIST]]
+			</SELECT>
+			&nbsp;&nbsp;&nbsp;
+			<FONT SIZE="2"><B> 
+			[[REQCOMPONENTID]]<A HREF="./viewcategories.cgi?projectid=[[PROJECTID_VAL]]" class="fieldlabel"><span class="fieldlabel">[[COMPONENTLABEL]]</span>:</a>&nbsp;</B></FONT>
+			<FONT SIZE="2"> 
+			<SELECT NAME=componentid onChange="compselect(this.form);">
+			[[COMPONENTID_OPTIONLIST]]
+			</SELECT>
+			</FONT>
+</td>
+<td align=right>
+<div style="padding-left:20px;">
+</div>
+<input type=hidden name=delta_ts value="[[DELTA_TS_VAL]]">
+</td>
+</tr>
+</table>
+</td></tr>
+
+<tr><td colspan="2" style="height:15px;"><spacer type="block" height="15" width="1"></td></tr>
+
+
+    <TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right style="padding-left:15px;"><FONT SIZE="2"><B> <FONT SIZE="3" COLOR="#CC0033"></FONT> 
+        [[REQSHORT_DESC]]<A HREF="./fielddescriptions.html#Summary" TARGET="descwin" class="fieldlabel"><span class="sectionlabel">[[SHORTDESCLABEL]]</span></a>:</B></FONT>&nbsp;&nbsp;</TD>
+      <TD > <FONT SIZE="2"> 
+        <INPUT class="x-form-field x-form-text" id=short_desc NAME=short_desc maxlength=250 VALUE="[[SHORT_DESC_VAL]]" style="width:710px;font-size:14px; height:24px;">
+        </font>
+
+	</td>
+    </TR>
+
+
+<tr><td colspan="2" style="height:10px;"><spacer type="block" height="10" width="1"></td></tr>
+<tr><td valign="top" align="right"  style="padding-left:15px;width:100px;">
+<FONT SIZE="2"><B>[[REQLONG_DESC]]<A HREF="./fielddescriptions.html#Description" TARGET="descwin" class="fieldlabel"><span class="sectionlabel">[[LONG_DESCLABEL]]</span></a>:</B></FONT>&nbsp;&nbsp;<br>
+<div style="padding-top:16px;padding-right:10px;" align="right">
+<span align="left"> <a href="javascript:void(0);" onClick="javascript:toggleactivities('');return true;"><span id="activitytext" style="font-size:8pt;"></span></a> </span>
+</div>
+</td>
+<td style="width:850px;" valign="top">
+<TEXTAREA WRAP=VIRTUAL NAME=long_desc id=long_desc xID=note ROWS=5 COLS=55 class="x-form-field" style="width:710px;" >[[LONG_DESC_VAL]]</TEXTAREA>
+
+</td>
+</tr>
+<tr><td colspan="2" style="height:10px;"><spacer type="block" height="10" width="1"></td></tr>
+
+<!-- action block here -->
+<tr><td valign="top" align="right" style="width:100px;">
+<FONT SIZE="2">
+		<B><span class="sectionlabel">Action</span>:</B></FONT>&nbsp;&nbsp;</td>
+<td  valign="top" style="padding:0; margin:0;width:850px;">
+<div style="width:710px;">
+	<div class=action style="border:1px solid #999;background:#FF9; ">
+
+	
+    <!-- general action -->
+   <div id="generalaction" style="padding:4px;">
+    <table cellpadding=0 cellspacing=0 border=0>
+	<tr>
+	<td colspan=5>
+		</td>
+	</tr>
+
+	   <tr><td colspan="5" height="8"><spacer type="block" height="8" width="1"></td></tr>
+	  
+       <TR > 
+      <TD ALIGN=RIGHT width="100"> 
+        <FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033"></FONT> 
+          [[REQASSIGNED_TO]]<A HREF="./fielddescriptions.html#AssignedTo" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[ASSIGNEDLABEL]]</span>:</a></b></font>&nbsp;</TD>
+		<TD>
+        <SELECT NAME="assigned_to" id="assigned_to">
+			<OPTION SELECTED VALUE=[[ASSIGNED_TO_ID]]>[[ASSIGNED_TO_NAME]]
+			[[ASSIGNED_TO_OPTIONLIST]]
+        </SELECT>
+
+	</TD>
+  <td>&nbsp;&nbsp;</td>
+ <TD ALIGN=right><FONT SIZE="2"><B>[[REQREPORTER]]<span class="fieldlabel">[[REPORTERLABEL]]:</span></B></FONT>&nbsp;</TD>
+	<INPUT TYPE=hidden NAME=reporter VALUE="[[REPORTER_VAL]]">
+      <TD><FONT SIZE="2">[[REPORTER_DISP]]</FONT></TD>
+	</TR>
+
+     </table>
+  </div>
+  
+  <!-- end general action categories -->
+
+    </font>
+</div>
+</div>
+</td>
+</tr>
+<!-- end action block -->
+
+<tr><td colspan="2" style="height:10px;"><spacer type="block" height="10" width="1"></td></tr>
+
+<!-- Data tabs here -->
+<tr><td valign="top" align="right">
+<FONT SIZE="2">
+		<B><span class="sectionlabel">Data Tabs</span>:</B></FONT>&nbsp;&nbsp;</td>
+<td  valign="top">
+
+
+   <!-- start tabs -->
+
+<div id=tabholder style="width:710px;margin-bottom:30px;">
+<!-- Details tab below -->
+<div id="tabdiv1container"  class="tab-content">
+<div id="tabdiv1" style="padding:15px;">
+<table cellpadding=0 cellspacing=0 border=0 style="margin:10px;">
+
+		<tr><td colspan="5" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+		
+		<!-- target date, target milestone -->
+		<tr>
+		<TD align="right" nowrap="nowrap">
+		
+		<FONT SIZE="2"><B>[[REQTARGET_DATE]]<A HREF="./fielddescriptions.html#Complete" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[TARGET_DATELABEL]]</span>:</a>&nbsp;</B></FONT></td><td><FONT SIZE="2"> 
+        <INPUT class="x-form-field x-form-text" NAME=target_date id=target_date SIZE=15 VALUE="[[TARGET_DATE_DISP]]">
+        </FONT>
+		
+        </TD>
+   		<td>&nbsp;&nbsp;</td>
+		<TD ALIGN=RIGHT nowrap="nowrap">
+			<FONT SIZE="2"><B>[[REQTARGET_MILESTONE]]<A HREF="./fielddescriptions.html#TargetMilestone" target=newwin class="fieldlabel"><span class="fieldlabel">[[MILESTONELABEL]]</span>:</a>&nbsp;</B></FONT>
+        </td>
+      	<TD >
+      		<FONT SIZE="2"> 
+        	<SELECT NAME=target_milestone> 
+				[[TARGET_MILESTONE_OPTIONLIST]]
+			</SELECT>
+        	</FONT>
+        </TD>
+		</tr>
+
+		<tr><td colspan="5"  style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+		
+		<!-- urgency, priority -->
+ 		<TR>
+      <TD ALIGN=right  width="100" nowrap="nowrap"><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033"></FONT> 
+        [[REQSEVERITY]]<A HREF="./fielddescriptions.html#Severity" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[SEVLABEL]]</span>:</a>&nbsp;</B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        <SELECT NAME=severity>
+			[[SEVERITY_OPTIONLIST]]
+        </SELECT>
+        </FONT></TD>
+		 <td>&nbsp;&nbsp;</td>
+      <TD ALIGN=RIGHT nowrap="nowrap"><FONT SIZE="2"><B>[[REQPRIORITY]]<A HREF="./fielddescriptions.html#Priority" target=newwin class="fieldlabel"><span class="fieldlabel">[[PRILABEL]]</span>:</a>&nbsp;</B></font></td>
+	<td><select name=priority>
+		[[PRIORITY_OPTIONLIST]]
+	</SELECT>
+	</td>
+	</tr>
+		
+		<tr><td colspan="5" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+
+		<!-- start date, hours-->
+ 		<TR>
+      <TD ALIGN=right  width="100"  nowrap="nowrap"><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033"></FONT> 
+        [[REQSTART_DATE]]<A HREF="./fielddescriptions.html#Complete" TARGET="descwin" class="fieldlabel"><span class="fieldlabel">[[START_DATELABEL]]</span>:</a>&nbsp;</B></FONT></TD>
+      <TD> <FONT SIZE="2"> 
+        <INPUT class="x-form-field x-form-text" NAME=start_date id=start_date SIZE=15 VALUE="[[START_DATE_DISP]]">
+        </FONT>
+		</td>
+		 <td>&nbsp;&nbsp;</td>
+		  <TD ALIGN=right nowrap="nowrap"><font size="2"><b>[[REQUNITS_REQ]]<a href="./fielddescriptions.html#Units" target="descwin" class="fieldlabel">
+                <span class="fieldlabel">[[UNITLABEL]]</span>:</a>&nbsp;</b></font></TD>
+      <TD > <FONT SIZE="2"> 
+      <input class="x-form-field x-form-text" name=units_req size=5 value="[[UNITS_REQ_VAL]]">
+        </FONT></TD>
+		</tr>
+	
+		<tr><td colspan="5" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>	
+	
+		<!-- whiteboard -->
+		<TR>
+      <TD ALIGN=right  width="100" nowrap="nowrap"><font size="2"><B>[[REQSTATUS_WHITEBOARD]]<A HREF="./fielddescriptions.html#Whiteboard" TARGET="descwin" class="fieldlabel">[[WHITEBOARDLABEL]]:</a>&nbsp;</B></FONT></TD>
+      <TD colspan="2"> <FONT SIZE="2"> 
+        <INPUT class="x-form-field x-form-text" NAME=status_whiteboard SIZE=35 VALUE="[[STATUS_WHITEBOARD_DISP]]">
+        </FONT></TD>
+                  <TD ALIGN=right nowrap="nowrap"><font size="2"><b>[[REQEXT_REF]]<a href="./fielddescriptions.html#ext_ref" target="descwin" class="fieldlabel">
+                <span class="fieldlabel">[[EXT_REFLABEL]]</span>:</a>&nbsp;</b></font></TD>
+      <TD > <FONT SIZE="2">
+      <input class="x-form-field x-form-text" id=ext_ref name=ext_ref size=8 value="[[EXT_REF_VAL]]">
+        </FONT></TD>
+		</tr>
+	
+		<tr><td colspan="5" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+
+		<!-- Keywords -->
+		<TR>
+      <TD ALIGN=right  valign="top" width="100" nowrap="nowrap"><font size="2"><B>[[REQKEYWORDS]]<A HREF="./keyword_descriptions.html" target=newwin class="fieldlabel">[[KEYWORDSLABEL]]:</a>&nbsp;</B></FONT></TD>
+      <TD colspan="4"> <FONT SIZE="2"> 
+       [[KEYWORDS_OPTIONLIST]]
+        </FONT></TD>
+		</tr>
+		<tr><td colspan="5" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+</table> 
+</div>
+</div>
+<!-- Details tab above -->
+
+
+<!-- Contacts tab below -->
+<div id="tabdiv2container"  class="tab-content">
+<div id="tabdiv2" style="padding:15px;">
+
+<table cellpadding=0 cellspacing=0 border=0 style="margin:10px;"><tr><td valign="top">
+
+                <table cellpadding=0 cellspacing=0 border=0>
+
+		<!-- primary contact -->
+        <tr>
+      	<TD ALIGN=RIGHT><b>
+		<FONT SIZE="2">
+			[[REQTECH_CONTACT]]<A HREF="./fielddescriptions.html#TechContact" TARGET="descwin" class="fieldlabel">[[TECHLABEL]]:&nbsp;
+			</a></font></b></TD>
+             <TD> 	
+             		<div><input type=hidden style="display:none;" name=tech_contact id=tech_contact value=[[TECH_CONTACT_VAL]]><input style='display:none;' name=tech_contact_disp id=tech_contact_disp></div>
+		<div id=tech_contact_txt style="color:blue; text-decoration:underline;cursor:pointer;" onclick="applycombo('tech_contact');">[[TECH_CONTACT_DISP]]</div>
+
+             
+		</TD>
+        <td>&nbsp;&nbsp;</td>
+        </tr>
+		
+		<tr><td colspan="3" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+		
+		<!--secondary contact -->
+		 <tr>
+      	<TD ALIGN=RIGHT><b>
+		<FONT SIZE="2">
+			[[REQQA_CONTACT]]<A HREF="./fielddescriptions.html#SQEContact" TARGET="descwin" class="fieldlabel">[[QALABEL]]:&nbsp;
+			</a></TD>
+             <TD> 		
+             		<div><input type=hidden style="display:none;" name=qa_contact id=qa_contact value=[[QA_CONTACT_VAL]]><input style='display:none;' name=qa_contact_disp id=qa_contact_disp></div>
+		<div id=qa_contact_txt style="color:blue; text-decoration:underline;cursor:pointer;" onclick="applycombo('qa_contact');">[[QA_CONTACT_DISP]]</div>
+
+		</TD>
+        <td>&nbsp;&nbsp;</td>
+        </tr>
+
+                <tr><td colspan="3" style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+
+</table>
+
+</td><td valign="top" align="left" style="padding-left:20px;">
+
+	<!-- cc lists -->
+		<FONT SIZE="2">
+		<div style='float:left;vertical-align:middle;'>
+		[[REQCC]]<A HREF="./fielddescriptions.html#CC" TARGET="descwin" class="fieldlabel">[[CCLABEL]]:</a>
+		<input type=hidden name=cc id=ccinit value="[[CC_VAL]]">
+		</div>
+		
+		<input class="x-form-field x-form-text" type=text name=employees id=employees autocomplete=off>
+
+		<div align="left" style="width:180px;">
+			<div id=ccbox style="text-align:left;border:1px solid #ccc; height: 10em;overflow: auto;padding:3px;margin-bottom:20px;">
+		[[CC_DISP]]
+			</div>
+		</div>
+</td></tr></table>
+
+</div>
+</div>
+<!-- Contacts tab above -->
+
+<!-- Found tab below -->
+<div id="tabdiv3container"  class="tab-content">
+<div id="tabdiv3" style="padding:15px;">
+<table cellpadding=0 cellspacing=0 border=0 style="margin:10px;">
+
+        <tr>
+                <TD align="right" nowrap>
+
+                                <FONT SIZE="3" COLOR="#CC0033">
+                                </FONT>
+                                [[REQREPRODUCIBILITY]]<A HREF="./fielddescriptions.html#Reproducibility" TARGET="descwin" class="fieldlabel">[[REPROLABEL]]:</a>&nbsp;</B> 
+                </td>
+                <td>
+                <SELECT NAME="reproducibility">
+                        [[REPRODUCIBILITY_OPTIONLIST]] 
+                </SELECT>
+                </FONT>
+                </TD> <td>&nbsp;&nbsp;</td>
+                <td rowspan=5>
+                [[REQRELEASENOTE]]<b><a href="./fielddescriptions.html#releasenote" target="descwin" class=fieldlabel>[[RELEASENOTELABEL]]</a></b><br>
+                        <textarea  class=x-form-field cols=40 rows=5 name=releasenote id=releasenote>[[RELEASENOTE_VAL]]</textarea>
+                </td>
+
+</tr>
+
+        <tr>
+                <TD  align="right" nowrap>
+                <B>
+                        <FONT SIZE="3" COLOR="#CC0033">
+                        </FONT>
+                        [[REQVERSION]]<A HREF="./fielddescriptions.html#BuildID" TARGET="descwin" class="fieldlabel">[[VERSIONLABEL]]:</a>&nbsp;</B>
+                </td>
+                <td>
+                <SELECT NAME=version>
+                [[VERSION_OPTIONLIST]] 
+                </SELECT>
+                </td>
+        </tr>
+
+        <tr>
+                <td align="right" nowrap>
+                        [[REQBUG_PLATFORM]]<A HREF="./fielddescriptions.html#Platform" TARGET="descwin" class="fieldlabel">[[PLATFORMLABEL]]:</a>&nbsp;</B>
+                </td>
+                <td>
+                <SELECT NAME="bug_platform">
+                [[BUG_PLATFORM_OPTIONLIST]]
+                </SELECT>
+                </td>
+        </tr>
+
+        <tr>
+                <td align="right" nowrap>
+                        <FONT SIZE="3" COLOR="#CC0033">
+                        </FONT>
+                        [[REQBUG_OP_SYS]]<A HREF="./fielddescriptions.html#OS" TARGET="descwin" class="fieldlabel">[[OSLABEL]]:</a>&nbsp;</B>
+                </td>
+                <td>
+                <SELECT NAME="bug_op_sys">
+                [[BUG_OP_SYS_OPTIONLIST]]
+                </SELECT>
+                </FONT>
+                </TD>
+        </TR>
+
+        <TR>
+                <TD align="right" nowrap>
+                <FONT SIZE="2">
+                <B>
+                        [[REQCHANGELIST]]<A HREF="./fielddescriptions.html#Changelist" TARGET="descwin" class="fieldlabel">[[CHANGELISTLABEL]]:</a>&nbsp;</B>
+                        </td>
+                <td>
+                <INPUT class="x-form-field x-form-text" NAME=changelist SIZE=15 VALUE="[[CHANGELIST_VAL]]">
+                </FONT>
+                </TD>
+        </TR>
+
+</table>
+</div>
+</div>
+<!-- Fixed tab above -->
+
+
+<!-- Attachments tab below -->
+<div id="tabdiv5container"  class="tab-content">
+<div id="tabdiv5" style="padding:15px;">
+<style>
+	.attachtbl TH { border-bottom:1px solid #ccc; }
+</style>
+<table cellpadding=0 cellspacing=0 border=0 width=100%>
+
+		<!-- Attachment INFO -->
+        <tr>
+      	<TD ALIGN=RIGHT>
+			</td>
+		</tr>
+		
+		<!-- Add Attachment & MIME type -->	
+		<tr><td>
+			<table cellpadding="0" cellspacing="0" border="0" style="margin-top:15px;border-top:1px solid #CCC;">
+			<tr><td colspan="3"  style="height:10px;"><spacer type="block" height="10" width="1"></td></tr>
+			<tr><td colspan="3"><font size="1"><b>Add attachment:</b></font></td></tr>
+			<tr><td colspan="3"><spacer type="block" height="8" width="1"></td></tr>
+			<tr><td><INPUT class="x-form-field x-form-text" style="font-size:10px;" TYPE=FILE NAME=FILE ></td><td>&nbsp;&nbsp;</td><td>
+			<font size="1"><b>MimeType:</b></font>&nbsp;<SELECT NAME=type>
+					<OPTION value="text/plain">Plain text (text/plain)
+					<OPTION value="text/html">HTML source (text/html)
+					<OPTION value="application/octet-stream">Binary file (any other file)
+					<OPTION value="application/pdf">PDF
+					<OPTION value="application/zip">Zip File
+					<OPTION value="image/gif">GIF Image (image/gif)
+					<OPTION value="image/jpeg">JPEG Image (image/jpeg)
+					<OPTION value="image/png">PNG Image (image/png)
+				  </SELECT></td></tr>
+				  <tr><td colspan="3"  style="height:8px;"><spacer type="block" height="8" width="1"></td></tr>
+			<tr><td colspan="3"><font size="1"><b>File Description:</b></font>&nbsp;<input class="x-form-field x-form-text" type=text name=description size=22> <font size=-1>- NOTE: For a perforce file put the full depot path as the description.</font></td></tr>
+			</table>
+		</td></tr>
+</table>
+</div>
+</div>
+<!-- Attachments tab above -->
+
+<!-- Dependencies tab below -->
+<div id="tabdiv6container"  class="tab-content">
+<div id="tabdiv6" style="padding:15px;">
+<style>
+	.dependents TD { font-family:Lucida Grande, Geneva, Verdana, Arial, Helvetica, sans-serif; font-size:8pt; font-weight:bold;}
+</style>
+<table height=150 cellpadding="0" cellspacing="0" class="dependents">
+		<TR>
+			<TD VALIGN=TOP style="border:1px solid gray;padding:5px;">
+
+					Make this record dependent upon<br> this record: <INPUT class="x-form-field x-form-text" TYPE=text size=5 name=child style="font-size:11px;" OnChange="dependencyInput(this.value);">
+
+				</td>
+				<td>&nbsp;&nbsp;</td>
+				<td valign=top style="border:1px solid gray;padding:5px;">
+
+					Make record <INPUT class="x-form-field x-form-text" TYPE=text size=5 name=parent style="font-size:11px;" OnChange="dependencyInput(this.value);"> dependent upon<br> this record
+				</td>
+			</tr>
+</table>
+</div>
+</div>
+<!-- Dependencies tab above -->
+</div>
+
+<!-- end tab divs-->
+
+</td>
+</tr>
+<!-- end Data tabs here -->
+
+	</TR>
+	
+<tr><td colspan="2" style="height:10px;"><spacer type="block" height="10" width="1"></td></tr>
+
+</TABLE>
+</div>
+<!-- Button Rows -->
+<div id=footer align="center" >
+<table width=100%>
+<tr>
+<td align=center>
+	<table cellpadding="0" cellspacing="0" border="0" width="700">
+		<tr class=form_header><td width="33%">
+		<INPUT class=x-btn TYPE="reset" VALUE="Reset" NAME="reset">
+		</td><td style="color:#FFF;font-size:10pt;" width="33%" nowrap="nowrap">
+		<INPUT class=x-btn TYPE="submit" NAME=maketemplate VALUE="Save as Template"  onClick="document.main2.didsubmit.value='y';this.value='Please wait...';">
+		  <input type=text name=templatename size=10>
+		  in <select name=category>
+		  <option value="[[USERID]]">my account
+		  [[BEGINGROUP]]
+		  <option value="g[[groupid]]">[[groupname]]
+		  [[ENDGROUP]]
+		  </select>
+		</td>
+		<td align="right" width="34%">
+		
+		<INPUT class=x-btn TYPE="submit" NAME="Submit"  accesskey=s VALUE="Submit" onClick="document.main2.didsubmit.value='y';this.value='Please wait...';">
+		<script>if (navigator.appVersion.toLowerCase().indexOf("mac") > 0) { document.write("<font size=1>ctrl-S</font>"); } else { document.write("alt-S"); } </script>
+		</td></tr></table>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</form>
+
+
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<SCRIPT LANGUAGE=JAVASCRIPT>
+userlisturl='[[PISSROOT]]/getUser.cgi?mode=getusersbyproject&yui=1&qry=[[PROJECTID_VAL]]';
+
+var activitydata=false;
+var notefield;
+var commentarea;
+var pt_cookieCommentSize = "pt_bugcommentsize";
+var pt_cookieNoteSize = "pt_bugnotesize";
+var pt_cookieActivities = "pt_bugshowactivities";
+Ext.get('footer').anchorTo(document,'bl-bl',null,null,true);
+var grouplist={[[JS_GROUPLIST]]};
+var components = {};
+[[BEGINCOMPJS]]
+components["[[componentid]]"]=new Array("[[initialowner]]","[[initialqacontact]]");
+[[ENDCOMPJS]]
+
+function validateRequiredFields(form) {
+
+	if( document.main2.didsubmit.value != "y" ){
+		return false;
+	}
+ [[BEGINREQ]]
+ if( form.[[REQUIREDFIELD]].value == "" ) 
+ {
+	alert("[[REQUIREDFIELDLABEL]] cannot be blank");
+	form.[[REQUIREDFIELD]].focus();
+	form.Submit.value="Save Edits";
+	if(form.emailsubmit)
+	{
+	 form.emailsubmit.value="Save and Force Notification";
+	}
+	return false;
+ }
+ [[ENDREQ]]
+ document.main2.submit();
+ return true;
+}
+function verifyNextPrev(num) {
+	if(num) {
+		return true;
+	}
+	else {
+		msg="There is no [[RECORDTYPE]] here, please cancel this request";
+		confirm(msg);
+		return false;
+	}
+}
+function switchProject(form,note)
+{
+	var newIndex = form.projectid.selectedIndex;
+	var purl="enterBugForm.cgi?type=look&id=[[RECORD_ID_VAL]]&queryid=[[QUERYID]]&switch=" + form.projectid.options[ newIndex ].value + "&note=" + encodeURI(note);
+	window.location.assign(purl);
+}
+var duplicateresolution='[[DUPLICATERESOLUTION]]';
+ 
+var hasattach='[[ATTACHMENTS]]';
+var hasdeps='[[DEPENDENCIES]]';
+    
+//setup tabs
+var tabs=new Ext.TabPanel({
+	applyTo:'tabholder',
+	activeTab: 0,
+	deferredRender: false,
+	autoHeight: true,
+	plain:true,
+	items: [
+		{contentEl:'tabdiv1container', title: 'Details'},
+		{contentEl:'tabdiv2container', title: 'Contacts'},
+		{contentEl:'tabdiv3container', title: 'Found/Fixed'},
+		{contentEl:'tabdiv5container', title: 'Attachments'},
+		{contentEl:'tabdiv6container', title: 'Dependancies'}	
+		]
+	});
+Ext.get('tabholder').setStyle('border','0px solid white');
+
+var assigned_to_cmb;
+var ccstore;
+var userstore;
+
+function noteresizer()
+{
+	notefield = new Ext.Resizable('long_desc', {
+		wrap:true,
+		width:710,
+		height:250,
+		minWidth:710,
+		maxWidth:710,
+		minHeight: 50
+	});
+}
+
+var pageinited=false;
+function pageinit() {
+	if(pageinited)
+	{
+		return;
+	}
+	else
+	{
+		pageinited=true;
+	}
+[[HEADER]]
+	var targetdateselector= new Ext.form.DateField({format: 'Y-m-d'});
+	targetdateselector.applyToMarkup('target_date');
+	var startdateselector= new Ext.form.DateField({format: 'Y-m-d'});
+	startdateselector.applyToMarkup('start_date');
+	initcombos();
+	noteresizer();
+
+}
+
+</script>
+<style>
+.x-btn-text{padding: 3px 0px 3px 3px}
+</style>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,296 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<html>
+	<head>
+
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+
+<title>
+[[TITLE]]
+</title>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+</head>
+<BODY onload="pageinit();">
+<table width="100%" class="form_header" style="padding:7px;">
+<tr>
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+<td colspan=2>
+<!--REPORT0-->
+<h3 style="margin:0px;">Query Results : [[NUMRESULTS]] record(s).</h3>
+<script>var resultcount=[[NUMRESULTS]];</script>
+<!--ENDREPORT0-->
+</td>
+<td align=right colspan="2">
+QueryID: [[QUERYID]] <a href="[[PISSROOT]]/reports/choosereport.cgi?queryid=[[QUERYID]]">Make Report</a>
+</td>
+</tr>
+</table>
+<table style="padding:5px 5px 0px 5px;" width="100%" class="optionTable">
+<tr>
+<td>&nbsp;
+<a href="javascript:void(0);" onClick="checkall(document.reclist.ids)">Check All</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="javascript:void(0);" onClick="toggleDisplayOptions();"><span id="dispOptionsText">Show Display Options</span></a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="javascript:void(0);" onClick="show_bulkeditor();">Show Bulk Editor</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<A HREF="./display_query.cgi?[[URL_STRING]]">Edit this Query</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<div onclick='Ext.Notice.msg("Legend","[[LEGEND]]");' class="legend link">  Legend </div>
+</td>
+<td align="right">
+[[EXCELON1]]
+Save Results to <A HREF="./do_query.cgi?[[URL_STRING]]&excel=1">Excel</a>/<A HREF="./do_query.cgi?[[URL_STRING]]&csv=1">CSV</a>
+&nbsp;
+[[EXCELON2]]
+
+</td>
+</tr>
+<tr><td colspan="2">
+<div id="dispOptions" style="margin-top:5px;margin-bottom:0px;border:1px solid #e5e5e5; padding:5px;visibility:hidden;color:#555;">
+<a href="#" onClick="expandall([[QUERYID]]);">Expand All</a>&nbsp;&nbsp;<a href="#" onClick="collapseall([[QUERYID]]);">Collapse All</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+View results <a href="./do_query.cgi?hier=[[HIERBOOL]]&queryid=[[QUERYID]]&mini=[[MINISTATE]]" onclick="SetCookie('[[QUERYID]]hier','[[HIERBOOL]]');">[[VIEW]] hierarchy</a>, 
+&nbsp;&nbsp;|&nbsp;&nbsp;
+Make row display: <a href="#" onClick="growrecord();">Bigger</a> &nbsp;&nbsp; <a href="#" onClick="shrinkrecord();">Smaller</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<A HREF="#" onclick="doQFquery();">Change Columns</A>
+</div></td></tr>
+</table>
+<FORM id=reclist name=reclist ACTION="quickaction.cgi" METHOD=POST>
+<INPUT type=hidden name=queryidval id=queryidval value=[[QUERYID]]>
+<!--REPORT1-->
+<TABLE id=queryresults[[QUERYID]] class=[[TABLECLASS]] BORDER="0" cellspacing=0 cellpadding=1 style="padding:5px;"><TR class="[[HEADERCLASS]]" style="background:#aaa;">
+		<TH class=form_header style="background:#aaa;padding-right:0px;width:75px;"><!--EDIT-->Action<!--ENDEDIT--></TH>
+		[[BEGIN1]]
+			<TH align=left>
+				<A HREF="./do_query.cgi?orderby=[[FIELDNAME]]&reverse=1&queryid=[[QUERYID2]]">[[FIELDLABEL]]</A>
+			</TH>
+		[[END1]]
+		</TR>
+		[[BEGIN2]]
+		<TR id="[[LINEAGE]]" class="recordrow [[ROWCLASS]]" style="cursor:pointer; display:[[COLLAPSESTATE]]"
+				onmouseover="Ext.get(Ext.DomQuery.selectNode('input',this)).setStyle('visibility','');" 
+				onmouseout="if(!Ext.getDom(Ext.DomQuery.selectNode('input',this)).checked && !bulk_data && !checkall){Ext.get(Ext.DomQuery.selectNode('input',this)).setStyle('visibility','hidden');}"
+		><TD valign=middle [[MINIROWSPAN]] NOWRAP id=[[record_ID]] width=2% >
+		<INPUT TYPE=checkbox id='ids' name='ids' value=[[record_ID]] style='visibility:hidden;'>
+		<!--EDIT-->
+			<A HREF="redir.cgi?method=edit&id=[[record_ID]]&queryid=[[QUERYID]]">Edit</a>
+			&nbsp;<!--ENDEDIT--><a href="javascript:void(0);" onClick="javascript:show_quickview( '[[record_ID]]', '[[QUERYID]]' ,'[[PISSROOTREP]]/');"><img class=magnifier src="[[PISSROOTREP]]/images/magnifier.gif" width="13" height="13" border="0"></a>
+			</td>
+    		<TD nowrap valign=middle  style="cursor:normal;" id=[[record_ID]]>
+			&nbsp;
+			[[HIER]]
+			<span onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD1]]
+			</span>
+			</TD>
+			[[CELL1]]
+			<TD valign=middle  id=[[record_ID]] onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD2]]
+			</TD>
+			[[CELL2]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD3]]
+			</TD>
+			[[CELL3]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD4]]
+
+			</TD>
+			[[CELL4]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD5]]
+			</TD>
+			[[CELL5]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD6]]
+			</TD>
+			[[CELL6]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD7]]
+			</TD>
+			[[CELL7]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD8]]
+			</TD>
+			[[CELL8]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD9]]
+			</TD>
+			[[CELL9]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD10]]
+			</TD>
+			[[CELL10]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD11]]
+			</TD>
+			[[CELL11]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD12]]
+			</TD>
+			[[CELL12]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD13]]
+			</TD>
+			[[CELL13]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD14]]
+			</TD>
+			[[CELL14]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD15]]
+			</TD>
+			[[CELL15]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD16]]
+			</TD>			
+			[[CELL16]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD17]]
+			</TD>
+			[[CELL17]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD18]]
+			</TD>				
+			[[CELL18]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD19]]
+			</TD>			
+			[[CELL19]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD20]]
+			</TD>
+			[[CELL20]]
+			<TD valign=middle  onClick="window.location='[[PISSROOTREP]]/redir.cgi?id=[[record_ID]]&queryid=[[QUERYID]]';">
+			[[FIELD21]]
+			</TD>		
+	
+			[[CELLEND]]
+		</TR>
+		[[MINIPREVIEW]]
+		[[END2]]
+</TABLE>
+
+<!--ENDREPORT1-->
+</FORM>	
+<!--REPORT2-->
+<div id=quickviewrec style="visibility:hidden;cursor:pointer;cursor:hand;border-bottom:1px solid #669;background:#FFF;position:absolute;top:0px;">
+<div class=x-dlg-hd></div>
+<div class="x-dlg-bd qv_table" id=quickviewbody><img src="images/loading_small.gif"> Loading...
+</div>
+</div>
+
+<div id=bulkeditor style="visibility:hidden;cursor:pointer;cursor:hand;border-bottom:1px solid #669;background:#FFF;position:absolute;top:0px;">
+<div class=x-dlg-hd></div>
+<div class="x-dlg-bd" style="overflow:auto;">
+<div id=bulk_form><img src="images/loading_small.gif"> Loading...
+</div>
+</div>
+</div>
+<div id=fieldselections style="width:400px;height:400px;">
+</div>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+<!-- Begin
+var lineagecheck='';
+var baseurl='[[PISSROOT]]';
+var checkflag = "false";
+var divloader=new Object;
+var recsize=12;
+var queryid='[[QUERYID]]';
+var menuhash=[];
+var recordlist=new Array([[RECLIST]]);
+var recs=recordlist;
+var bulk_data;
+if(resultcount)
+{
+inittable([[QUERYID]]);
+}
+function setTooltipCookie()
+{
+    if(document.getElementById('tooltip').checked)
+    {
+        SetCookie('tooltips','true');   
+    }
+    else
+    {
+        SetCookie('tooltips','false');   
+    }
+}
+
+//  End -->
+</script>
+<!--ENDREPORT2-->
+<script language="javascript">
+	function toggleDisplayOptions(){
+		dispOptionsVal = document.getElementById("dispOptions");
+		if( dispOptionsVal.style.visibility == "hidden" ){
+		
+			 dispOptionsVal.style.visibility = "visible";
+			 document.getElementById("dispOptionsText").innerHTML = "Hide Display Options";
+		}else{
+			dispOptionsVal.style.visibility = "hidden";
+			document.getElementById("dispOptionsText").innerHTML = "Show Display Options";
+		}
+	}
+</script>
+
+<script>
+setrecordsize();
+divloader.area=document.getElementById('bulk_form');
+function pageinit() {
+	[[HEADER]]
+	Ext.QuickTips.init();
+	
+}
+
+function doQFquery()
+{
+	showQFdialog('[[PISSROOT]]/fieldlist.cgi','','[[RETURNFIELDS]]','Change Columns',function(){
+		var newfieldset=getQFselections();
+		var newurl="./do_query.cgi?[[URL_STRING]]&returnfields=" + newfieldset;
+		qfdialog.hide();
+		Ext.Notice.msg("Updating...","reloading query with new column settings");
+		window.location=newurl;
+	});	
+}
+
+</script>
+
+[[DEBUGOUT]]
+
+
+[[FOOTER]]
+</body>
+
+</html>

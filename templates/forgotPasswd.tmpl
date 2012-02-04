@@ -1,0 +1,52 @@
+<!--
+###############################################################
+#    Copyright (C) 3001-3003 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<html>
+<head>
+</head>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<body>
+<center>
+<h3>Forgot Password</h3>
+<p/>
+<table class=form_table cellspacing=0 cellpadding=3>
+<form action="forgotPasswd.cgi" method=post>
+<input type=hidden name=mode value=[[nextmode]]>
+<tr>
+	<td>Username:</td><td><input type=text name=username size=30 value='[[username]]'></td>
+	<input type=hidden name=active value=Yes>
+	</td>
+	<td rowspan=9>
+	</td>
+</tr>
+<tr>
+<td>
+	<center><input type=submit value="send" onClick="this.value='Please wait...'"></center>
+</td>
+</tr>
+<input type=hidden name=userid value='[[userid]]'>
+<input type=hidden name=bugtraqprefs value='[[bugtraqprefs]]'>
+<input type=hidden name=returnfields value='[[returnfields]]'>
+<input type=hidden name=recordeditprivs value='[[recordeditprivs]]'>
+</form>
+</table>
+</center>
+</body>
+</html>

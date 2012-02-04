@@ -1,0 +1,126 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<head><title>ProjectTraq Menu Editor</title></head>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<style>
+.default
+{
+	background: #F4FF03;
+}
+</style>
+<body>
+<fieldset>
+Editing [[PROJECTIDLABEL]]:  [[PROJECTID_DISP]]
+<br>
+<a href="editproject.cgi?mode=getproject&projectid=[[PID]]">Return to [[PROJECTIDLABEL]] Administration</a>
+<br>
+</fieldset>
+<table class=form_table cellpadding=3 cellspacing=0>
+<tr class=form_header>
+<td colspan=4>
+Menu Editor: [[MENU]]
+</td>
+<td align=right>
+Default <font color=#F4FF03><b>Highlighted</b></font>
+</td>
+</tr>
+<tr>
+<td><font size=-1 class=fieldlabel>Parent</font>
+</td>
+<td>
+<font size=-1 class=fieldlabel>Value</font>
+</td>
+<td>
+<font size=-1 class=fieldlabel>Display Value</font>
+</td>
+<td class=fieldlabel>
+Record Types
+</td>
+<td>
+</td>
+</tr>
+[[BEGINMILE]]
+<tr class=[[DEFAULT]]>
+<form action=menus_edit.cgi method=post>
+<input type=hidden name=id value=[[ID]]>
+<input type=hidden name=projectid value=[[PROJECTID_VAL]]>
+<input type=hidden name=menuname value=[[MENUNAME]]>
+<td>
+    <select name=parent>
+       [[PARENT_OPTIONLIST]]
+    </select>
+</td>
+<td>
+<input type=text name=value value="[[VALUE]]">
+</td>
+<td>
+<input type=text name=display_value size=50 value="[[DISPLAY_VALUE]]">
+</td>
+<td>
+Bug <input type=checkbox name=bug value=bug [[BUGSELECTED]]>
+Task <input type=checkbox name=task value=task [[TASKSELECTED]]>
+</td>
+<td>
+<font size=-1>
+<input type=submit name=action value="Update"> 
+<a href="menus_edit.cgi?action=Default&id=[[ID]]&projectid=[[PROJECTID_VAL]]&menu=[[MENUNAME]]">Make Default</a>
+ - 
+<a href="menus_edit.cgi?action=Delete&id=[[ID]]&projectid=[[PROJECTID_VAL]]&menu=[[MENUNAME]]">Delete</a>
+</font>
+</td>
+</form>
+</tr>
+[[ENDMILE]]
+<tr>
+<td colspan=3>
+<hr>
+<font size=-1><i>Add new menu item</i></font>
+</td>
+</tr>
+<tr>
+<form action=menus_edit.cgi method=post>
+<input type=hidden name=projectid value=[[PID]]>
+<input type=hidden name=menuname value=[[MENUNAME_ALT]]>
+<input type=hidden name=menu value=[[MENUNAME_ALT]]>
+<td>
+    <select name=parent>
+       [[ADDPARENT_OPTIONLIST]]
+    </select>
+</td>
+<td><input type=text name=value>
+</td>
+<td><input type=text size=50 name=display_value>
+</td>
+<td>
+Bug <input type=checkbox name=bug value=bug>
+Task <input type=checkbox name=task value=task>
+</td>
+<td>
+<input type=submit name=action value="Add">
+<a href="menus_edit.cgi?action=ClearDefaults&projectid=[[PROJECTID_VAL]]&menu=[[MENUNAME]]">Clear Defaults</a>
+
+</td>
+</tr>
+</form>
+</table>
+
+
+</body>

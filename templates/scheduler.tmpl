@@ -1,0 +1,186 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<head><title>ProjectTraq Job Scheduler</title>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+
+<form action="scheduler.cgi" method=post>
+<input type=hidden name=mode value="newschedule">
+<table border=0 cellpadding=2 cellspacing=0 class="form_table paddedtable3">
+<tr class=form_header>
+<th colspan=2>
+Add new schedule:
+</th>
+</tr>
+<tr>
+<td>
+Time to run:
+</td><td>
+Minute:<select name=minute><option>1<option>15<option>30<option>45<option>*</select>
+Hour:<select name=hour>
+<option>*
+<option>1
+<option>2
+<option>3
+<option>4
+<option>5
+<option>6
+<option>7
+<option>8
+<option>9
+<option>10
+<option>11
+<option>12
+<option>13
+<option>14
+<option>15
+<option>16
+<option>17
+<option>18
+<option>19
+<option>20
+<option>21
+<option>22
+<option>23
+<option>24
+</select>
+Day of Month: <input class="x-form-field x-form-text" type=text size=2 name=dayofmonth value="*">
+Day of Week: <select name=dayofweek>
+<option value="*">All
+<option value=1>Monday
+<option value=2>Tuesday
+<option value=3>Wednesday
+<option value=4>Thursday
+<option value=5>Friday
+<option value=6>Saturday
+<option value=0>Sunday
+</select>
+Month:<select name=month>
+<option value="*">All
+<option value=1>January
+<option value=2>February
+<option value=3>March
+<option value=4>April
+<option value=5>May
+<option value=6>June
+<option value=7>July
+<option value=8>August
+<option value=9>September
+<option value=10>October
+<option value=11>November
+<option value=12>December
+</select></td></tr>
+[[scheduleradminstart]]
+<tr>
+<td>
+Alt Email Destination:
+</td>
+<td>
+<input class="x-form-field x-form-text"  type=text size=25 style="width:95%; border:1px solid gray; padding:1px;" name=alt_email>
+<br>
+</td>
+</tr>
+[[scheduleradminend]]
+<tr>
+<td>
+Comment:
+</td>
+<td>
+<input class="x-form-field x-form-text"  type=text size=40 style="width:95%; border:1px solid gray; padding:1px;"  name=comment value="Comment here please...">
+</td>
+</tr>
+<tr valign=top>
+<td>
+Urls:
+</td>
+<td valign=top><center>
+<textarea  class="x-form-field x-form-text"  rows=2 cols=50 name=urls style="width:100%;height:100%; padding:1px;">
+</textarea>
+</td>
+</tr>
+<tr>
+<td colspan=2>
+<center>
+<input type=submit value="Submit"></center>
+</center>
+</td></tr>
+</form>
+</table>
+<hr>
+&nbsp;&nbsp;&nbsp;&nbsp;Existing Schedules:
+<table class=lined style="margin:10px;" cellspacing=0 cellpadding=1>
+[[BEGIN1]]
+<tr ><td colspan=9 style="border-top:1px solid gray;">ID: [[schedule_id]] - [[comment]]</td></tr>
+<tr><td rowspan=2>
+<a href="scheduler.cgi?mode=delete&id=[[schedule_id]]"><font size=-3>delete</font></a><br>
+<a href="scheduler.cgi?mode=activate&id=[[schedule_id]]"><font size=-3>activate</font></a><br>
+<a href="scheduler.cgi?mode=deactivate&id=[[schedule_id]]"><font size=-3>deactivate</font></a><br>
+<a href="scheduler.cgi?mode=sendnow&id=[[schedule_id]]"><font size=-3>send now</font></a>
+</td>
+<font size=-1>
+<td><font size=-2>Minute</td><td><font size=-2>Hour</td><td><font size=-2>DayofMonth</td>
+	<td><font size=-2>DayofWeek</td><td><font size=-2>Month</td><td><font size=-2>Active</td><td><font size=-2>Alt Email</td><td align=left><font size=-2>Urls</td>
+</font>
+	</tr>
+
+<tr>
+<td>[[min]]</td>
+<td>[[hour]]</td>
+<td>[[day]]</td>
+<td>[[dayofweek]]</td>
+<td>[[month]]</td>
+<td>[[active]]</td>
+<td><font size=-2>[[alt_email]]</font></td>
+<td><tt>[[url]]</tt></td>
+</tr>
+[[END1]]
+<tr>
+<td style="border-bottom:1px solid gray;" colspan=9>
+&nbsp;
+</td>
+</tr>
+</table>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+
+<script>
+[[HEADER]]
+</script>
+[[FOOTER]]
+</body>
+</html>

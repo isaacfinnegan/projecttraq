@@ -1,0 +1,119 @@
+Quick Installation Instructions:
+
+(for upgrading, see docs/upgrade.txt)
+
+1.	Install Software Prerequisites:
+
+	You will need the following software installed to get the ProjectTraq system up and running.
+
+	mysql >= 3.23.x
+
+	apache
+	Optionally: mod_perl with apache.  ProjectTraq runs much faster in a mod_perl environment
+
+	The following perl modules are required.
+	these can be installed by typing
+	
+		perl -MCPAN -e 'install MODULENAME'
+		
+For Windows, you may use the ActiveState Perl distribution's PPM (perl package manager)
+Just type the following from within ppm
+		
+		install MODULENAME  
+		
+		(NOTE: For modules in PPM, use - instead of ::  i.e.   Mail::Sendmail -> Mail-Sendmail)
+    
+ # You will need to install a mysql DBD driver for perl		
+	DBI  (and optionally  Apache::DBI if using mod_perl)
+  DBD::mysql
+ # This is not the only mysql DBI driver that can be used
+ # You will need to install a mysql DBD driver for perl		
+	CGI
+	Mail::Sendmail
+	MIME::Base64
+	Date::Calc
+	Crypt::CBC
+	Crypt::Blowfish
+		(NOTE: On windows ActiveState is not allowed to distribute this module.  You may wish to add the theoryx PPM repository.
+		You can do this by typing (for ActiveState Perl 5.8.4):
+		rep add "TheoryX" http://theoryx5.uwinnipeg.ca/ppms/
+		from within ppm)
+	Storable  (comes in perl 5.8)
+	
+	Optional:
+	Sys::Syslog
+	Net::LDAP	
+	GD
+
+
+2.	Untar-zip the .tgz file somewhere in your web tree (ideally where it is going to end up).
+
+3.	Database - 
+	
+	Run the following commands:
+	
+	mysql -e "create database projecttraq"
+	mysql -e "grant all privileges on projecttraq.* to projecttraq@localhost identified by 'password'"
+	mysql -e "flush privileges"
+	mysql -uprojecttraq -ppassword projecttraq < createdb.sql
+	
+	The script createdb.sql will create all the necessary tables/records needed by piss to function.   
+
+	NOTE:  A default administrator account is created (user: admin pass: changeme)  YOU MUST CHANGE THIS!  When you finish setting up the system log in as admin and change the password.
+	
+4.	Setup configuration
+	Copy the lib/traq.cfg.dist file to /etc/traq.cfg or /usr/local/etc/traq.cfg if you move this file to another location, you must edit the <projecttraq root>/lib/TraqConfig.pm file so that it can find the traq.cfg file.   Then edit file according to your needs.  This file is fairly well commented, so you should just read through it and make the appropriate changes.
+	Be sure to read through all configuration options, as many settings will be needed before continuing (such as path info.) 
+
+5.	Apache changes
+	The following configuration changes will need to be made to apache to allow projecttraq to run.  You may add or change these lines in your httpd.conf
+
+    AddHandler cgi-script .cgi
+	
+	DirectoryIndex index.html index.cgi
+	
+	<Directory -path to installation->
+    Options +ExecCGI
+    </Directory>
+
+
+6.	Test setup
+	You may use the testSetup.pl script to verify everything is setup correctly for the Perl environment.
+	Then hit 
+
+7.	Optional mod_perl setup
+	mod_perl allows perl programs to run much faster in apache by staying compiled.   You can setup projecttraq for mod_perl by doing the following:
+	
+	-use the startup.pl.dist script provided in the lib/ directory. You will need to modify following line to match your installation path.
+	
+			use lib qw(/www/htdocs/projecttraq/lib);
+ 
+ 
+	-Add the following to your apache config (modify path's as apropriate)
+	mod_perl:
+	
+	###   ProjectTraq mod_perl
+	PerlRequire /www/conf/startup.pl
+	PerlModule Apache::Registry
+	<Directory /www/htdocs/projecttraq>
+		<Files *.cgi>
+    	    SetHandler perl-script
+        	PerlHandler Apache::Registry
+		  	PerlSendHeader On
+		</Files>
+	</Directory>
+	
+	
+	for mod_perl2, add the following to you <apache root>/conf.d/perl.conf (modify path's as apropriate):
+	
+	
+	###   ProjectTraq mod_perl2
+	PerlModule Apache2::compat
+	<Directory /www/htdocs/projecttraq>
+		<Files *.cgi>
+		        SetHandler perl-script
+		        PerlHandler ModPerl::Registry
+		        PerlOptions +ParseHeaders
+		</Files>
+	</Directory>
+	PerlRequire /www/conf/startup.pl

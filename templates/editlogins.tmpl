@@ -1,0 +1,68 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<html>
+<head>
+<title>User Editor</title>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<body>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+<font color=black><h3>User Administration</h3></font>
+<a href=editlogins.cgi?active=Yes>[[Yes]]Active</b></a> <a href=editlogins.cgi?active=No>[[No]]Inactive</b></a> <a href=editlogins.cgi?active=All>[[All]]All</b></a>
+<A href="editlogins.cgi?mode=new">Create User</a>
+<table border=1>
+<tr>
+<td>Name</td><td>Userid</td><td><font size=-1>Records assigned to this User</font></td>
+</tr>
+[[BEGINR]]
+<tr><td>
+<a href="editlogins.cgi?mode=edit&login=[[USERID]]">[[USERNAME]]</A>
+</td>
+<td>[[USERID]]</td>
+<td><font size=-1><a href="do_query.cgi?type=bug&return_bugs=1&return_tasks=1&role_andor=or&assigned_to=[[USERID]]&status_class=open">Open Records List</a></font></td></tr>
+[[ENDR]]
+</TABLE>
+<br>
+<a href="[[RETURN]]/">Return</a>
+<br>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<script>
+[[HEADER]]
+</script>
+[[FOOTER]]
+</body>
+</html>

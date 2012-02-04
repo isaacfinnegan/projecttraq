@@ -1,0 +1,49 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<h3>Modifying [[PROJECTIDLABEL]] Access Groups</h3>
+<table>
+<form action="./editproject.cgi">
+<input type=hidden name=mode value=processgroupacl>
+<input type=hidden name=projectid value=[[PROJECTID]]>
+<tr>
+    <td><center>No Access</center></td><td></td><td>Full Access</td>
+</tr>
+<tr><td>
+    <SELECT multiple SIZE=20 NAME=notingroup>
+    [[BEGIN1]]
+	<OPTION value=[[gid]]>[[name]]
+    [[END1]]
+    </SELECT>
+    </td>
+    <td>
+    <input type=submit name=action value="Add"><br>
+    <input type=submit name=action value="Delete">
+    </td>
+    <td>
+    <SELECT multiple SIZE=20 NAME=ingroup>
+    [[BEGIN2]]
+	<OPTION VALUE=[[groupid]]>[[groupname]]
+    [[END2]]
+    </SELECT>
+    </td>
+</tr>
+</form>
+</table>

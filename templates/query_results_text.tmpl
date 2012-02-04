@@ -1,0 +1,115 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+var checkflag = "false";
+function check(field) {
+if (checkflag == "false") {
+for (i = 0; i < field.length; i++) {
+field[i].checked = true;}
+checkflag = "true";
+return "Uncheck All"; }
+else {
+for (i = 0; i < field.length; i++) {
+field[i].checked = false; }
+checkflag = "false";
+return "Check All"; }
+}
+function calendar(datefield){
+  var val=escape(document.main.elements[datefield].value);
+  window.open('calpop.cgi?fld='+datefield+'&val='+val,'calendar','width=240,height=270,menubar=0,scrollbars=0,resizable=1,toolbar=0');
+}
+
+//  End -->
+</script>
+
+	</head>
+[[HEADER]]
+
+	<BODY>
+<LINK REL=stylesheet HREF="./traq.css" TYPE="text/css">
+<h3>Your query returned [[NUMRESULTS]] record(s).</h3>
+<FORM ACTION="quickaction.cgi" METHOD=GET>
+
+<A HREF="./prefs.cgi?queryid=[[QUERYID]]&tab=3">Change</A> Columns<br>
+View results as a <a href="./do_query.cgi?hier=1&queryid=[[QUERYID]]">hierarchy</a>.<br>
+<pre>
+Action  [[BEGIN1]]<A HREF="./do_query.cgi?qname=[[QNAME]]&orderby=[[FIELDNAME]]&reverse=1">[[FIELDLABEL]]</A> &nbsp;[[END1]]
+</pre>
+<hr>
+<pre>
+[[BEGIN2]]
+<INPUT TYPE=checkbox name=ids value=[[record_ID]]><A HREF="redir.cgi?method=edit&id=[[record_ID]]">edit</a> [[HIER]] <A HREF="redir.cgi?method=look&id=[[record_ID]]">[[FIELD1]]</a> [[FIELD2]] [[FIELD3]] [[FIELD4]] [[FIELD5]] [[FIELD6]] [[FIELD7]] [[FIELD8]] [[FIELD9]] [[FIELD10]] [[FIELD11]] [[FIELD12]] [[FIELD13]]
+[[END2]]
+</pre>	
+<A HREF="./prefs.cgi?queryid=[[QUERYID]]&tab=3">Change</A> Columns
+<hr>
+Change several tasks at once...<br>
+<SELECT name=action>
+<option Value="Close">Close
+<option Value="Reopen">Reopen
+<option VALUE="ViewAll">ViewAll
+<option selected VALUE="Change">Change
+<option value="AddNote">AddNote
+<option value="Edit">Edit
+</SELECT>
+Assign To:<SELECT name=assign_to>
+<option selected value=>
+[[BEGINASS]]
+	<option value=[[EMPLOYEEID]]>[[EMPLOYEENAME]]
+[[ENDASS]]
+</SELECT>
+Status:<select name=status>
+<option selected value=>
+[[BEGINST]]
+<option value=[[statusv]]>[[statusl]]
+[[ENDST]]
+</SELECT>
+Priority:<select name=priority>
+<option selected value=>
+[[BEGINPP]]
+<option value=[[priv]]>[[pril]]
+[[ENDPP]]
+</SELECT>
+Milestone:<select name=milestone>
+<option selected value=>
+[[BEGINMIL]]
+<option value=[[milid]]>[[mil]]
+[[ENDMIL]]
+</select>
+<br>
+Target Date:
+<input type=text size=10 name=target_date><a href="javascript:calendar('target_date');"><img src="cal_icon.gif"></a>
+&nbsp;&nbsp;&nbsp;Comment:<font color=red>*</font>
+<Input type=text size=20 name=note>
+<input value="Do It" type=submit>
+</FORM>	
+		<a href=[[display_query_page_url]]>Back To Query page</a>
+
+[[FOOTER]]
+	</body>
+
+</html>

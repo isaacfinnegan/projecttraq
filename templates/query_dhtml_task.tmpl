@@ -1,0 +1,936 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<HTML><HEAD><TITLE>TaskTraq Query</TITLE>
+<SCRIPT LANGUAGE="Javascript">
+var menuhash=[];
+
+[[JS]]
+
+var fieldlist=[ [[FIELDLIST]] ];
+
+var fieldareas=[];
+
+var fieldarealist="";
+
+var fieldinitlist=['short_desc','long_desc','projectid','assigned_to','reporter'];
+
+function initdisp(pref)
+{
+    fieldarealist=document.getElementById('fieldarealist').value;
+    fieldareas=fieldarealist.split('--');
+    if(!fieldarealist)
+    {
+        fieldareas=fieldinitlist;
+    }
+        
+    var f=0;
+    var g=0;
+    for (f=0;f<fieldlist.length;f++)
+    {
+        if(document.getElementById(fieldlist[f] + 'area'))
+        {
+            document.getElementById(fieldlist[f] + 'area').style.display='none';
+        }
+    }
+    for (g=0;g<fieldareas.length;g++)
+    {
+        if(document.getElementById(fieldareas[g] + 'area'))
+        {
+            showField(fieldareas[g],1);
+        }
+    }
+}
+function hideall(fade)
+{
+    for (f=0;f<fieldlist.length;f++)
+    {
+        if(document.getElementById(fieldlist[f] + 'area'))
+        {
+           hideField(fieldlist[f],fade);
+        }
+    }
+    clearField('status_class');
+}
+function showColumnSelector()
+{
+	document.getElementById('columnselector').style.display='block';
+}
+
+function move(index,to) {
+	var list = document.getElementById('returnfields');
+	var total = list.options.length-1;
+	if (index == -1) return false;
+	if (to == +1 && index == total) return false;
+	if (to == -1 && index == 0) return false;
+	var items = new Array;
+	var values = new Array;
+	for (i = total; i >= 0; i--) {
+		items[i] = list.options[i].text;
+		values[i] = list.options[i].value;
+	}
+	for (i = total; i >= 0; i--) {
+		if (index == i) {
+			list.options[i + to] = new Option(items[i],values[i], 0, 1);
+			list.options[i] = new Option(items[i + to], values[i + to]);
+			i--;
+		}
+		else {
+			list.options[i] = new Option(items[i], values[i]);
+		   }
+		}
+		list.focus();
+	}
+
+</SCRIPT>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+				Task Query
+	</TD>
+	</TR>
+</table>
+
+<FORM action="do_query.cgi" method=get name=main onsubmit="if(Ext){document.getElementById('returnfields').value=getQFselections();}">
+<input type=hidden name=type value=task>
+<input type=hidden name=dhtml value=1>
+<input type=hidden name=role_andor value='and'>
+<input type=hidden name=fieldarealist id=fieldarealist value="[[FIELDAREALIST]]">
+<table style="margin: 10px; border: 1px solid #bbb;" bgcolor=#eeeeee CELLPADDING="1" CELLSPACING="0" >
+<tr>
+<td valign=center align=center style="padding:3px 15px 0px 15px;">
+	<INPUT type=submit value="Submit query" name=submit onClick="this.value='Please wait...'"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<INPUT type=reset value="Reset back to the default query" name=reset> 
+    <span style="align:center;margin-left:10px; font-size:11px;">
+	<FONT face="Arial, Helvetica, sans-serif" size=3>Save this Query as:</FONT></B><input class="x-form-field x-form-text"  name=queryname>
+	&nbsp;&nbsp;
+	Get All:
+	<b>Bugs</b><input type=checkbox name=return_bugs [[return_bugs]] value=1>
+	<b>Tasks</b><input type=checkbox name=return_tasks  [[return_tasks]] value=1>
+	</span>
+</td>
+</tr>
+<tr>
+<td><div id=queryrunoptions style="height:14px;overflow:hidden;">
+	<div 
+		onclick="queryoptions(this);" style="font-size:10px;font-style:italic;cursor:pointer;margin-left:10px;margin-bottom:8px;"
+	>
+	More Options...
+	</div>
+	<div id=moreoptions style="font-size:11px;">
+		<input type=hidden id=returnfields name=returnfields value="[[RETURNFIELDS]]">
+		&nbsp;&nbsp;Custom Column Selection:<br>
+		<div style="float:right;width:140px;padding:10px;margin:10px;">
+		Sort by 
+		   <select name=orderby style="font-size:10px;">
+			   <option value=''>Default</option>
+			   [[ORDERBY_OPTIONLIST]]
+		   </select>
+		<br>
+		Report Mode <input type=checkbox name=reportmode id=reportmode value=1>
+		</div>
+		<div id=quickfieldarea style='width:403px;height:180px;padding-bottom:3px;margin-left:10px;'></div>
+	</div>
+</div>
+</td>
+</tr>
+</table>
+	
+<p/>
+<div id=main style="margin-left:5px;">
+<div id=wrap1 class=wrap1>
+<div id=wrap2 class=wrap2>
+<div id=wrap3 class=wrap3>
+<div id=fieldlist class="fieldlist">
+<div style="background-color:white;">
+Select a field below to query against
+</div>
+<hr align=center width="85%">
+<div id=assigned_toqueryfield class=queryfield onClick="showField('assigned_to');">[[ASSIGNED_TOLABEL]]</div>
+<div id=versionqueryfield class=queryfield onClick="showField('version');">[[VERSIONLABEL]]</div>
+<div id=ccqueryfield class=queryfield onClick="showField('cc');">[[CCLABEL]]</div>
+<div id=componentidqueryfield class=queryfield onClick="showField('componentid');">[[COMPONENTIDLABEL]]</div>
+<div id=resolutionqueryfield class=queryfield onClick="showField('resolution');">[[RESOLUTIONLABEL]]</div>
+<div id=creation_tsqueryfield class=queryfield onClick="showField('creation_ts');">[[CREATION_TSLABEL]]</div>
+<div id=delta_tsqueryfield class=queryfield onClick="showField('delta_ts');">[[DELTA_TSLABEL]]</div>
+<div id=days_remqueryfield class=queryfield onClick="showField('days_rem');">[[DAYS_REMLABEL]]</div>
+<div id=long_descqueryfield class=queryfield onClick="showField('long_desc');">[[LONG_DESCLABEL]]</div>
+<div id=ext_refqueryfield class=queryfield onClick="showField('ext_ref');">[[EXT_REFLABEL]]</div>
+<div id=units_reqqueryfield class=queryfield onClick="showField('units_req');">[[UNITS_REQLABEL]]</div>
+<div id=priorityqueryfield class=queryfield onClick="showField('priority');">[[PRIORITYLABEL]]</div>
+<div id=keywordsqueryfield class=queryfield onClick="showField('keywords');">[[KEYWORDSLABEL]]</div>
+<div id=tech_contactqueryfield class=queryfield onClick="showField('tech_contact');">[[TECH_CONTACTLABEL]]</div>
+<div id=projectidqueryfield class=queryfield onClick="showField('projectid');">[[PROJECTIDLABEL]]</div>
+<div id=reporterqueryfield class=queryfield onClick="showField('reporter');">[[REPORTERLABEL]]</div>
+<div id=qa_contactqueryfield class=queryfield onClick="showField('qa_contact');">[[QA_CONTACTLABEL]]</div>
+<div id=start_datequeryfield class=queryfield onClick="showField('start_date');">[[START_DATELABEL]]</div>
+<div id=statusqueryfield class=queryfield onClick="showField('status');">[[STATUSLABEL]]</div>
+<div id=short_descqueryfield class=queryfield onClick="showField('short_desc');">[[SHORT_DESCLABEL]]</div>
+<div id=target_milestonequeryfield class=queryfield onClick="showField('target_milestone');">[[TARGET_MILESTONELABEL]]</div>
+<div id=target_datequeryfield class=queryfield onClick="showField('target_date');">[[TARGET_DATELABEL]]</div>
+<div id=record_idqueryfield class=queryfield onClick="showField('record_id');">[[RECORD_IDLABEL]]</div>
+<div id=severityqueryfield class=queryfield onClick="showField('severity');">[[SEVERITYLABEL]]</div>
+<div id=status_whiteboardqueryfield class=queryfield onClick="showField('status_whiteboard');">[[STATUS_WHITEBOARDLABEL]]</div>
+<hr align=center width="85%">
+<div id=booleanqueryfield class=queryfield onClick="showField('boolean');">Boolean Options</div>
+<div id=changesqueryfield class=queryfield onClick="showField('changes');">Changes Options</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div style="width:600px;height:16px;">
+    <div style="float:left;" class=queryareatab>
+        <span qtip="Click here to load your saved query field display selections for 'Option Set 1'" class=qoptionload onClick="hideall('nofade');document.getElementById('fieldarealist').value=GetCookie('taskset1');initdisp();">Option Set 1</span>
+        <span qtip="Click here to save the currently chosen field display as 'Option Set 1'" class=qoptionsave onClick="SetCookie('taskset1',document.getElementById('fieldarealist').value);"> save</span>
+    </div>
+    <div style="float:left;" class=queryareatab>
+        <span qtip="Click here to load your saved query field display selections for 'Option Set 2'" class=qoptionload onClick="hideall('nofade');document.getElementById('fieldarealist').value=GetCookie('taskset2');initdisp();">Option Set 2</span>
+        <span qtip="Click here to save the currently chosen field display as 'Option Set 2'" class=qoptionsave onClick="SetCookie('taskset2',document.getElementById('fieldarealist').value);"> save</span>
+    </div>
+    <div style="float:left;" class=queryareatab>
+        <span qtip="Click here to load your saved query field display selections for 'Option Set 3'" class=qoptionload onClick="hideall('nofade');document.getElementById('fieldarealist').value=GetCookie('taskset3');initdisp();">Option Set 3</span>
+        <span qtip="Click here to save the currently chosen field display as 'Option Set 3'" class=qoptionsave onClick="SetCookie('taskset3',document.getElementById('fieldarealist').value);"> save</span>
+    </div>
+    <div style="text-align:right;">
+        <span style="text-align:right;color:gray; font-style:italic;font-size:10px; cursor: pointer;" onClick="hideall();">Clear selections</span>
+    </div>
+</div>
+<div id=queryarea>
+</div>
+<div id=holdingarea>
+
+<div id=projectidarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+    	  	<span class=fieldlabel>[[PROJECTIDLABEL]] or Service:</span> 
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('projectid');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+	      	<SELECT class=smallish multiple size=7 name=projectid id=projectid 
+	      	onChange="dyn_menu(this.form.projectid,'target_milestone');dyn_menu(this.form.projectid,'componentid');"
+	      	>
+				[[PROJECTID_OPTIONLIST]]
+		</SELECT>
+		</TD>
+		</TR>
+		</TABLE>
+</div>
+<div id=componentidarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+    	  <span class=fieldlabel>[[COMPONENTIDLABEL]]: </span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('componentid');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+	  <SELECT class=smallish multiple size=7 name=componentid id=componentid>  
+			[[COMPONENTID_OPTIONLIST]]
+	      </SELECT> 
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=target_milestonearea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+          <span class=fieldlabel>[[TARGET_MILESTONELABEL]]</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('target_milestone');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+	  <SELECT class=smallish multiple size=5 name=target_milestone id=target_milestone>
+			[[TARGET_MILESTONE_OPTIONLIST]]
+	      </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>
+<div id=short_descarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+      	<span class=fieldlabel>[[SHORT_DESCLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('short_desc');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <input class="x-form-field x-form-text"  name=short_desc id=short_desc size=40 value="[[short_desc]]">
+            <SELECT class=smallish name=short_desc_type> 
+			[[short_desc_type_optionlist]]
+            </SELECT> 
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=long_descarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+           <span class=fieldlabel>[[LONG_DESCLABEL]]:</span>
+        </th>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('long_desc');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <input class="x-form-field x-form-text"  type=text id=long_desc name=long_desc size=40 value="[[long_desc]]"> 
+         <SELECT class=smallish name=long_desc_type> 
+			[[long_desc_type_optionlist]]
+          	</SELECT> 
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=status_whiteboardarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+           <span class=fieldlabel>[[STATUS_WHITEBOARDLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('status_whiteboard');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <input class="x-form-field x-form-text"  name=status_whiteboard id=status_whiteboard size=40 value="[[status_whiteboard]]"> 
+          <SELECT class=smallish name=status_whiteboard_type> 
+			[[status_whiteboard_type_optionlist]]
+          </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=days_remarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+           <span class=fieldlabel>[[DAYS_REMLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('days_rem');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <input class="x-form-field x-form-text"  name=days_rem id=days_rem size=40 value="[[days_rem]]"> 
+          <SELECT class=smallish name=days_rem_type> 
+			[[days_rem_type_optionlist]]
+          </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=ext_refarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+        <span class=fieldlabel>[[EXT_REFLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('ext_ref');">Close</div>
+    </td>
+        </tr>
+        <TR>
+                <TD colspan=2>
+          <INPUT class="x-form-field x-form-text" name=ext_ref id=ext_ref size=40 value="[[ext_ref]]">
+            <SELECT class=smallish name=ext_ref_type>
+                        [[ext_ref_type_optionlist]]
+            </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+
+<div id=units_reqarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+           <span class=fieldlabel>[[UNITS_REQLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('units_req');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <input class="x-form-field x-form-text"  name=units_req id=units_req size=40 value="[[units_req]]"> 
+          <SELECT class=smallish name=units_req_type> 
+			[[units_req_type_optionlist]]
+          </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+
+<div id=keywordsarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+         <A HREF="./keywords.cgi" TARGET=newwin class=fieldlabel>[[KEYWORDSLABEL]]</a>:
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('keywords');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+               [[BEGINb]]
+               <input name=keywords id=keywords [[CHECKED]] type=checkbox value=[[keywordid]]>[[name]] &nbsp;&nbsp;&nbsp;
+               [[ENDb]]
+        <br>
+        <SELECT class=smallish name=keywords_type> 
+            <OPTION value=any selected>Any</OPTION> 
+            <OPTION value=all>All</OPTION> 
+            <OPTION value=none>None</OPTION>
+           </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=attachmentsarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+           <span class=fieldlabel>Attachments:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('attachments');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+          <SELECT id=attachments class=smallish name=attach_have>
+          [[attach_have_optionlist]]
+          </select>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id="assigned_toarea" class="fieldarea">  
+    <table cellspacing=0 cellpadding=2>
+    <tr class=fieldarea_header>
+    <td align=left>
+    <span class=fieldlabel>[[ASSIGNED_TOLABEL]]:</span>
+    </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('assigned_to');">Close</div>
+    </td>
+    <tr>
+    <td>
+    <SELECT class=smallish MULTIPLE SIZE=8 name=assigned_to id=assigned_to>
+    [[ASSIGNED_TO_OPTIONLIST]]
+    </SELECT>
+    </td>
+    <td>
+     <span class=fieldlabel>By Group</span>
+     <br>
+    <SELECT class=smallish MULTIPLE SIZE=7 name=assigned_togroup id=assigned_togroup>
+    [[ASSIGNED_TOGROUP_OPTIONLIST]]
+    </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>	
+<div id="reporterarea" class="fieldarea">  
+    <table cellspacing=0 cellpadding=2>
+    <tr class=fieldarea_header>
+    <td align=left>
+    <span class=fieldlabel>[[REPORTERLABEL]]:</span>
+    </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('reporter');">Close</div>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <SELECT class=smallish MULTIPLE SIZE=8 name=reporter id=reporter>
+    [[REPORTER_OPTIONLIST]]
+    </SELECT>
+    </td>
+    <td>
+    <span class=fieldlabel>By Group</span>
+    <br>
+    <SELECT class=smallish MULTIPLE SIZE=7 name=reportergroup id=reportergroup>
+    [[REPORTERGROUP_OPTIONLIST]]
+    </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>	
+<div id="tech_contactarea" class="fieldarea">  
+    <table cellspacing=0 cellpadding=2>
+    <tr class=fieldarea_header>
+    <td align=left>
+     <span class=fieldlabel>[[TECH_CONTACTLABEL]]:</span>
+    </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('tech_contact');">Close</div>
+    </td>
+    </tr>
+    <tr>
+    <td>
+     <SELECT class=smallish MULTIPLE SIZE=8 name=tech_contact id=tech_contact>
+    [[TECH_CONTACT_OPTIONLIST]]
+    </SELECT>
+    </td>
+    <td>
+    <span class=fieldlabel>By Group</span>
+    <br>
+    <SELECT class=smallish MULTIPLE SIZE=7 name=tech_contactgroup id=tech_contactgroup>
+    [[TECH_CONTACTGROUP_OPTIONLIST]]
+    </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>	
+<div id="qa_contactarea" class="fieldarea">  
+    <table cellspacing=0 cellpadding=2>
+    <tr class=fieldarea_header>
+    <td align=left>
+    <span class=fieldlabel>[[QA_CONTACTLABEL]]:</span>
+    </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('qa_contact');">Close</div>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <SELECT class=smallish MULTIPLE SIZE=8 name=qa_contact id=qa_contact>
+    [[QA_CONTACT_OPTIONLIST]]
+    </SELECT>
+    </td>
+    <td>
+    <span class=fieldlabel>By Group</span><br>
+    <SELECT class=smallish MULTIPLE SIZE=7 name=qa_contactgroup id=qa_contactgroup>
+    [[QA_CONTACTGROUP_OPTIONLIST]]
+    </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>	
+<div id="ccarea" class="fieldarea">  
+    <table cellspacing=0 cellpadding=2>
+    <tr class=fieldarea_header>
+    <td align=left>
+    <span class=fieldlabel>[[CCLABEL]]:</span>
+    </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('cc');">Close</div>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <SELECT class=smallish MULTIPLE SIZE=8 name=cc id=cc>
+    [[ROLE_CC_OPTIONLIST]]
+    </SELECT>
+    </td>
+    <td>
+    <span class=fieldlabel>By Group</span><br>
+    <SELECT class=smallish MULTIPLE SIZE=7 name=ccgroup id=ccgroup>
+    [[CCGROUP_OPTIONLIST]]
+    </SELECT>
+    </td>
+    </tr>
+    </table>
+</div>	
+
+
+<div id=statusarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+       <span class=fieldlabel>[[STATUSLABEL]]:</span> 
+       </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="clearField('status_class');hideField('status');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD>
+	  <SELECT class=smallish multiple size=5 name=status id=status> 
+		[[STATUS_OPTIONLIST]]
+	  </SELECT> 
+        </td>
+        <td style="vertical-align:middle;">
+    	or filter by  
+		<select name=status_class id=status_class style="font-size:10px;">
+			<option></option>
+			[[STATUS_CLASS_OPTIONLIST]]
+		</select>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=resolutionarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+          <span class=fieldlabel>[[RESOLUTIONLABEL]]:</span> 
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('resolution');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+	  <SELECT class=smallish multiple size=5 name=resolution id=resolution> 
+		[[RESOLUTION_OPTIONLIST]]
+	  </SELECT> 
+	  </td>
+	  </tr>
+	  </table>
+</div>
+<div id=priorityarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+          <span class=fieldlabel>[[PRIORITYLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('priority');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+        <SELECT class=smallish multiple size=5 name=priority id=priority> 
+        [[PRIORITY_OPTIONLIST]]
+        </SELECT> 
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=severityarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+          <span class=fieldlabel>[[SEVERITYLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('severity');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		<TD colspan=2>
+        <SELECT class=smallish multiple size=5 name=severity id=severity> 
+        [[SEVERITY_OPTIONLIST]]
+          </SELECT>
+        </td>
+        </tr>
+        </table>
+</div>
+<div id=creation_tsarea class=fieldarea>
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+                <span class=fieldlabel>[[CREATION_TSLABEL]]:</span> 
+
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('creation_ts');">Close</div>
+    </td>
+        </tr>
+        <TR>
+		            <TD ><FONT face="Arial, Helvetica, sans-serif">From: </font>
+		             			  <input class="x-form-field x-form-text"  size=14 value="[[start_creation_ts]]" name=start_creation_ts id=start_creation_ts> 
+		 <FONT face="Arial, Helvetica, sans-serif">To: </font>
+		 <input class="x-form-field x-form-text"  size=14 value="[[end_creation_ts]]" name=end_creation_ts id=end_creation_ts>
+		            </TD>
+         			<td align=right>
+			<div id=start_datetip style="vertical-align:bottom;color:#aba8a6;font-size:8pt;display:inline;font-style:italic;">smart date parsing <img onClick="NewWindow('datetest.cgi','DateTester',400,500,'1');" class=magnifier style="cursor:pointer;" src="images/question-mark-small.gif"></div>
+			</td>
+
+		          </TR>
+		</TABLE>
+</div>
+<div id=delta_tsarea class=fieldarea>
+		<table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+                <span class=fieldlabel>[[DELTA_TSLABEL]]:</span> 
+
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('delta_ts');">Close</div>
+    </td>
+        </tr>
+			<tr><td >
+			<FONT face="Arial, Helvetica, sans-serif">From: </font>
+			<input class="x-form-field x-form-text"  size=14 value="[[start_delta_ts]]" name=start_delta_ts id=start_delta_ts>
+		<FONT face="Arial, Helvetica, sans-serif">To: </font>
+		<input class="x-form-field x-form-text"  size=14 value="[[end_delta_ts]]" name=end_delta_ts id=end_delta_ts> 
+			</td>
+			<td align=right>
+			<div id=start_datetip style="vertical-align:bottom;color:#aba8a6;font-size:8pt;display:inline;font-style:italic;">smart date parsing <img onClick="NewWindow('datetest.cgi','DateTester',400,500,'1');" class=magnifier style="cursor:pointer;" src="images/question-mark-small.gif"></div>
+			</td>
+			</tr>
+		</table>
+</div>
+<div id=start_datearea class=fieldarea >
+        <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+                <span class=fieldlabel>[[START_DATELABEL]]:</span> 
+
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('start_date');">Close</div>
+    </td>
+        </tr>
+			<tr><td
+			<FONT face="Arial, Helvetica, sans-serif">From: </font>
+			<input class="x-form-field x-form-text"  size=14 value="[[start_start_date]]" name=start_start_date id=start_start_date> 
+		<FONT face="Arial, Helvetica, sans-serif">To: </font>
+		<input class="x-form-field x-form-text"  size=14 value="[[end_start_date]]" name=end_start_date id=end_start_date> 
+			</td>
+			<td align=right>
+			<div id=start_datetip style="vertical-align:bottom;color:#aba8a6;font-size:8pt;display:inline;font-style:italic;">smart date parsing <img onClick="NewWindow('datetest.cgi','DateTester',400,500,'1');" class=magnifier style="cursor:pointer;" src="images/question-mark-small.gif"></div>
+			</td>
+			</tr>
+		</table>
+</div>
+<div id=target_datearea class=fieldarea>
+		<table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+                <span class=fieldlabel>[[TARGET_DATELABEL]]:</span> 
+
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('target_date');">Close</div>
+    </td>
+        </tr>
+			<tr><td >
+			<FONT face="Arial, Helvetica, sans-serif">From: </font>
+			<input class="x-form-field x-form-text"  size=14 value="[[start_target_date]]" name=start_target_date id=start_target_date> 
+		<FONT face="Arial, Helvetica, sans-serif">To: </font>
+		<input class="x-form-field x-form-text"  size=14 value="[[end_target_date]]" name=end_target_date id=end_target_date> 
+			</td>
+			<td align=right>
+			<div id=start_datetip style="vertical-align:bottom;color:#aba8a6;font-size:8pt;display:inline;font-style:italic;">smart date parsing <img onClick="NewWindow('datetest.cgi','DateTester',400,500,'1');" class=magnifier style="cursor:pointer;" src="images/question-mark-small.gif"></div>
+			</td>
+			</tr>
+		</table>
+</div>
+
+<div id=record_idarea class=fieldarea>
+    <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+        <span class=fieldlabel>[[RECORD_IDLABEL]]:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('record_id');">Close</div>
+    </td>
+        </tr>
+        <tr>
+        <td colspan=2>
+        <SELECT name=task_id_type class=smallish> 
+	    <OPTION value=include selected>Only
+	    <OPTION value=exclude>Exclude</OPTION>
+	    </SELECT> 
+	    <span class=smallish>tasks numbered:</span> 
+	    <input class="x-form-field x-form-text"  value="[[record_id]]" name=record_id id=record_id size=40> 
+	    <font size=1>(separate by commas)</font>
+	    </td>
+	    </tr>
+	    </table>
+</div>
+
+
+<div id=changesarea class=fieldarea>
+<!-- SEARCHING ON RECORD CHANGES -->
+    <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left colspan=2>
+        <span class=fieldlabel>RECORD CHANGE:</span>
+        </td>
+    <td align=right colspan=2>
+        <div class=queryfieldclose onclick="hideField('changes');">Close</div>
+    </td>
+    </tr>
+	<TR>
+	<TD colspan=3>
+	Field 
+		<SELECT class=smallish name=chfield> 
+		<option></option>
+		[[CHFIELD_OPTIONLIST]]
+		</SELECT> </FONT>
+	   changed between  
+	  <input class="x-form-field x-form-text"  size=12 value="[[chfield_from]]" name=chfield_from id=chfield_from> 
+		 and 
+	  <input class="x-form-field x-form-text"  size=12 value="[[chfield_to]]" name=chfield_to id=chfield_to>
+		</FONT>
+		<br>by:<SELECT class=smallish NAME=changeby><option value="">
+		[[CHANGEBY_OPTIONLIST]]
+		</SELECT>
+		from: <input class="x-form-field x-form-text"  type=text value="[[changefrom]]" name=changefrom size=11>
+		to:<input class="x-form-field x-form-text"  type=text value="[[changeto]]" name=changeto size=11>
+	</TD>
+	</TR>
+</TABLE>
+</div>
+
+<div id=booleanarea class=fieldarea>
+<!-- BOOL FIELD QUERIES -->
+    <table cellspacing=0 cellpadding=2>
+        <tr class=fieldarea_header>
+        <td height=15 align=left>
+        <span class=fieldlabel>BOOLEAN FIELD QUERIES:</span>
+        </td>
+    <td align=right>
+        <div class=queryfieldclose onclick="hideField('boolean');">Close</div>
+    </td>
+    </tr>
+	  <TD colspan=2>
+	    <SELECT name=bool_field1 class=smallish> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field1_optionlist]]
+	    </SELECT> 
+
+	    <SELECT name=bool_operator1 class=smallish> 
+	        <OPTION value=none>-- Limit by Operator --</OPTION> 
+			[[bool_operator1_optionlist]]
+	    </SELECT>
+	      <input class="x-form-field x-form-text"  size=10 name=bool_value1 value="[[bool_value1]]">
+	      <select name=bool_type1 class=smallish>
+			[[BOOL_TYPE1_OPTIONLIST]]
+			</select>
+	  </TD>
+
+	  </TR>
+	  <TR>
+	  <TD colspan=2>
+	    <SELECT name=bool_field2 class=smallish> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field2_optionlist]]
+		</SELECT> 
+
+	    <SELECT name=bool_operator2 class=smallish> 
+	        <OPTION value=none >-- Limit by Operator --</OPTION> 
+			[[bool_operator2_optionlist]]
+	    </SELECT>
+	      <input class="x-form-field x-form-text"  size=10 name=bool_value2 value="[[bool_value2]]">
+			<select name=bool_type2 class=smallish>
+			[[BOOL_TYPE2_OPTIONLIST]]
+			</select
+	  </TD>
+
+	  </TR>
+	  <TR>
+	  <TD colspan=2>
+	    <SELECT name=bool_field3 class=smallish> 
+	        <OPTION value=none>-- Field --</OPTION> 
+			[[bool_field3_optionlist]]
+		</SELECT> 
+
+	    <SELECT name=bool_operator3 class=smallish> 
+	        <OPTION value=none>-- Limit by Operator --</OPTION> 
+			[[bool_operator3_optionlist]]
+	    </SELECT>
+	      <input class="x-form-field x-form-text"  size=10 name=bool_value3 value="[[bool_value3]]">
+			<select name=bool_type3 class=smallish>
+			[[BOOL_TYPE3_OPTIONLIST]]
+			</select	  </TD>
+	  </TR>
+	<TR>
+	  <TD>
+	    <CENTER><B> <FONT 
+	    face="Arial, Helvetica, sans-serif"><A target=_blank 
+	    href="http://www.internettutorials.net/boolean.html">What is this 
+	    stuff?</A> </FONT></B></CENTER></TD>
+</TABLE>
+</div>
+</div>
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<script>
+initdisp();
+var datefields=new Array('start_start_date','end_start_date','start_target_date','end_target_date','start_creation_ts','end_creation_ts','start_delta_ts','end_delta_ts','chfield_from','chfield_to');
+var dateselector=new Array(); 
+function queryoptions(optarea)
+{
+	if(optarea.innerHTML=='Hide Options...')
+	{
+		Ext.get('queryrunoptions').setHeight('14',true);
+		optarea.innerHTML='More Options...';
+	}
+	else
+	{
+		Ext.get('queryrunoptions').setHeight('220',true);
+		if(quickfieldarea.innerHTML=='')
+		{
+			setupfieldlistlayout('quickfieldarea','[[PISSROOT]]/fieldlist.cgi','task',Ext.get('returnfields').dom.value);
+		}
+		optarea.innerHTML='Hide Options...';
+	}
+}
+Ext.onReady(function() {
+	[[HEADER]]
+	var ii;
+	for(ii=0;ii < datefields.length;ii++)
+	{
+		dateselector[ii]=new Ext.form.DateField({format: 'Y/m/d'});
+		dateselector[ii].applyToMarkup(datefields[ii]);	
+		dateselector[ii].focus();
+		dateselector[ii].el.findParent('div').style.display='inline';
+		dateselector[ii].el.findParent('div').style.marginRight='20px';
+		Ext.QuickTips.init();
+
+	}
+
+});
+</script>  
+</FORM>
+</BODY></HTML>

@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>TaskTraq</title>
+<SCRIPT LANGUAGE="JavaScript">
+function valid(form) {
+  if( 
+      (form.short_desc.value == "ShortDescription of Problem") || 
+      (form.severity.value == "") ) {
+	if(form.templatename.value != "" ) {
+		return true;
+	}
+	alert("Please fill out all required fields");
+	return false;
+  }
+  else {
+	return true;
+  }
+}
+function validateTemplate(form) {
+	if( form.templatename.value == "" ) {
+		alert("Please enter a name for the template.");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</SCRIPT>
+
+</head>
+<BODY onload="window.resizeTo(700,500);" >
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<p/>
+<p/>
+<p/>
+<FORM NAME=main METHOD="post" ACTION="processNewTask.cgi" onSubmit="return valid(this);">
+<INPUT TYPE=hidden NAME=projectid VALUE="[[PROJECTID_VAL]]">
+<INPUT TYPE=hidden NAME=parent VALUE="[[PARENT]]">
+<INPUT TYPE=hidden NAME=debug VALUE="[[DEBUG]]">
+<INPUT TYPE=hidden NAME=rtype VALUE=[[RTYPE]]>
+<input type=hidden name="reporter" value="[[REPORTER_VAL]]">
+<input type=hidden name=popup value=1>
+<input type=hidden name="assigned_to" value="[[ASSIGNED_TO_VAL]]">
+<input type=hidden name=cc value="[[CC_VAL]]">
+<input type=hidden name=severity value="[[SEVERITY_VAL]]">
+<input type=hidden name=componentid value="[[COMPONENTID_VAL]]">
+[[KEYWORDS_VAL]]
+<input type=hidden name=status_whiteboard value="Referring URL: [[REFERER]]">
+<input type=hidden name="short" value=1>
+<input type="hidden" name=target_milestone value="[[TARGET_MILESTONE_VAL]]">
+<input type=hidden name=target_date value="[[TARGET_DATE_VAL]]">
+<input type=hidden name=start_date value="[[START_DATE_VAL]]">
+<input type=hidden name=units_req value="[[UNITS_REQ_VAL]]">
+<TABLE WIDTH="600" BORDER="0" CELLSPACING="0" CELLPADDING="2" class=form_table>
+	<TR VALIGN="MIDDLE"> 
+      <TD ALIGN=right><FONT SIZE="2"><B> <FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#Summary" target=descwin>[[SHORTDESCLABEL]]:</a></B></FONT></TD>
+      <TD COLSPAN="5"> <FONT SIZE="2"> 
+        <INPUT type=text NAME=short_desc maxlength=250 SIZE=45 VALUE="[[SHORT_DESC_DISP]]" style="width:500px;">
+        </FONT></TD>
+    </TR>
+    <TR> 
+      <TD ALIGN=right VALIGN=top><FONT SIZE="2"><B><FONT SIZE="3" COLOR="#CC0033">*</FONT> 
+        <A HREF="./fielddescriptions.html#Description" target=descwin>[[LONG_DESCLABEL]]:</a></B></FONT></TD>
+      <!--  </tr> <tr> -->
+      <TD COLSPAN=5> <FONT SIZE="3"> 
+        <TEXTAREA WRAP=VIRTUAL NAME=long_desc ROWS=15 COLS=70 style="width:500px;">Referring URL: [[REFERER]]
+
+[[LONG_DESC_DISP]]</TEXTAREA>
+        <BR>
+        </FONT></TD>
+    </TR>
+    <TR align="center"> 
+      <TD COLSPAN="6" VALIGN=top> 
+        <input type="submit" name="Submit" value="Submit">
+        <CENTER>
+        </CENTER></TD>
+    </TR>
+  </TABLE>
+  </FORM>
+</body>
+</html>

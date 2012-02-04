@@ -1,0 +1,113 @@
+<!--
+###############################################################
+#    Copyright (C) 2001-2007 Isaac Finnegan and Sean Tompkins
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+###############################################################
+-->
+<HTML>
+<HEAD>
+<title>Attachments</title>
+
+<SCRIPT LANGUAGE=JAVASCRIPT>
+function verify() {
+	msg = "Are you you you want to\ndelete this attachment?";
+	return confirm(msg);
+}
+function returnattachmentcount(intNumber){
+		
+		window.opener.document.main.elements['attachments'].value=intNumber;
+		window.close();
+		window.opener.focus();
+}
+
+</SCRIPT>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</HEAD>
+<BODY>
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+<!-- [[HEADER]] -->
+<!-- <br> -->
+<!-- <table width=90%><tr><td> -->
+<!-- 	<b><FONT SIZE=+2>Record: <a href="../redir.cgi?type=view&id=[[ID]]&queryid=[[QUERYID]]">[[RTYPE]][[ID]]</a></FONT><b> -->
+<!-- 	</td> -->
+<!-- 	<td> -->
+<!-- 	Attachments: [[COUNT]] -->
+<!-- 	</td> -->
+<!-- 	<td align=right> -->
+<!-- 	<a href="javascript:returnattachmentcount([[COUNT]]);">Close Window</a> -->
+<!-- 	</td> -->
+<!-- </tr></table> -->
+<!-- <br> -->
+<TABLE border=1>
+<FONT SIZE="1"><tr>
+<th><FONT SIZE="1">Attach_ID</font></th>
+<th><FONT SIZE="1">Date Added</font></th>
+<th><FONT SIZE="1">Description</font></th>
+<th><FONT SIZE="1">Filename</font></th>
+<th><FONT SIZE="1">Submitter</font></th>
+<th></font><FONT SIZE="1">MimeType</font></th></tr>
+</font>
+[[BEGIN1]]
+	<TR>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[attach_id]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[creation_ts]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[description]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[filename]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[submitter_id]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1">[[mimetype]]</font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1"><a href="./attach.cgi?mode=download&id=[[RECORDID]]&attid=[[attach_id]]&queryid=[[QUERYID]]" target=_blank>View</A></font></td>
+		<td bgcolor=#FFFFFF><FONT SIZE="1"><a href="./attach.cgi?mode=delete&id=[[RECORDID]]&attid=[[attach_id]]&queryid=[[QUERYID]]" onClick="return verify()">Delete</A></font></td>
+	</TR>
+[[END1]]
+</TABLE>
+<hr>
+<FORM ENCTYPE="multipart/form-data" ACTION="./attach.cgi" METHOD=POST>
+  <p><font size=-1>Add attachment:
+    <INPUT style="font-size=10px;" TYPE=FILE NAME=FILE>
+    <INPUT TYPE=HIDDEN NAME=mode value=upload>
+    <input type=hidden name=queryid value=[[QUERYID]]>
+    <input type=hidden name=id value=[[ID]]>
+    <BR>
+  File Description:
+  
+<input type=text name=description size=12>
+  MimeType:
+  <SELECT NAME=type>
+    <OPTION value="text/plain">Patch file (text/plain, diffs)
+    <OPTION value="text/plain">Plain text (text/plain)
+    <OPTION value="text/html">HTML source (text/html)
+    <OPTION value="image/gif">GIF Image (image/gif)
+    <OPTION value="image/jpeg">JPEG Image (image/jpeg)
+    <OPTION value="image/png">PNG Image (image/png)
+    <OPTION value="application/octet-stream">Binary file (any other file)
+    <OPTION value="application/pdf">PDF
+    <OPTION value="application/zip">Zip File
+  </SELECT>
+  <br>
+  Comment: 
+  <input type=text name=note style="width:300px;">
+  <input type=submit value='Add File' onClick="this.value='Please wait...'">
+</font></p>
+</FORM>
+</HTML>

@@ -1,0 +1,443 @@
+# This file contains almost all the configuration setting for the PISS system
+
+##### General Settings (used for main (i.e. non-task, non-bug) areas of the system)
+
+# Header/Footer
+#  set to 0/1 to turn on
+$c{general}{header}=1;
+$c{general}{footer}=0;
+
+##### Field definitions
+# Defines which fields have menus and whether they are project specific or system-wide
+$c{general}{systemmenu}="status,resolution,priority,severity,reproducibility,handset,target_project,found_phase,root_cause,project_milestone";
+$c{general}{projectmenu}="bug_op_sys,version,bug_platform";
+$c{general}{rolemenu}="assigned_to,reporter,tech_contact,qa_contact";
+
+# Hash defining menu dependencies
+%{$c{general}{menudependency}}=(
+    project_milestone=>"target_project",
+);
+
+# Define fields that are date or datetime (yes I know this could be extrapolated from the database
+$c{general}{datefields}="target_date,start_date,delta_ts,creation_ts";
+# Define virtual fields, fields that either don't exist in the database (calculated fields) or are auto generated (date changed/created)
+$c{general}{virtualfields}="creation_ts,delta_ts,days_rem";
+# Define external table fields (these are fields that store data outside of the traq_records tables
+$c{general}{externalfields}="cc,keywords,long_desc,note";
+
+
+# Field labels that are used when referencing the whole system (i.e. query results, prefs)
+$c{general}{recordtype} = "Record Type";
+%{$c{general}{label}}      = (
+    record_id         => "Record#",
+    type			  => "Type",
+    short_desc        => "Summary",
+    version           => "BuildId",
+    assigned_to       => "Assigned To",
+    tech_contact      => "Tech/Pri. Contact",
+    qa_contact        => "SQE/Sec. Contact",
+    reporter          => "Reporter",
+    componentid       => "Comp./Cat.",
+    status            => "Status",
+    projectid         => "Project",
+    status_whiteboard => "Whiteboard",
+    bug_op_sys        => "OS",
+    cc                => "CC",
+    priority          => "Imp./Pri.",
+    creation_ts       => "Date Created",
+    delta_ts          => "Last Changed",
+    bug_platform      => "Platform",
+    long_desc		  => "Description",
+    severity          => "Urg./Sev.",
+    resolution        => "Resolution",
+    reproducibility   => "Reproducibility",
+
+    # use &nbsp; to keep label from wrapping in query columns
+    start_date		 => "Start&nbsp;Date",
+    target_date      => "Target&nbsp;Date",
+    changelist        => "Change#",
+    units_req        => "Hours Remaining",
+    target_milestone => "Target Release",
+    keywords         => "Keywords",
+    note             => "Comments",
+    days_rem 	     => "Days Remaining",
+	ext_ref	=> "Ref. #",
+    releasenote      => "Release Note",
+);
+
+
+##### TaskTraq Settings
+# Settings for the task system
+$c{tasktraq}{server}  = "pt.example.com";
+$c{tasktraq}{formcgi} = "enterTaskForm.cgi";
+
+# if set to 1, all record edits will require comments in the comment/description field
+# if set to 0, no comment will be required
+# if set to auto, when no comment is supplied, a 'canned' related to the edit action will be added.
+$c{tasktraq}{requirecomment} = "auto";
+
+# Defines number at which status values are considered 'Closed' or 'Completed'
+# this allows you to have several values that the system treats as closed
+# ex:  Closed, Archived, etc...
+$c{tasktraq}{closethreshold} = 9;
+
+# if there is a resolved state, i.e. finished but not closed, set this to an number
+# below the close threshold so that records that are 'resolved' will show up in a
+# canned 'return open records' query
+$c{tasktraq}{'new'}    = 1;
+$c{tasktraq}{resolved} = 9;
+$c{tasktraq}{reopened} = 6;
+
+# Will auto change status from first value to second value if record is edited
+# i.e. auto change a ask from a 'new' status to 'seen' or 'assigned' when it is edited
+# to disable, just set to the same value
+$c{tasktraq}{autostatusfromedit} = 1;
+$c{tasktraq}{autostatustoedit}   = 2;
+
+$c{tasktraq}{recordtype} = "Task";
+
+# Fields that will be required for editing records (comma delimited)
+$c{tasktraq}{requiredforedit}   = "";
+$c{tasktraq}{requiredforcreate} = "componentid,short_desc";
+# NOTE: componentid must always be required for create
+
+# Text default in description field for record entry page
+$c{tasktraq}{recordentrytext} = "";
+
+%{$c{tasktraq}{label}} = (
+    record_id         => "Task#",
+    type			  => "Type",
+    short_desc        => "Summary",
+    version           => "BuildId",
+    assigned_to       => "Assigned To",
+    tech_contact      => "Primary Contact",
+    qa_contact        => "Secondary Contact",
+    reporter          => "Reporter",
+    componentid       => "Category",
+    status            => "Status",
+    projectid         => "Project",
+    status_whiteboard => "Whiteboard",
+    priority          => "Importance",
+    creation_ts       => "Date Created",
+    delta_ts          => "Last Changed",
+    severity          => "Urgency",
+    resolution        => "Completion",          
+    cc                => "CC",
+    keywords          => "Keywords",
+    long_desc		  => "Description",
+    note              => "Comments",
+	ext_ref	=> "Ref. #",
+
+    # use &nbsp; to keep label from wrapping in query columns
+    start_date      => "Start&nbsp;Date",
+    target_date      => "Target&nbsp;Date",
+    units_req        => "Hours Remaining",
+    target_milestone => "Target Milestone",
+    days_rem 	     => "Days Remaining",
+);
+
+##### BugTraq Settings
+# Settings for the bug system
+$c{bugtraq}{server}  = "pt.example.com";
+$c{bugtraq}{formcgi} = "enterBugForm.cgi";
+
+# if set to 1, all record edits will require comments in the comment/description field
+# if set to 0, no comment will be required
+# if set to auto, when no comment is supplied, a 'canned' related to the edit action will be added.
+$c{bugtraq}{requirecomment} = "auto";
+
+# Will auto change status from first value to second value if record is edited
+# i.e. auto change a ask from a 'new' status to 'seen' or 'assigned' when it is edited
+# to disable, just set to the same value
+$c{bugtraq}{autostatusfromedit} = 1;
+$c{bugtraq}{autostatustoedit}   = 2;
+
+# if there is a resolved state, i.e. finished but not closed, set this to an number
+# below the close threshold so that records that are 'resolved' will show up in a
+# canned 'return open records' query
+# NOTE: these values must match the desired states in the projecttraq system setup
+$c{bugtraq}{'new'}          = 1;
+$c{bugtraq}{resolved}       = 9;
+$c{bugtraq}{verified}       = 11;
+$c{bugtraq}{closethreshold} = 11;
+$c{bugtraq}{closed}         = 12;
+$c{bugtraq}{reopened}       = 5;
+
+# Set status to 'resolved' state if resolution gets set
+$c{bugtraq}{autoresolve} = 1;
+
+# Clear resolution if status goes back to opened state
+$c{bugtraq}{autoclearresolution} = 1;
+$c{bugtraq}{resolutionduplicate}=5;
+$c{bugtraq}{recordtype} = "Bug";
+
+# Fields that will be required for editing records (comma delimited)
+$c{bugtraq}{requiredforedit}   = "";
+$c{bugtraq}{requiredforcreate} =
+  "componentid,short_desc";
+# NOTE: componentid must always be required for create
+
+# Text default in description field for record entry page
+$c{bugtraq}{recordentrytext} = "
+Detailed description of problem
+
+
+
+
+STEPS TO REPRODUCE:
+1.
+2.
+3.
+4.
+5.
+
+ACTUAL RESULT: [As detailed as possible]
+
+EXPECTED RESULT: [What should have happened]
+
+WORKAROUND: [If applicable]
+
+ADDITIONAL INFORMATION : [Anything else that you think might be important or useful]
+";
+
+%{$c{bugtraq}{label}} = (
+    record_id         => "Bug#",
+    type			  => "Type",
+    short_desc        => "Summary",
+    version           => "BuildId",
+    assigned_to       => "Assigned To",
+    tech_contact      => "Tech Contact",
+    qa_contact        => "SQE Contact",
+    reporter          => "Reporter",
+    componentid       => "Component",
+    status            => "Status",
+    projectid         => "Project",
+    status_whiteboard => "Whiteboard",
+    priority          => "Priority",
+    creation_ts       => "Date Created",
+    delta_ts          => "Last Changed",
+    bug_platform      => "Platform",
+    severity          => "Severity",
+    resolution        => "Resolution",
+    reproducibility   => "Reproducibility",
+    bug_op_sys        => "OS",
+	long_desc		  => "Description",
+    cc                => "CC",
+    keywords          => "Keywords",
+    target_milestone  => "Target Milestone",
+    changelist        => "Change#",
+    note              => "Comments",
+	ext_ref	=> "Ref. #",
+    start_date      => "Start&nbsp;Date",
+    target_date      => "Target&nbsp;Date",
+    units_req        => "Hours Remaining",
+    days_rem 	     => "Days Remaining",
+    releasenote      => "Release Note",
+
+);
+
+
+##### Query output settings
+# Highlight colors for record display. 
+#   (Last item takes precedence in the case of multiple matches)
+#  format:  ["FIELDNAME","MATCH VALUE","CLASSNAME","COMMENT FOR LEGEND"]  
+#  when the field matches the value, the class name will be added to that row in the output
+
+@{$c{query}{highlight}} = (
+	# Make closed  records gray
+	["closed","12","graytext","Closed"],
+	# Make new records green
+	["status","1","greentext","New"],
+	# Make priority 1 records red
+	["priority","1","redtext","Priority 1"],
+	# Make row orange if person assigned record was not the last person who edited it
+	[["assignedmodified","0"],["status","7"],"orangebg","Needs Review"],   # <--example with compound condition
+);
+
+# Use gantt chart display function in query output 
+# NOTE: Required GD, GD::Text, and DBD::Chart perlmodules
+$c{query}{gantt}=1;
+
+# Enable excel import and export 
+# (requires, Spreadsheet::ParseExcel and Spreadsheet::WriteExcel)
+$c{general}{excel}=0;
+
+
+
+##### File System Paths
+# Path settings for the system.  You may change these if you plan to use a different directory layout
+$c{dir}{home}              = "/www/htdocs/projecttraq/";
+$c{dir}{general}           = "/www/htdocs/projecttraq/";
+$c{dir}{generaltemplates}  = "$c{dir}{general}templates";
+$c{dir}{bug}               = "$c{dir}{home}bug";
+$c{dir}{bugtraq}           = "$c{dir}{home}bug";
+$c{dir}{bugtemplates}	   = "$c{dir}{bug}/templates";
+$c{dir}{tasktraq}          = "$c{dir}{home}task";
+$c{dir}{task}              = "$c{dir}{home}task";
+$c{dir}{tasktemplates}	   = "$c{dir}{task}/templates";
+$c{dir}{project}           = "$c{dir}{home}project";
+$c{dir}{report}            = "$c{dir}{home}reports";
+$c{dir}{reporttemplates}   = "$c{dir}{report}/templates";
+$c{dir}{sys}               = "$c{dir}{home}sys";
+$c{dir}{footers}           = "$c{dir}{general}templates";
+$c{dir}{headers}           = "$c{dir}{general}templates";
+$c{dir}{errorTemplate}     = "$c{dir}{task}/templates/error.tmpl";
+$c{dir}{topLevelTemplates} = "$c{dir}{home}templates";
+
+
+##### User Account Settings
+
+# Setting to turn on for external login functions (see end of config)
+$c{externalaccess}{useoutsideLogin} = '0';
+$c{externalaccess}{allowvisitor}    = '1';
+
+# LDAP authentication settings
+$c{ldap}{ldapauth} = '0';    # Set to 1 to use ldap based authentication
+$c{ldap}{server} = 'ldap.example.com';    # Ldap server to attempt to bind to.
+$c{ldap}{basedn}   = 'ou=people,dc=example,dc=com'; # suffix to try to bind with
+$c{ldap}{userattr} =
+  'uid';    # attribute to try to bind with,  i.e. 'uid' will make the binddn
+
+# uid=USERNAME,ou=people,dc=example,dc=com
+
+$c{ldap}{autocreate} =
+  '1';      # Set to 1 to autocreate new users upon successful authentication
+
+$c{ldap}{autogroup} =
+  '';       # Group id of the group that user is added to upon auto-creation
+ # NOTE:  the user is automatically added to the system 'User' group on creation
+
+# The following settings are the default user settings that are filled in when you create
+# a new user.  These setting are also used when the ldap=>autocreate is turned on.
+
+$c{useraccount}{prefs}        = 'edit iemail_assigned_note email_tech_note email_qa_note email_reporter_note email_CC_note email_assigned_attachments email_tech_attachments email_qa_attachments email_reporter_attachments email_CC_attachments email_assigned_status email_tech_status email_qa_status email_reporter_status email_CC_status email_assigned_resolution email_tech_resolution email_qa_resolution email_reporter_resolution email_CC_resolution email_assigned_keywords email_tech_keywords email_qa_keywords email_reporter_keywords email_CC_keywords email_assigned_ccs email_tech_cc email_qa_cc email_reporter_cc email_CC_cc email_assigned_Other email_tech_Other email_qa_Other email_reporter_Other email_CC_Other email_assigned_priority email_assigned_severity email_assigned_milestone email_tech_priority email_tech_severity email_tech_milestone email_qa_priority email_qa_severity email_qa_milestone email_reporter_priority email_reporter_severity email_reporter_milestone'; 
+$c{useraccount}{returnfields} =
+  'record_id,priority,severity,short_desc,status,projectid';
+$c{useraccount}{editprivs} = 'all';
+
+# 'first_name' or 'last_name'  defines how user lists are sorted and names displayed
+# i.e. first last   or  last, first
+$c{useraccount}{sortname} = 'first_name';
+
+##### URL Path settings
+
+# Path settings to be used in constructing urls
+$c{url}{method}    = "http";
+$c{url}{server}    = "pt.example.com";
+$c{url}{base}      = "/projecttraq";
+$c{url}{home}      = "/projecttraq";
+$c{url}{doquery}   = "$c{url}{base}/do_query.cgi";
+$c{url}{bug}       = "$c{url}{base}/bug";
+$c{url}{task}      = "$c{url}{base}/task";
+$c{url}{loginpage} = "$c{url}{base}/login.cgi";
+
+##### Logging
+
+# If set to 1, system will log to syslog facility (will require Sys::Syslog perl module)
+# log level setting coming in future version
+$c{logging}{usesyslog} = '1';
+$c{logging}{loglevel}= 1;
+
+# Print logging messages to the apache error log facility
+$c{logging}{useapacheerror} = '1';
+
+##### Session database settings.
+
+# you should always leave this on (may want to turn off for some setups that
+$c{session}{enable} = 1; 
+
+# session timeout in seconds (seconds * minutes * hours) 0 for unlimited
+$c{session}{timeout} = 60 * 60 * 18;   
+$c{session}{restrictip} =  0;   # NOT YET USED whether to force new login when access from a different ip
+
+# CHANGE THIS!!!  this key is used to sign/encrypt the session cookie to verify authenticity
+$c{session}{key} = "12345678901234567890123456789012345678901234567890123456";
+
+
+##### Cache settings
+# Required Cache::FileCache perl module
+$c{cache}{usecache}=0;
+# You should not need to change the cache timeout
+$c{cache}{timeout}="never";
+
+
+##### Database settings
+$c{db}{host}           = "localhost";
+$c{db}{user}           = "root";
+$c{db}{password}       = "denied";
+$c{db}{database}       = "core";
+
+# The following 4 settings are not ready to be changed, it is placed for planned work
+$c{db}{logintable}     = "logins";
+$c{db}{logintablekey}  = "userid";
+$c{db}{logintablename} = "username";
+$c{db}{driver}         = "mysql";
+
+##### Email settings
+
+# Email address of webmaster
+$c{email}{webmaster} = 'webmaster@example.com';
+
+# Send emails for task record changes as
+$c{email}{taskemail} = 'projecttraq@example.com';
+
+# Send emails for bug record changes as
+$c{email}{bugemail} = 'projecttraq@example.com';
+
+# Set detail of email messages sent out
+#	0 - only sends a link (most secure)
+#	1 - sends change information
+#	2 - sends lots of info about the record !!! NOT IMPLEMENTED YET!!!
+$c{email}{emaillevel} = '1';
+
+# Make the reply to the user, or the system
+$c{email}{reply} = 'user';
+
+# Make the email subject be the record summary (summary) or record action (action), ie: 'Bug 12 created by Bob Jones'
+$c{email}{subject} = 'summary';
+
+$c{email}{mime} = 'text/html';
+
+@{$c{email}{notification}{'pageit@example.com'}{'blocker'}}=('severity','+','1');
+@{$c{email}{notification}{'pageit@example.com'}{'new'}}=('status','+','1');@{$c{email}{notification}{'pageit@example.com'}{'it'}}=('projectid','+','1'); 
+
+#################################################################
+# Alternate login function
+# (rewrite this function to integrate use existing login system)
+#################################################################
+sub outsideLogin()
+{
+	use URI::Escape;
+        # CGI object
+        my($cgi)=@_;
+        my($item,%hash,$cookie,$username,@str,@tmp,$create);
+        $cookie = $cgi->cookie('.example-AUTH');
+        @str=split('&',$cookie);
+        foreach $item (@str)
+        {
+                @tmp=split('=',$item);
+                $hash{$tmp[0]}=$tmp[1];
+        }
+
+        $username=$hash{'Identity'};
+        if(
+                $ENV{SCRIPT_NAME}=~ /(redir)|(enterBugForm)|(enterTaskForm)|(processNew)|(actioncomplete)/
+                &&
+                $ENV{QUERY_STRING}!~ /[\?&]id=\d+/
+                &&
+                !$username
+		&&
+		$ENV{HTTP_REFERER}!~ /internal\.example\.com/
+        )
+        {
+                $username='visitor';
+        }
+        unless($username)
+        {
+		my($url)= uri_escape('http://' . $ENV{SERVER_NAME} . $ENV{REQUEST_URI});
+                print $cgi->redirect("http://login.example.com/Login.aspx?ReturnUrl=$url");
+                exit;
+        }
+
+        return $username;
+}

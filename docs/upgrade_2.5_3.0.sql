@@ -1,0 +1,1 @@
+alter table traq_menus add parent varchar(60) null;                      

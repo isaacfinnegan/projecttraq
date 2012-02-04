@@ -1,0 +1,14 @@
+projecttraq was designed (at least from 2.0 on) to be very easy to customize.  The easiest thing to customize is adding fields.  To add a field to the system, you only need to do the following steps (at a minimum)
+
+1.  Add the field to the database (allow null, and this can be done live and anytime)
+
+2. Add the field and it's label to the label hashes in the config file for the relevant area (task/bug)
+
+3. Add the form field to the html template file.  
+
+All done!
+
+Now, if you want to make the field a select field, or use dynamic menus, or have other special work flow functionality, read on...
+
+
+#TODO  - complete this

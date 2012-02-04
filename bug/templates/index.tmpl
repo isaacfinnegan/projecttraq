@@ -1,0 +1,71 @@
+<head>
+<title>BugTraq</title>
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="[[PISSROOT]]/js/xtheme-gray.css" />
+
+<LINK REL=stylesheet HREF="[[PISSROOT]]/traq.css" TYPE="text/css">
+</head>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+	<TR class="form_header">
+	<td width=15></td>
+	<td >
+		<div id="container">
+    		<div id="toolbar"><a href="[[PISSROOT]]/">Projectraq</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=bug">Find bugs</a> <a href="[[PISSROOT]]/display_query.cgi?dhtml=1&cat=task">Find tasks</a></div>
+		</div>
+	</td>
+	<TD width=65% align=left style="height:35px;padding-left:30px;" valign="middle">
+	</TD>
+	</TR>
+</table>
+<p><b><font size="+2" color="#000000">&nbsp;&nbsp;BugTraq:</font></b>&nbsp;&nbsp;Defect Tracking Application
+</p>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="10" CELLPADDING="0">
+  <TR VALIGN="TOP"> 
+    <TD WIDTH="50%"> 
+      <HR>
+      <FORM METHOD="get" ACTION="../redir.cgi">
+        <FONT SIZE="3">Show Bug Number 
+	<INPUT TYPE=hidden name=type value=look>
+        <INPUT TYPE="text" NAME="id" SIZE="5">
+        <INPUT TYPE="submit" NAME="Submit" VALUE="Go">
+        </FONT> 
+      </FORM>
+      <HR>
+      <UL>
+        <LI><FONT SIZE="3"><a href="buglist.cgi?mode=new">New bug</a> </FONT></LI>
+        <LI><FONT SIZE="3"><a href="buglist.cgi">Bug List by [[PROJECTIDLABEL]]</a> </FONT></LI>
+        <LI><FONT SIZE="3"><A HREF="../display_query.cgi?dhtml=1&cat=bug&status=1&status=2&status=5">Query</a></FONT></LI>
+        <LI><FONT SIZE="3"><a href="../reports/choosereport.cgi">Reports</a></FONT>
+        <LI><FONT SIZE="3"><A HREF="../do_query.cgi?qname=user&type=bug">My Bugs</a></FONT></LI>
+	<LI><FONT SIZE="3"><A HREF="../display_saved.cgi">My Queries</a></FONT></LI>
+        <LI><FONT SIZE="3"><a href="../prefs.cgi">My account preferences</a> </FONT></LI>
+      </UL>
+    </TD>
+    <TD WIDTH="50%"> 
+      <P><FONT SIZE="3">Things to 
+        remember when reporting a bug:</FONT></P>
+      <UL>
+        <LI><FONT SIZE="3"><STRONG>Make sure 
+          you can reproduce the bug</STRONG>, and explain to others how to reproduce 
+          it as well. If engineers can't reproduce your bug, they won't be able 
+          to fix it. </FONT></LI>
+        <LI> <FONT SIZE="3">Use dependency field to indicate related bugs and/or tasks. 
+ 
+          </FONT></LI>
+        <LI><FONT SIZE="3">Include any additional information, the more information, the better. 
+</FONT></LI>
+        
+      </UL>
+    </TD>
+  </TR>
+</TABLE>
+<p> <a href="../">Return to ProjectTraq Home</a> 
+<P> 
+<script src="[[PISSROOT]]/js/ext-base.js" type="text/javascript"></script>
+<script src="[[PISSROOT]]/js/ext-all.js" type="text/javascript"></script>
+<script type="text/javascript" src="[[PISSROOT]]/js/ptlib.js"></script>
+<script>
+[[HEADER]]
+</script>
+</body>
+</html>

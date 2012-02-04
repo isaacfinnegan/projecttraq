@@ -1,0 +1,12 @@
+<form action=editproject.cgi method=post>
+<input type=hidden name=mode value="processmenu_[[ind]]">
+<input type=hidden name=projectid value=[[PID]]>
+<select multiple size=5 name=items>
+[[BEGIN1]]
+	<option value="[[value]]">[[display_value]] [[def]]
+[[END1]]
+</select>
+<br><center>
+<input type=submit name=action value="[[action]]"></center>
+
+</form>

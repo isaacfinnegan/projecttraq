@@ -1,0 +1,118 @@
+<h3>Modifying [[PROJECTIDLABEL]] [[componentidlabel]]</h3>
+
+<form action=editproject.cgi method=post>
+<input type=hidden name=mode value=processnewcomp>
+<input type=hidden name=projectid value=[[PID]]>
+<table>
+    <tr>
+      <td><b>Create New [[componentidlabel]]:</b></td>
+      <td><input type=text name=component value="" size=25>
+      </td>
+      <td rowspan=2>Active:
+          <input type=checkbox name=active value='checked' checked>
+          <br>
+          Bugs:<input type=checkbox  name='rec_type' value='bug' checked>  
+	  	<br>
+	  	Tasks:<input type=checkbox name='rec_type' value='task' checked>
+		</td>
+	  <td rowspan=3>
+	  Auto-CC:
+	  <div>
+<ol style="
+	font-size: 11px;
+	height: 9em;
+	width: 200x;
+	overflow: auto;
+	list-style-type:none;
+	padding: 3px;
+	margin:0;
+	border: 1px dotted grey;
+	background: white;
+	" id="cc">
+		[[COMPONENTIDCC0_OPTIONLIST]] 
+	</ol></div>
+
+	  </td>
+
+    </tr>
+    <tr>
+      <td><b>Description:</b></td>
+      <td><textarea name=description></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td align=center>Default [[techlabel]]:<br>
+      <select name=initialowner>
+		[[DEFAULT_DEV_OPTIONLIST]]
+        </select>
+      </td>
+      <td>&nbsp;</td>
+      <td align=center>Default [[qalabel]]:<br>
+      <select name=initialqacontact>
+		[[DEFAULT_QA_OPTIONLIST]]
+        </select>
+      </td>
+    </tr>
+<tr><td><center><input type=submit value="Create new [[componentidlabel]]" onClick="this.value='Please wait...'"></td></tr>
+</table>
+</form>
+<hr>
+[[BEGIN1]]
+  <form action="editproject.cgi" method=post>
+    <input type=hidden name=mode value=processcompedit>
+    <input type=hidden name=projectid value=[[PROJECTID]]>
+    <input type=hidden name=componentid value=[[componentid]]>
+<table>
+    <tr>
+      <td><b>[[componentidlabel]]:</b></td>
+      <td><input type=text name=component value="[[component]]" size=25>
+      </td>
+      <td rowspan=2>Active:
+          <input type=checkbox name=active value='checked' [[checked]]>
+          <br>
+          Bugs:<input type=checkbox  name='rec_type' value='bug' [[bugcheck]]>  
+	  	<br>
+	  	Tasks:<input type=checkbox name='rec_type' value='task' [[taskcheck]]>
+	  </td>
+	  <td rowspan=3>
+	  Auto-CC:
+	  <div>
+<ol style="
+	font-size: 11px;
+	height: 9em;
+	width: 200x;
+	overflow: auto;
+	list-style-type:none;
+	padding: 3px;
+	margin:0;
+	border: 1px dotted grey;
+	background: white;
+	" id="cc">
+		[[COMPONENTIDCC_OPTIONLIST]] 
+	</ol></div>
+
+	  </td>
+    </tr>
+    <tr>
+      <td><b>Description:</b></td>
+      <td><textarea name=description>[[description]]</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td align=center>Default [[techlabel]]:<br>
+      <select name=initialowner>
+          <option value=[[initialownerid]] selected>[[initialowner]][[EMP_MENU]]
+        </select>
+      </td>
+      <td>&nbsp;</td>
+      <td align=center>Default [[qalabel]]:<br>
+      <select name=initialqacontact>
+          <option value=[[initialqacontactid]]>[[initialqacontact]][[EMP_MENU]]
+        </select>
+      </td>
+    </tr>
+</table>
+<center><input type=submit value="Save Changes" onClick="this.value='Please wait...'"></center>
+</form>
+<br><hr>
+[[END1]]
